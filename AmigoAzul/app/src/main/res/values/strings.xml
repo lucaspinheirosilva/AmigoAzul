@@ -1,0 +1,14 @@
+<resources>
+    <dimen name="tamanhoFonte">25sp</dimen>
+
+
+    <dimen name="imagemWidth">80sp</dimen>
+
+    <!--ARRASTA E SOLTA-->
+    <dimen name="imagemHeigth">80sp</dimen>
+    <dimen name="paddingImages">5dp</dimen>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="alinhamentoImages">center</string>
+    <string name="app_name">Amigo Azul</string>
+
+</resources>

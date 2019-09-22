@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <!--INTRODUÇÂO-->
+    <color name="bg_intro1">#98B3F3</color>
+    <color name="bg_intro2">#8FDF90</color>
+    <color name="bg_intro3">#F3F198</color>
+    <color name="bg_intro4">#E1BDF7</color>
+    <!--CADASTRO-->
+    <color name="bg_cadastro">#E9E6FF</color>
+    <color name="bg_edttxt">#e0f7fa</color>
+
+    <!--ARRASTA E SOLTA-->
+    <color name="fundoTexto">#FAFAFA</color>
+
+
+</resources>

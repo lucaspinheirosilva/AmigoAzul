@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "105023191778",
+    "firebase_url": "https://amigo-azul.firebaseio.com",
+    "project_id": "amigo-azul",
+    "storage_bucket": "amigo-azul.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:105023191778:android:8b5c8808761577dac27cbb",
+        "android_client_info": {
+          "package_name": "br.com.amigoazul"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "105023191778-us3ha9bjap33d279pou4pvme49v781rl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.amigoazul",
+            "certificate_hash": "f7abe9902fd92688c04f0e0fb6039779990f8257"
+          }
+        },
+        {
+          "client_id": "105023191778-v7dgac1v7l3b6kr18ahqm8gnomj2tvdl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBR4k286N3za68zbG3F9cv898-x96rdgk4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "105023191778-v7dgac1v7l3b6kr18ahqm8gnomj2tvdl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

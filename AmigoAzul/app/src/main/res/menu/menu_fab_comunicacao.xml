@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/FAB_acao_addImagem"
+        android:icon="@drawable/ic_add_imagem"
+        android:title=""/>
+    <item
+        android:id="@+id/FAB_acao_excluirImagem"
+        android:icon="@drawable/ic_deletar_imagem"
+        android:title="" />
+
+</menu>
