@@ -1,1 +1,15 @@
 http://haylson.com.br/como-usar-o-git-e-o-github/
+
+COMANDO SUBIR PARA O GIT
+=>git status
+=>git commit -a -m "MENSAGEM AQUI"
+=>git push
+
+COMANDO ATUALIZAR DO GIT
+=>git pull
+
+COMANDO BAIXAR DO GIT(maquina nova)
+=>git config --global user.name "seu nome aqui"
+=>git config --global user.email "seu email aqui"
+=>git init
+=>git clone https://github.com/lucaspinheirosilva/AmigoAzul.git
