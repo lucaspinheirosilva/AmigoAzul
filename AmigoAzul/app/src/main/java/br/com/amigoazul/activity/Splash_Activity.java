@@ -1,8 +1,10 @@
 package br.com.amigoazul.activity;
 
+import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -11,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,20 +28,29 @@ import java.util.List;
 import br.com.amigoazul.R;
 import br.com.amigoazul.helper.UsuarioDAO;
 import br.com.amigoazul.model.ListaUsuario;
-/**TUTORIAL TELA SE SPLASH**/
+/**
+ * TUTORIAL TELA SE SPLASHTUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR
+ * TUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR
+ **/
 //https://www.devmedia.com.br/como-criar-telas-de-abertura-no-android/33256
 
 /**TUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR**/
 // https://www.youtube.com/watch?v=SmXGlv7QEO0
+
+/**TUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR**/
+// https://developer.android.com/training/permissions/requesting?hl=pt-br
 public class Splash_Activity extends AppCompatActivity {
 
     private static int SPLASH_TIME_OUT = 2000;
+    final static int Const_WRITE_EXTERNAL_STORAGE = 001;
+    final static int Const_READ_EXTERNAL_STORAGE = 002;
+
 
     /***VARIAVEIS FIREBASE*/
     FirebaseStorage firebaseStorage;
     StorageReference storageReference;
     StorageReference ref;
-    File meuDirectory = new File(Environment.getExternalStorageDirectory(), "AmigoAzul_Fotos");
+    File meuDiretorio = new File(Environment.getExternalStorageDirectory(), "AmigoAzul_Fotos");
 
 
     @Override
@@ -45,13 +58,38 @@ public class Splash_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
+        if (ContextCompat.checkSelfPermission(Splash_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(Splash_Activity.this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            } else {
+                ActivityCompat.requestPermissions(Splash_Activity.this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        Const_WRITE_EXTERNAL_STORAGE);
+            }
+        } else {
+
+        }
+        if (ContextCompat.checkSelfPermission(Splash_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(Splash_Activity.this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            } else {
+                ActivityCompat.requestPermissions(Splash_Activity.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        Const_READ_EXTERNAL_STORAGE);
+            }
+        } else {
+        }
+
         /**CRIAR PASTA PARA SALVAR AS FOTOS**/
-        if(!meuDirectory.exists()) {
-            meuDirectory.mkdirs();
+        if (!meuDiretorio.exists()) {
+            meuDiretorio.mkdirs();
             Toast.makeText(getApplicationContext(), "DIRETORIO CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             Toast.makeText(getApplicationContext(), "DIRETORIO JA EXISTE", Toast.LENGTH_SHORT).show();
-            meuDirectory.getAbsolutePath().toString();
+            meuDiretorio.getAbsolutePath().toString();
         }
 
         DOWNLOAD();
@@ -93,11 +131,11 @@ public class Splash_Activity extends AppCompatActivity {
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener <Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                String url=uri.toString();
+                String url = uri.toString();
                 DOWNLOADFILES(Splash_Activity.this,
                         "AreaTest",
                         ".jpg",
-                        meuDirectory.getAbsolutePath(),
+                        meuDiretorio.getAbsolutePath(),
                         url);
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -126,6 +164,30 @@ public class Splash_Activity extends AppCompatActivity {
         request.setDestinationInExternalPublicDir(diretorioDestino, nomeArquivo + extencaoArquivo);
 
         downloadManager.enqueue(request);
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case Const_READ_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                }
+            }
+            case Const_WRITE_EXTERNAL_STORAGE: {
+
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                }
+                else {
+                }
+                return;
+            }
+        }
     }
 }
+
+
