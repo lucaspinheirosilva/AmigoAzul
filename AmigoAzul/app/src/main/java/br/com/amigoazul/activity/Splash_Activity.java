@@ -41,6 +41,7 @@ import br.com.amigoazul.model.ListaUsuario;
 /**TUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR*/
 // https://www.youtube.com/watch?v=SmXGlv7QEO0
 // https://grokonez.com/android/firebase-storage-get-list-files-display-image-firebase-ui-database-android
+// https://grokonez.com/android/firebase-storage-download-files-to-memory-local-file-android
 // https://firebase.google.com/docs/storage/android/list-files
 
 /**PERMISSOES DO ANDROID**/
