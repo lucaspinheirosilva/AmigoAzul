@@ -34,12 +34,14 @@ import br.com.amigoazul.helper.UsuarioDAO;
 import br.com.amigoazul.model.ListaUsuario;
 
 /**
- * TUTORIAL TELA SE SPLASHTTUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR
+ * TUTORIAL TELA SE SPLASHT
  */
 //https://www.devmedia.com.br/como-criar-telas-de-abertura-no-android/33256
 
 /**TUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR*/
 // https://www.youtube.com/watch?v=SmXGlv7QEO0
+// https://grokonez.com/android/firebase-storage-get-list-files-display-image-firebase-ui-database-android
+// https://firebase.google.com/docs/storage/android/list-files
 
 /**PERMISSOES DO ANDROID**/
 // https://www.androidauthority.com/android-app-permissions-explained-642452/
@@ -68,21 +70,50 @@ public class Splash_Activity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkPermission()) {
                 Log.e("permissao", "permissao ja esta liberada");
+
+                /**CRIAR PASTA PARA SALVAR AS FOTOS**/
+                if (!meuDiretorio.exists()) {
+                    meuDiretorio.mkdirs();
+                    Toast.makeText(getApplicationContext(), "DIRETORIO CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "DIRETORIO JA EXISTE", Toast.LENGTH_SHORT).show();
+                    meuDiretorio.getAbsolutePath().toString();
+                }
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        List <ListaUsuario> SPLASH_listusers = new ArrayList <>();
+                        UsuarioDAO usuarioDAO = new UsuarioDAO(getApplicationContext());
+
+                        /**verifica se existe usuario cadastrado no BD**/
+                        SPLASH_listusers = usuarioDAO.listar();
+                        if (SPLASH_listusers.size() > 0) {
+                            Toast.makeText(getApplicationContext(), "USUARIO ENCONTRADO", Toast.LENGTH_SHORT).show();
+
+                            Intent i = new Intent(Splash_Activity.this, ListarUsuario.class);
+                            String blockSplash = "bloqueadoSplash";
+                            i.putExtra("BLOQUEIO_SPLASH", blockSplash);
+                            startActivity(i);
+                            finish();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "NADA ENCONTRADO", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(Splash_Activity.this, Introducao_Activity.class);
+                            startActivity(i);
+                            // Fecha esta activity
+                            finish();
+                        }
+                    }
+                }, SPLASH_TIME_OUT);
+
+                /**chama o metodo para download*/
+                DOWNLOAD();
             } else {
                 requestPermission();
             }
         }
 
-        /**CRIAR PASTA PARA SALVAR AS FOTOS**/
-        if (!meuDiretorio.exists()) {
-            meuDiretorio.mkdirs();
-            Toast.makeText(getApplicationContext(), "DIRETORIO CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "DIRETORIO JA EXISTE", Toast.LENGTH_SHORT).show();
-            meuDiretorio.getAbsolutePath().toString();
-        }
 
-        DOWNLOAD();
     }
 
     /**
@@ -108,9 +139,7 @@ public class Splash_Activity extends AppCompatActivity {
 
             }
         });
-
     }
-
     public void DOWNLOADFILES(Context contexto,
                               String nomeArquivo,
                               String extencaoArquivo,
@@ -150,9 +179,17 @@ public class Splash_Activity extends AppCompatActivity {
                                            String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case Const_WRITE_EXTERNAL_STORAGE: {
-
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    /**CRIAR PASTA PARA SALVAR AS FOTOS**/
+                    if (!meuDiretorio.exists()) {
+                        meuDiretorio.mkdirs();
+                        Toast.makeText(getApplicationContext(), "DIRETORIO CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "DIRETORIO JA EXISTE", Toast.LENGTH_SHORT).show();
+                        meuDiretorio.getAbsolutePath().toString();
+                    }
 
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -179,6 +216,9 @@ public class Splash_Activity extends AppCompatActivity {
                             }
                         }
                     }, SPLASH_TIME_OUT);
+
+                    /**chama o metodo para download*/
+                    DOWNLOAD();
                 } else {
                     /**Cria o gerador do AlertDialog*/
                     AlertDialog.Builder builder = new AlertDialog.Builder(Splash_Activity.this);
@@ -187,7 +227,7 @@ public class Splash_Activity extends AppCompatActivity {
                     /**define a imagen icone*/
                     builder.setIcon(R.drawable.por_favor);
                     /**define a mensagem*/
-                    builder.setMessage("Precisamos que você nos permita salvar fotos no seu dispositivo.\n A não autorização impossibilita o uso do aplicativo.l ");
+                    builder.setMessage("Precisamos que você nos permita salvar fotos no seu dispositivo.\n A não autorização impossibilita o uso do aplicativo.");
                     /**define um botão como positivo*/
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface arg0, int arg1) {
