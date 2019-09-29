@@ -29,6 +29,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //UTILIZAR PARA CRIAR A 1º VEZ O BANCO DE DADOS
 
+        /**CRIAR TABELA DE USUARIO*/
         String sql_cadUser = "CREATE TABLE IF NOT EXISTS " + TABELA_USUARIO
                 + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 " nomeuser TEXT NOT NULL, " +
@@ -37,9 +38,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 " email TEXT, " +
                 "senha TEXT ) ";
 
+        /**CRIAR TABELA DE COMUNICACAO*/
         String sql_cadComunic = "CREATE TABLE IF NOT EXISTS " + TABELA_COMUNICACAO
                 + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 " caminho_fire TEXT NOT NULL, " +
+                " tipo_comunic TEXT NOT NULL, " +
                 " texto_falar TEXT NOT NULL) ";
 
         try {

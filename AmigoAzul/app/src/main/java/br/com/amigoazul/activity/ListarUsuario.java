@@ -74,7 +74,7 @@ public class ListarUsuario extends AppCompatActivity {
                             //Recuper produto para edição
                             usuarioselecionado = listUsuario.get(position);
 
-                            //Enviar produto para a tela de adicionar produto
+                            //Enviar produto para a tela de adicionar usuario
                             Intent intent = new Intent(ListarUsuario.this, Cadastro_Activity.class);
                             intent.putExtra("usuarioSelecionado", usuarioselecionado);
                             startActivity(intent);

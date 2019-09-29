@@ -23,7 +23,6 @@ import androidx.core.content.ContextCompat;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
@@ -31,12 +30,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.amigoazul.R;
+import br.com.amigoazul.helper.ComunicacaoDAO;
 import br.com.amigoazul.helper.UsuarioDAO;
+import br.com.amigoazul.model.ListaComunicacao;
 import br.com.amigoazul.model.ListaUsuario;
 
-/**
- * TUTORIAL TELA SE SPLASHT
- */
+/** TUTORIAL TELA SE SPLASHT */
 //https://www.devmedia.com.br/como-criar-telas-de-abertura-no-android/33256
 
 /**TUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR*/
@@ -61,9 +60,15 @@ public class Splash_Activity extends AppCompatActivity {
 
     /**CRIAR DIRETORIO NO CELULAR DO USUARIO*/
     File meuDiretorio = new File(Environment.getExternalStorageDirectory(), "AmigoAzul_Fotos");
+    File meuDirSentimentos = new File(Environment.getExternalStorageDirectory(), "AmigoAzul_Fotos/Sentimentos");
+    File meuDirObjetos = new File(Environment.getExternalStorageDirectory(), "AmigoAzul_Fotos/Objetos");
+    File meuDirMontarFreses = new File(Environment.getExternalStorageDirectory(), "AmigoAzul_Fotos/Montar_Frase");
 
     /***ALERTDIALOG*/
     private AlertDialog alerta;
+
+    /**ESTANCIAR OUTRAS CLASSES*/
+    ListaComunicacao listaComunicacao = new ListaComunicacao();
 
 
     @Override
@@ -79,7 +84,23 @@ public class Splash_Activity extends AppCompatActivity {
                 /**CRIAR PASTA PARA SALVAR AS FOTOS**/
                 if (!meuDiretorio.exists()) {
                     meuDiretorio.mkdirs();
+                    meuDirMontarFreses.mkdirs();
+                    meuDirObjetos.mkdirs();
+                    meuDirSentimentos.mkdirs();
                     Toast.makeText(getApplicationContext(), "DIRETORIO CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+
+                    if (!meuDirSentimentos.exists()) {
+                        meuDirSentimentos.mkdirs();
+                        Toast.makeText(getApplicationContext(), "DIRETORIO SENTIMENTOS CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                    }
+                    if (!meuDirObjetos.exists()) {
+                        meuDirObjetos.mkdirs();
+                        Toast.makeText(getApplicationContext(), "DIRETORIO OBJETOS CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                    }
+                    if (!meuDirMontarFreses.exists()) {
+                        meuDirMontarFreses.mkdirs();
+                        Toast.makeText(getApplicationContext(), "DIRETORIO MONTAR FRASES CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), "DIRETORIO JA EXISTE", Toast.LENGTH_SHORT).show();
                     meuDiretorio.getAbsolutePath().toString();
@@ -90,6 +111,24 @@ public class Splash_Activity extends AppCompatActivity {
                     public void run() {
                         List <ListaUsuario> SPLASH_listusers = new ArrayList <>();
                         UsuarioDAO usuarioDAO = new UsuarioDAO(getApplicationContext());
+                        ComunicacaoDAO comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
+                        List<ListaComunicacao>SPLASH_listComunic;
+
+                        /**verifica se existe comunicação cadastrado no BD**/
+                        //se a listagem for igual a 0 é inserido 2 registros na tabela COMUNICACAO
+                        SPLASH_listComunic = comunicacaoDAO.listar();
+                        if (SPLASH_listComunic.size()==0){
+                            listaComunicacao.setCaminhoFirebase("sentimento 1.png");
+                            listaComunicacao.setTextoFalar("eu te amo");
+                            listaComunicacao.setTipoComunic("sentimentos");
+                            comunicacaoDAO.salvar(listaComunicacao);
+
+                            listaComunicacao.setCaminhoFirebase("sentimento 2.jpg");
+                            listaComunicacao.setTextoFalar("estou triste");
+                            listaComunicacao.setTipoComunic("sentimentos");
+                            comunicacaoDAO.salvar(listaComunicacao);
+                            Toast.makeText(getApplicationContext(),"SENTIMENTOS INSERIDOS COM SUCESSO",Toast.LENGTH_SHORT).show();
+                        }
 
                         /**verifica se existe usuario cadastrado no BD**/
                         SPLASH_listusers = usuarioDAO.listar();
@@ -127,32 +166,9 @@ public class Splash_Activity extends AppCompatActivity {
     public void DOWNLOAD() {
         storageReference = firebaseStorage.getInstance().getReference();
         //ref = storageReference.child("AreaTest.jpg");
-        ref = storageReference.child("gs://amigo-azul.appspot.com/Sentimentos");
+        ref = storageReference.child("Sentimentos");
 
-        ref.listAll().addOnSuccessListener(new OnSuccessListener <ListResult>() {
-            @Override
-            public void onSuccess(ListResult listResult) {
-
-                for (StorageReference prefix : listResult.getPrefixes()) {
-                    // All the prefixes under listRef.
-                    // You may call listAll() recursively on them.
-                }
-                for (StorageReference item : listResult.getItems()) {
-                    // All the items under listRef.
-                }
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
-
-
-
-
-                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener <Uri>() {
+        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener <Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 String url = uri.toString();
@@ -166,10 +182,11 @@ public class Splash_Activity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
 
-                Toast.makeText(getApplicationContext(),"Erro ao baixar Image:"+e.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Erro ao baixar Image:" + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
+
     public void DOWNLOADFILES(Context contexto,
                               String nomeArquivo,
                               String extencaoArquivo,
