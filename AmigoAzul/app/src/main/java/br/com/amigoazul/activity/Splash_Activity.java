@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
@@ -56,6 +57,9 @@ public class Splash_Activity extends AppCompatActivity {
     FirebaseStorage firebaseStorage;
     StorageReference storageReference;
     StorageReference ref;
+
+
+    /**CRIAR DIRETORIO NO CELULAR DO USUARIO*/
     File meuDiretorio = new File(Environment.getExternalStorageDirectory(), "AmigoAzul_Fotos");
 
     /***ALERTDIALOG*/
@@ -122,9 +126,33 @@ public class Splash_Activity extends AppCompatActivity {
      */
     public void DOWNLOAD() {
         storageReference = firebaseStorage.getInstance().getReference();
-        ref = storageReference.child("AreaTest.jpg");
+        //ref = storageReference.child("AreaTest.jpg");
+        ref = storageReference.child("gs://amigo-azul.appspot.com/Sentimentos");
 
-        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener <Uri>() {
+        ref.listAll().addOnSuccessListener(new OnSuccessListener <ListResult>() {
+            @Override
+            public void onSuccess(ListResult listResult) {
+
+                for (StorageReference prefix : listResult.getPrefixes()) {
+                    // All the prefixes under listRef.
+                    // You may call listAll() recursively on them.
+                }
+                for (StorageReference item : listResult.getItems()) {
+                    // All the items under listRef.
+                }
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+
+
+
+                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener <Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 String url = uri.toString();
@@ -138,6 +166,7 @@ public class Splash_Activity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
 
+                Toast.makeText(getApplicationContext(),"Erro ao baixar Image:"+e.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
     }
