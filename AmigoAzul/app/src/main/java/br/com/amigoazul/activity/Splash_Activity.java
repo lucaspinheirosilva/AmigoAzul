@@ -162,6 +162,9 @@ public class Splash_Activity extends AppCompatActivity {
         ListaComunicacao listaComunicacao = new ListaComunicacao();
         fileRef = imageReference.child("TESTE.jpg");
         //todo:continuar apartir daqui
+        ComunicacaoDAO comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
+
+
 
 
 
