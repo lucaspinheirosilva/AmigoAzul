@@ -35,7 +35,11 @@ import br.com.amigoazul.helper.UsuarioDAO;
 import br.com.amigoazul.model.ListaComunicacao;
 import br.com.amigoazul.model.ListaUsuario;
 
-/** TUTORIAL TELA SE SPLASHT */
+/**
+ * TUTORIAL TELA SE SPLASHT
+ * TUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR
+ * TUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR
+ */
 //https://www.devmedia.com.br/como-criar-telas-de-abertura-no-android/33256
 
 /**TUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR*/
@@ -106,31 +110,17 @@ public class Splash_Activity extends AppCompatActivity {
                     meuDiretorio.getAbsolutePath().toString();
                 }
 
+                //INSERIR DADOS DE COMUNICACAO NO BD
+                INSERIR_DADOS_BANCO();
+
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        List <ListaUsuario> SPLASH_listusers = new ArrayList <>();
-                        UsuarioDAO usuarioDAO = new UsuarioDAO(getApplicationContext());
-                        ComunicacaoDAO comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
-                        List<ListaComunicacao>SPLASH_listComunic;
-
-                        /**verifica se existe comunicação cadastrado no BD**/
-                        //se a listagem for igual a 0 é inserido 2 registros na tabela COMUNICACAO
-                        SPLASH_listComunic = comunicacaoDAO.listar();
-                        if (SPLASH_listComunic.size()==0){
-                            listaComunicacao.setCaminhoFirebase("sentimento 1.png");
-                            listaComunicacao.setTextoFalar("eu te amo");
-                            listaComunicacao.setTipoComunic("sentimentos");
-                            comunicacaoDAO.salvar(listaComunicacao);
-
-                            listaComunicacao.setCaminhoFirebase("sentimento 2.jpg");
-                            listaComunicacao.setTextoFalar("estou triste");
-                            listaComunicacao.setTipoComunic("sentimentos");
-                            comunicacaoDAO.salvar(listaComunicacao);
-                            Toast.makeText(getApplicationContext(),"SENTIMENTOS INSERIDOS COM SUCESSO",Toast.LENGTH_SHORT).show();
-                        }
 
                         /**verifica se existe usuario cadastrado no BD**/
+                        List <ListaUsuario> SPLASH_listusers = new ArrayList <>();
+                        UsuarioDAO usuarioDAO = new UsuarioDAO(getApplicationContext());
+
                         SPLASH_listusers = usuarioDAO.listar();
                         if (SPLASH_listusers.size() > 0) {
                             Toast.makeText(getApplicationContext(), "USUARIO ENCONTRADO", Toast.LENGTH_SHORT).show();
@@ -156,8 +146,6 @@ public class Splash_Activity extends AppCompatActivity {
                 requestPermission();
             }
         }
-
-
     }
 
     /**
@@ -166,7 +154,16 @@ public class Splash_Activity extends AppCompatActivity {
     public void DOWNLOAD() {
         storageReference = firebaseStorage.getInstance().getReference();
         //ref = storageReference.child("AreaTest.jpg");
-        ref = storageReference.child("Sentimentos");
+
+        StorageReference imageReference;
+        imageReference = FirebaseStorage.getInstance().getReference().child("Sentimentos");
+        StorageReference fileRef;
+        fileRef = null;
+        ListaComunicacao listaComunicacao = new ListaComunicacao();
+        fileRef = imageReference.child("TESTE.jpg");
+        //todo:continuar apartir daqui
+
+
 
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener <Uri>() {
             @Override
@@ -289,6 +286,27 @@ public class Splash_Activity extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+    public void INSERIR_DADOS_BANCO() {
+        /**verifica se existe comunicação cadastrado no BD**/
+        ComunicacaoDAO comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
+        List <ListaComunicacao> SPLASH_listComunic;
+        //se a listagem for igual a 0 é inserido 2 registros na tabela COMUNICACAO por default
+        SPLASH_listComunic = comunicacaoDAO.listar();
+        if (SPLASH_listComunic.size() == 0) {
+            listaComunicacao.setCaminhoFirebase("sentimento 1.png");
+            listaComunicacao.setTextoFalar("eu te amo");
+            listaComunicacao.setTipoComunic("sentimentos");
+            comunicacaoDAO.salvar(listaComunicacao);
+
+            listaComunicacao.setCaminhoFirebase("sentimento 2.jpg");
+            listaComunicacao.setTextoFalar("estou triste");
+            listaComunicacao.setTipoComunic("sentimentos");
+            comunicacaoDAO.salvar(listaComunicacao);
+            Toast.makeText(getApplicationContext(), "SENTIMENTOS INSERIDOS COM SUCESSO", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
 

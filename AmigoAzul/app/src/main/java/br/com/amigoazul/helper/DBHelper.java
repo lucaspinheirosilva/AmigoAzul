@@ -27,9 +27,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //UTILIZAR PARA CRIAR A 1º VEZ O BANCO DE DADOS
+        /**UTILIZAR PARA CRIAR A 1º VEZ O BANCO DE DADOS**/
 
-        /**CRIAR TABELA DE USUARIO*/
+        //CRIAR TABELA DE USUARIO
         String sql_cadUser = "CREATE TABLE IF NOT EXISTS " + TABELA_USUARIO
                 + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 " nomeuser TEXT NOT NULL, " +
@@ -38,14 +38,14 @@ public class DBHelper extends SQLiteOpenHelper {
                 " email TEXT, " +
                 "senha TEXT ) ";//TODO:criar sistema de criptografia da senha
 
-        /**CRIAR TABELA DE COMUNICACAO*/
+        //CRIAR TABELA DE COMUNICACAO*/
         String sql_cadComunicacao = "CREATE TABLE IF NOT EXISTS " + TABELA_COMUNICACAO
                 + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 " caminho_fire TEXT NOT NULL, " +
                 " tipo_comunic TEXT NOT NULL, " +
                 " texto_falar TEXT NOT NULL) ";
 
-        /**CRIAR TABELA DE ATIVIDADES*/
+        //CRIAR TABELA DE ATIVIDADES*/
         String sql_cadAtividades = "CREATE TABLE IF NOT EXISTS " + TABELA_ATIVIDADE
                 + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 " nome_atividade TEXT NOT NULL, " +
@@ -55,6 +55,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 " tipo_atividade TEXT NOT NULL) ";
 
         try {
+            //Executa o comando SQL e exibe logs no console do ANDROID STUDIO
             db.execSQL(sql_cadUser);
             Log.i("DB_INFO:", "CADASTRO USUARIO ---BANCO CRIADO COM SUCESSO");
             db.execSQL(sql_cadComunicacao);
@@ -63,6 +64,7 @@ public class DBHelper extends SQLiteOpenHelper {
             Log.i("DB_INFO:", "CADASTRO ATIVIDADES ---BANCO CRIADO COM SUCESSO");
 
         } catch (Exception erro) {
+            //cajo der algum erro ao criar banco e/ou tabelas, aparece uma mensagem de erro para o usuario
             Toast.makeText(contextToast, "ERRO AO CRIAR BANCO DE DADOS:" + erro.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
