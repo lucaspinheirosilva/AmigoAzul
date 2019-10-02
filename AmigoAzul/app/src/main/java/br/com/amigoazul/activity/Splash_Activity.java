@@ -165,9 +165,6 @@ public class Splash_Activity extends AppCompatActivity {
         ComunicacaoDAO comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
 
 
-
-
-
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener <Uri>() {
             @Override
             public void onSuccess(Uri uri) {
