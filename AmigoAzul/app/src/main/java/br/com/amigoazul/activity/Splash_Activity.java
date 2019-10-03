@@ -39,6 +39,7 @@ import br.com.amigoazul.model.ListaUsuario;
  * TUTORIAL TELA SE SPLASHT
  * TUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR
  * TUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR
+ * TUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR
  */
 //https://www.devmedia.com.br/como-criar-telas-de-abertura-no-android/33256
 
@@ -154,16 +155,24 @@ public class Splash_Activity extends AppCompatActivity {
     public void DOWNLOAD() {
         storageReference = firebaseStorage.getInstance().getReference();
         //ref = storageReference.child("AreaTest.jpg");
-
-        StorageReference imageReference;
-        imageReference = FirebaseStorage.getInstance().getReference().child("Sentimentos");
         StorageReference fileRef;
         fileRef = null;
-        ListaComunicacao listaComunicacao = new ListaComunicacao();
+        StorageReference imageReference;
+        imageReference = FirebaseStorage.getInstance().getReference().child("Sentimentos");
+
+
         fileRef = imageReference.child("TESTE.jpg");
         //todo:continuar apartir daqui
         ComunicacaoDAO comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
+        List <ListaComunicacao> listaComunicacaos = new ArrayList <>();
+        listaComunicacaos = comunicacaoDAO.listar();
 
+        int i;
+        for (i = 0; i < listaComunicacaos.size(); i++) {
+            Log.e("FIREBASE", listaComunicacaos.get(i).getCaminhoFirebase());
+
+
+        }
 
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener <Uri>() {
             @Override
