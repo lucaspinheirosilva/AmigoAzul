@@ -39,9 +39,9 @@ public class AtividadeDAO implements intfceAtividadeDAO {
 
         try {
             escreve.insert(DBHelper.TABELA_COMUNICACAO, null, contentValues);
-            Log.e("INFO_DB_ATIVIDADE:", "DADOS GRAVADOS COM SUCESSO");
+            Log.e("INFO_DB_ATIVIDADE:", "ATIVIDADE GRAVADA COM SUCESSO");
         } catch (Exception erro) {
-            Log.e("INFO_DB_ATIVIDADE:", "ERRO AO SALVAR DADOS" + erro.getMessage());
+            Log.e("INFO_DB_ATIVIDADE:", "ERRO AO SALVAR ATIVIDADE" + erro.getMessage());
             return false;
         }
         return false;

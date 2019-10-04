@@ -39,9 +39,9 @@ public class UsuarioDAO implements intfceUsuarioDAO {
 
         try {
             escreve.insert(DBHelper.TABELA_USUARIO, null, contentValues);
-            Log.i("INFO_DB:", "DADOS GRAVADOS COM SUCESSO");
+            Log.i("INFO_DB_USUARIO:", "USUARIO GRAVADO COM SUCESSO");
         } catch (Exception erro) {
-            Log.i("INFO_DB:", "ERRO AO SALVAR DADOS" + erro.getMessage());
+            Log.i("INFO_DB_USUARIO:", "ERRO AO SALVAR USUARIO" + erro.getMessage());
             return false;
         }
         return false;
@@ -60,9 +60,9 @@ public class UsuarioDAO implements intfceUsuarioDAO {
             String[] args = {lista_usuario.getId().toString()};
             escreve.update(DBHelper.TABELA_USUARIO, contentValues, "id=?", args);
 
-            Log.e("INFO_DB:", "USUARIO ATUALIZADOS COM SUCESSO");
+            Log.e("INFO_DB_USUARIO:", "USUARIO ATUALIZADOS COM SUCESSO");
         } catch (Exception erro) {
-            Log.e("INFO_DB:", "ERRO AO ATUALIZAR USUARIO" + erro.getMessage());
+            Log.e("INFO_DB_USUARIO:", "ERRO AO ATUALIZAR USUARIO" + erro.getMessage());
             return false;
         }
 
@@ -79,9 +79,9 @@ public class UsuarioDAO implements intfceUsuarioDAO {
             String[] args = {lista_usuario.getId().toString()};
             escreve.delete(DBHelper.TABELA_USUARIO, "id=?", args);
 
-            Log.e("INFO_DB:", "USUARIO EXCLUIDO COM SUCESSO -->"+" ID: "+idUser+" NOME: "+nomeUser+" MARCA: "+GrauTea);
+            Log.e("INFO_DB_USUARIO:", "USUARIO EXCLUIDO COM SUCESSO -->" + " ID: " + idUser + " NOME: " + nomeUser + " MARCA: " + GrauTea);
         } catch (Exception erro) {
-            Log.e("INFO_DB:", "ERRO AO EXCLUIR USUARIO -->"+" ID: "+idUser+" NOME: "+nomeUser+" MARCA: "+GrauTea+"-->"+erro.getMessage());
+            Log.e("INFO_DB_USUARIO:", "ERRO AO EXCLUIR USUARIO -->" + " ID: " + idUser + " NOME: " + nomeUser + " MARCA: " + GrauTea + "-->" + erro.getMessage());
             return false;
         }
 

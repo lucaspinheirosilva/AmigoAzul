@@ -36,9 +36,9 @@ public class ComunicacaoDAO implements intfceComunicacaoDAO {
 
         try {
             escreve.insert(DBHelper.TABELA_COMUNICACAO, null, contentValues);
-            Log.e("INFO_DB_COMUNICACAO:", "DADOS GRAVADOS COM SUCESSO");
+            Log.e("INFO_DB_COMUNICACAO:", "COMUNICACAO GRAVADA COM SUCESSO");
         } catch (Exception erro) {
-            Log.e("INFO_DB_COMUNICACAO:", "ERRO AO SALVAR DADOS" + erro.getMessage());
+            Log.e("INFO_DB_COMUNICACAO:", "ERRO AO SALVAR COMUNICACAO" + erro.getMessage());
             return false;
         }
         return false;

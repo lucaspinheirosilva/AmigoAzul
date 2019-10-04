@@ -3,6 +3,7 @@ package br.com.amigoazul.activity;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,9 +38,6 @@ import br.com.amigoazul.model.ListaUsuario;
 
 /**
  * TUTORIAL TELA SE SPLASHT
- * TUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR
- * TUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR
- * TUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR
  */
 //https://www.devmedia.com.br/como-criar-telas-de-abertura-no-android/33256
 
@@ -60,7 +58,11 @@ public class Splash_Activity extends AppCompatActivity {
     /***VARIAVEIS FIREBASE*/
     FirebaseStorage firebaseStorage;
     StorageReference storageReference;
-    StorageReference ref;
+
+    /**
+     * VARIAVEL PROGRESSBAR
+     */
+    ProgressDialog progressDialog;
 
 
     /**CRIAR DIRETORIO NO CELULAR DO USUARIO*/
@@ -84,7 +86,7 @@ public class Splash_Activity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkPermission()) {
-                Log.e("permissao", "permissao ja esta liberada");
+                Log.e("PERMISSAO", "permissao ja foi concedida para criar pastas para as fotos na memoria do Dispositivo");
 
                 /**CRIAR PASTA PARA SALVAR AS FOTOS**/
                 if (!meuDiretorio.exists()) {
@@ -153,63 +155,40 @@ public class Splash_Activity extends AppCompatActivity {
      * METODO TESTE PARA BAIXAR IMAGENS FIREBASE
      */
     public void DOWNLOAD() {
-        storageReference = firebaseStorage.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
         //ref = storageReference.child("AreaTest.jpg");
         StorageReference fileRef;
-        fileRef = null;
+        /* fileRef = null;*/
         StorageReference imageReference;
         imageReference = FirebaseStorage.getInstance().getReference().child("Sentimentos");
 
 
-        fileRef = imageReference.child("TESTE.jpg");
+        /* fileRef = imageReference.child("TESTE.jpg");*/
         //todo:continuar apartir daqui
         ComunicacaoDAO comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
         List <ListaComunicacao> listaComunicacaos = new ArrayList <>();
         listaComunicacaos = comunicacaoDAO.listar();
 
+
+        //Percorre o Vetor e pega o nome do campo "CAMINHO FIRABASE" e unificar com o URL de download
+        //que vem do FIREBASE, e baixar as imagen no laço FOR
         int i;
         for (i = 0; i < listaComunicacaos.size(); i++) {
-            Log.e("FIREBASE", listaComunicacaos.get(i).getCaminhoFirebase());
+            Log.e("FIREBASE", "Nome da Imagem no Banco de dados do Dispositivo " + listaComunicacaos.get(i).getCaminhoFirebase());
+            fileRef = imageReference.child(listaComunicacaos.get(i).getCaminhoFirebase());
+            Log.e("FIREBASE", "Caminho da Imagem no Firebase " + fileRef.toString());
+            if (fileRef != null) {
+                progressDialog = new ProgressDialog(this);
+                progressDialog.setTitle("Baixando Imagens.");
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                progressDialog.setMessage("Baixando " + (i = i + 1) + " de " + listaComunicacaos.size());
+                progressDialog.show();
 
+
+            }
 
         }
 
-        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener <Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                String url = uri.toString();
-                DOWNLOADFILES(Splash_Activity.this,
-                        "AreaTest",
-                        ".jpg",
-                        meuDiretorio.getAbsolutePath(),
-                        url);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-                Toast.makeText(getApplicationContext(), "Erro ao baixar Image:" + e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    public void DOWNLOADFILES(Context contexto,
-                              String nomeArquivo,
-                              String extencaoArquivo,
-                              String diretorioDestino,
-                              String url) {
-
-        DownloadManager downloadManager =
-                (DownloadManager) contexto.getSystemService(contexto.DOWNLOAD_SERVICE);
-
-        Uri uri = Uri.parse(url);
-
-        DownloadManager.Request request = new DownloadManager.Request(uri);
-
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalPublicDir(diretorioDestino, nomeArquivo + extencaoArquivo);
-
-        downloadManager.enqueue(request);
     }
 
     private boolean checkPermission() {
@@ -304,12 +283,12 @@ public class Splash_Activity extends AppCompatActivity {
         //se a listagem for igual a 0 é inserido 2 registros na tabela COMUNICACAO por default
         SPLASH_listComunic = comunicacaoDAO.listar();
         if (SPLASH_listComunic.size() == 0) {
-            listaComunicacao.setCaminhoFirebase("sentimento 1.png");
+            listaComunicacao.setCaminhoFirebase("sentimento_1.png");
             listaComunicacao.setTextoFalar("eu te amo");
             listaComunicacao.setTipoComunic("sentimentos");
             comunicacaoDAO.salvar(listaComunicacao);
 
-            listaComunicacao.setCaminhoFirebase("sentimento 2.jpg");
+            listaComunicacao.setCaminhoFirebase("sentimento_2.jpg");
             listaComunicacao.setTextoFalar("estou triste");
             listaComunicacao.setTipoComunic("sentimentos");
             comunicacaoDAO.salvar(listaComunicacao);

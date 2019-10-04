@@ -222,7 +222,7 @@ public class Cadastro_Activity extends AppCompatActivity {
                             finish();
                         } else {
                             Toast.makeText(getApplicationContext(), "ERRO AO EXCLUIR!!", Toast.LENGTH_LONG).show();
-                            Log.i("ERRO", "ERRO AO EXCLUIR!!");
+                            Log.i("ERRO", "ERRO AO EXCLUIR USUARIO DO CADASTRO!!");
 
                         }
                     }
