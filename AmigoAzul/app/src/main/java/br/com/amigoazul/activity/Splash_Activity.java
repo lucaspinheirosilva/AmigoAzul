@@ -23,10 +23,13 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -181,8 +184,30 @@ public class Splash_Activity extends AppCompatActivity {
                 progressDialog = new ProgressDialog(this);
                 progressDialog.setTitle("Baixando Imagens.");
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                 progressDialog.setMessage("Baixando " + (i = i + 1) + " de " + listaComunicacaos.size());
                 progressDialog.show();
+                try {
+                    File file = new File(meuDirSentimentos,listaComunicacaos.get(i).getCaminhoFirebase());
+                   fileRef.getFile(file).addOnSuccessListener(new OnSuccessListener <FileDownloadTask.TaskSnapshot>() {
+                       @Override
+                       public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                       }
+                   }).addOnFailureListener(new OnFailureListener() {
+                       @Override
+                       public void onFailure(@NonNull Exception e) {
+
+                       }
+                   })
+
+
+
+
+
+                }catch (Exception erro){
+
+                }
 
 
             }

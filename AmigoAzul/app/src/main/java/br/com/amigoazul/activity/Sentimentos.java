@@ -9,6 +9,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import br.com.amigoazul.R;
 
+//VER ISSO...PODE AJUDAR
+//TODO: https://github.com/nostra13/Android-Universal-Image-Loader
+
 public class Sentimentos extends AppCompatActivity {
 
     @Override
