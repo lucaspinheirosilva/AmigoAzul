@@ -52,6 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 " nivel_atividade INT NOT NULL, " +
                 " hora_atividade TEXT NOT NULL, " +
                 " nome_usuario TEXT NOT NULL, " +
+                " pontos_atividade DECIMAL, " +
                 " tipo_atividade TEXT NOT NULL) ";
 
         try {
