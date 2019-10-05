@@ -166,7 +166,6 @@ public class Splash_Activity extends AppCompatActivity {
         imageReference = FirebaseStorage.getInstance().getReference().child("Sentimentos");
 
 
-        /* fileRef = imageReference.child("TESTE.jpg");*/
         //todo:continuar apartir daqui
         ComunicacaoDAO comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
         List <ListaComunicacao> listaComunicacaos = new ArrayList <>();
@@ -199,7 +198,7 @@ public class Splash_Activity extends AppCompatActivity {
                        public void onFailure(@NonNull Exception e) {
 
                        }
-                   })
+                   });
 
 
 
