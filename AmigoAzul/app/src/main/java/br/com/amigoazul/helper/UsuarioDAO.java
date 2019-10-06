@@ -34,6 +34,7 @@ public class UsuarioDAO implements intfceUsuarioDAO {
         contentValues.put("nomeuser", lista_usuario.getNomeUsuario());
         contentValues.put("dataNasc", lista_usuario.getDataNasc());
         contentValues.put("grauTEA", lista_usuario.getGrauTEA());
+        contentValues.put("usuario_ativo", lista_usuario.getUsuarioAtivo());
         contentValues.put("email", lista_usuario.getEmail());
         contentValues.put("senha", lista_usuario.getSenha());
 
@@ -54,6 +55,7 @@ public class UsuarioDAO implements intfceUsuarioDAO {
         contentValues.put("nomeuser", lista_usuario.getNomeUsuario());
         contentValues.put("dataNasc", lista_usuario.getDataNasc());
         contentValues.put("grauTEA", lista_usuario.getGrauTEA());
+        contentValues.put("usuario_ativo", lista_usuario.getUsuarioAtivo());
         contentValues.put("email", lista_usuario.getEmail());
         contentValues.put("senha", lista_usuario.getSenha());
         try {
@@ -100,6 +102,7 @@ public class UsuarioDAO implements intfceUsuarioDAO {
 
             Long id = cursor.getLong(cursor.getColumnIndex("id"));
             String nomeuser = cursor.getString(cursor.getColumnIndex("nomeuser"));
+            String usuarioAtivo = cursor.getString(cursor.getColumnIndex("usuario_ativo"));
             String dataNasc = cursor.getString(cursor.getColumnIndex("dataNasc"));
             String GrauTea = cursor.getString(cursor.getColumnIndex("grauTEA"));
             String email = cursor.getString(cursor.getColumnIndex("email"));
@@ -109,6 +112,7 @@ public class UsuarioDAO implements intfceUsuarioDAO {
             listaUsuario.setNomeUsuario(nomeuser);
             listaUsuario.setDataNasc(dataNasc);
             listaUsuario.setGrauTEA(GrauTea);
+            listaUsuario.setUsuarioAtivo(usuarioAtivo);
             listaUsuario.setEmail(email);
             listaUsuario.setSenha(senha);
 

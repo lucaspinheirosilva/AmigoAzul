@@ -279,7 +279,7 @@ public class Splash_Activity extends AppCompatActivity {
                                 startActivity(i);
                                 finish();
                             } else {
-                                Toast.makeText(getApplicationContext(), "NADA ENCONTRADO", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "NENHUM USUARIO ENCONTRADO", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(Splash_Activity.this, Introducao_Activity.class);
                                 startActivity(i);
                                 // Fecha esta activity
@@ -324,12 +324,17 @@ public class Splash_Activity extends AppCompatActivity {
         if (SPLASH_listComunic.size() == 0) {
             listaComunicacao.setCaminhoFirebase("sentimento_1.png");
             listaComunicacao.setTextoFalar("eu te amo");
+            listaComunicacao.setTextoFalar_MontarFrase(null);
             listaComunicacao.setTipoComunic("sentimentos");
+            listaComunicacao.setExcluido("N");
             comunicacaoDAO.salvar(listaComunicacao);
 
             listaComunicacao.setCaminhoFirebase("sentimento_2.jpg");
             listaComunicacao.setTextoFalar("estou triste");
+            listaComunicacao.setTextoFalar_MontarFrase(null);
             listaComunicacao.setTipoComunic("sentimentos");
+            listaComunicacao.setExcluido("S");
+
             comunicacaoDAO.salvar(listaComunicacao);
             Toast.makeText(getApplicationContext(), "SENTIMENTOS INSERIDOS COM SUCESSO", Toast.LENGTH_SHORT).show();
         }

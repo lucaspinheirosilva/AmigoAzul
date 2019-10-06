@@ -16,6 +16,7 @@ public class ListaUsuario implements Serializable {
     String nomeUsuario;
     String dataNasc;
     String grauTEA;
+    String usuarioAtivo;
     String email;
     String senha;
 
@@ -49,6 +50,14 @@ public class ListaUsuario implements Serializable {
 
     public void setGrauTEA(String grauTEA) {
         this.grauTEA = grauTEA;
+    }
+
+    public String getUsuarioAtivo() {
+        return usuarioAtivo;
+    }
+
+    public void setUsuarioAtivo(String usuarioAtivo) {
+        this.usuarioAtivo = usuarioAtivo;
     }
 
     public String getEmail() {

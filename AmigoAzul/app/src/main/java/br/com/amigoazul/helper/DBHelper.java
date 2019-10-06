@@ -21,6 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static String TABELA_USUARIO = "tb_CAD_USUARIO";
     public static String TABELA_COMUNICACAO = "tb_CAD_COMUNICACAO";
     public static String TABELA_ATIVIDADE = "tb_CAD_ATIVIDADE";
+
     public DBHelper(Context context) {
         super(context, NOME_DB, null, VERSION);
     }
@@ -35,6 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 " nomeuser TEXT NOT NULL, " +
                 " dataNasc TEXT NOT NULL, " +
                 " grauTEA TEXT NOT NULL, " +
+                " usuario_ativo TEXT NOT NULL, " +
                 " email TEXT, " +
                 "senha TEXT ) ";//TODO:criar sistema de criptografia da senha
 
@@ -43,8 +45,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 " caminho_fire TEXT NOT NULL, " +
                 " tipo_comunic TEXT NOT NULL, " +
-                " tipo_falar_montarfrase TEXT, " +
-                " texto_falar TEXT) ";
+                " texto_falar_montarfrase TEXT, " +
+                " texto_falar TEXT, " +
+                " excluido TEXT) ";
 
         //CRIAR TABELA DE ATIVIDADES*/
         String sql_cadAtividades = "CREATE TABLE IF NOT EXISTS " + TABELA_ATIVIDADE
@@ -52,9 +55,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 " nome_atividade TEXT NOT NULL, " +
                 " nivel_atividade INT NOT NULL, " +
                 " tempo_jogado TEXT NOT NULL, " +
-                " nome_usuario TEXT NOT NULL, " +
                 " pontos_atividade DECIMAL, " +
-                " tipo_atividade TEXT NOT NULL) ";
+                " tipo_atividade TEXT NOT NULL, " +
+                " FK_id_usuario INT NOT NULL CONSTRAINT group_id REFERENCES " + TABELA_USUARIO + " (id)) ";
 
         try {
             //Executa o comando SQL e exibe logs no console do ANDROID STUDIO

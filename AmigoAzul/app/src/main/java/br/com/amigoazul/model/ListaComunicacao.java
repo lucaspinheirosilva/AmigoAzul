@@ -7,10 +7,12 @@ import java.io.Serializable;
  */
 public class ListaComunicacao implements Serializable {
 
-    Long id;
-    String caminhoFirebase;
-    String tipoComunic;
-    String textoFalar;
+    private Long id;
+    private String caminhoFirebase;
+    private String tipoComunic;
+    private String textoFalar;
+    private String textoFalar_MontarFrase;
+    private String excluido;
 
     public Long getId() {
         return id;
@@ -44,4 +46,19 @@ public class ListaComunicacao implements Serializable {
         this.textoFalar = textoFalar;
     }
 
+    public String getTextoFalar_MontarFrase() {
+        return textoFalar_MontarFrase;
+    }
+
+    public void setTextoFalar_MontarFrase(String textoFalar_MontarFrase) {
+        this.textoFalar_MontarFrase = textoFalar_MontarFrase;
+    }
+
+    public String getExcluido() {
+        return excluido;
+    }
+
+    public void setExcluido(String excluido) {
+        this.excluido = excluido;
+    }
 }
