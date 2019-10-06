@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,7 +29,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -187,10 +190,26 @@ public class Splash_Activity extends AppCompatActivity {
                 progressDialog.setMessage("Baixando " + (i = i + 1) + " de " + listaComunicacaos.size());
                 progressDialog.show();
                 try {
-                    File file = new File(meuDirSentimentos,listaComunicacaos.get(i).getCaminhoFirebase());
+                    final File file = new File(meuDirSentimentos,listaComunicacaos.get(i).getCaminhoFirebase());
                    fileRef.getFile(file).addOnSuccessListener(new OnSuccessListener <FileDownloadTask.TaskSnapshot>() {
                        @Override
                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                           //TODO: ANALIZAR ESSE TRECHO E IMPLEMENTAR NO DOWNLOAD DAS IMAGENS
+                           //https://www.youtube.com/watch?v=SmXGlv7QEO0
+                         /* public void downloadFile(Context context,String arquivoNome,String extensaoArquivo,String diretorio,String url){
+                               DownloadManager downloadmanager =(DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                               Uri uri = Uri.parse(url);
+                               DownloadManager.Request request = new DownloadManager.Request(uri);
+
+                               request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                               request.setDestinationInExternalFilesDir(context,diretorio,null);
+                               downloadmanager.enqueue(request);
+
+                           }*/
+
+
+
 
                        }
                    }).addOnFailureListener(new OnFailureListener() {
@@ -199,10 +218,6 @@ public class Splash_Activity extends AppCompatActivity {
 
                        }
                    });
-
-
-
-
 
                 }catch (Exception erro){
 
@@ -320,6 +335,7 @@ public class Splash_Activity extends AppCompatActivity {
         }
 
     }
+
 }
 
 

@@ -1,0 +1,20 @@
+SELECT * from tb_CAD_ATIVIDADE;
+SELECT * FROM tb_CAD_COMUNICACAO;
+SELECT * from tb_CAD_USUARIO;
+
+INSERT INTO tb_CAD_ATIVIDADE VALUES (1,"memoria com cores",1,05,"Mariana",85,"memoria");
+INSERT INTO tb_CAD_ATIVIDADE VALUES (2,"memoria 2x2",2,15,"Mariana",55,"memoria");
+INSERT INTO tb_CAD_ATIVIDADE VALUES (3,"memoria 4x4",3,10,"Mariana",95,"memoria");
+INSERT INTO tb_CAD_ATIVIDADE VALUES (4,"memoria 6x6",4,08,"Mariana",25,"memoria");
+
+INSERT INTO tb_CAD_USUARIO VALUES (1,"Maria Aparecida","24/02/1991",2,"sebastiao@gmail.com","seba123");
+INSERT INTO tb_CAD_USUARIO VALUES (2,"Jose Padilha","02/06/1999",1,NULL,NULL);
+INSERT INTO tb_CAD_USUARIO VALUES (3,"Miguel Alencar","09/01/1992",3,NULL,NULL);
+INSERT INTO tb_CAD_USUARIO VALUES (4,"Alisson Braga","20/10/1995",3,"maria_lourdes@hotmail.com","malu2019");
+INSERT INTO tb_CAD_USUARIO VALUES (5,"Josias de Oliveira","30/12/1994",2,NULL,NULL);
+
+INSERT INTO tb_CAD_COMUNICACAO VALUES (3,"vovo_1.jpg","sentimentos",NULL,"aonde esta a vovó");
+INSERT INTO tb_CAD_COMUNICACAO VALUES (4,"fome_55.jpg","sentimentos",NULL,"eu estou com fome");
+INSERT INTO tb_CAD_COMUNICACAO VALUES (5,"eu_255.jpg","montar frase","eu",NULL);
+INSERT INTO tb_CAD_COMUNICACAO VALUES (6,"brincar_15125.jpg","montar frase","brincar",NULL);
+INSERT INTO tb_CAD_COMUNICACAO VALUES (7,"bola_84654.jpg","objetos",NULL,"eu quero brincar com a bola");

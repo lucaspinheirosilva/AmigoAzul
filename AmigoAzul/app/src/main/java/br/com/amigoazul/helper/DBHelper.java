@@ -43,14 +43,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 " caminho_fire TEXT NOT NULL, " +
                 " tipo_comunic TEXT NOT NULL, " +
-                " texto_falar TEXT NOT NULL) ";
+                " tipo_falar_montarfrase TEXT, " +
+                " texto_falar TEXT) ";
 
         //CRIAR TABELA DE ATIVIDADES*/
         String sql_cadAtividades = "CREATE TABLE IF NOT EXISTS " + TABELA_ATIVIDADE
                 + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 " nome_atividade TEXT NOT NULL, " +
                 " nivel_atividade INT NOT NULL, " +
-                " hora_atividade TEXT NOT NULL, " +
+                " tempo_jogado TEXT NOT NULL, " +
                 " nome_usuario TEXT NOT NULL, " +
                 " pontos_atividade DECIMAL, " +
                 " tipo_atividade TEXT NOT NULL) ";
