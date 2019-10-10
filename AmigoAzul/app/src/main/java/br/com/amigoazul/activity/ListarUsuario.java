@@ -30,7 +30,7 @@ public class ListarUsuario extends AppCompatActivity {
     Button BtnNovoUsuario;
     ListaUsuario usuarioselecionado;
     UsuarioDAO usuarioDAO;
-    List <ListaUsuario> listUsuario = new ArrayList <>();
+    List <ListaUsuario> listUsuario = new ArrayList();
 
 
     @Override
