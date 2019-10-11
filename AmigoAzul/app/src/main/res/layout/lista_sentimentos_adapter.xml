@@ -4,11 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/imgbtn_sentim_ID"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/img_atividade" />
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/arrasta_solta" />
 </LinearLayout>
 
