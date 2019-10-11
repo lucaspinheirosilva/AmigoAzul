@@ -2,7 +2,6 @@ package br.com.amigoazul.activity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.amigoazul.R;
-import br.com.amigoazul.adapter.ListarComunicacaoAdapter;
+import br.com.amigoazul.adapter.ListarSentimentosAdapter;
 
 //VER ISSO...PODE AJUDAR
 //TODO: https://github.com/nostra13/Android-Universal-Image-Loader
@@ -30,7 +29,7 @@ public class Sentimentos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();//esconder a actionBar
         setContentView(R.layout.sentimentos);
-        DOWNLOAD_TESTE();
+        CARREGAR_FOTOS_SENTIMENTOS();
 
 
     }
@@ -39,18 +38,16 @@ public class Sentimentos extends AppCompatActivity {
     //https://www.tutorialspoint.com/android/android_camera.html
     //https://pt.stackoverflow.com/questions/119792/carregar-imageview-usando-caminho-da-imagem
     //https://stackoverflow.com/questions/8646984/how-to-list-files-in-an-android-directory
-    public void DOWNLOAD_TESTE() {
+    public void CARREGAR_FOTOS_SENTIMENTOS() {
         File diretorio = new File(splash_activity.meuDirSentimentos.getAbsolutePath());
         if (diretorio.exists()) {
-            Log.e("TESTE", "a pasta é " + diretorio.getAbsolutePath());
+            Log.e("SENTIMENTOS", "a pasta é " + diretorio.getAbsolutePath());
             File[] files = diretorio.listFiles();
-            Log.e("TESTE", "total de arquivos no diretorio: " + files.length);
-            File imagemFile;
+            Log.e("SENTIMENTOS", "total de arquivos no diretorio: " + files.length);
             listaArquivos.clear();
 
             for (int i = 0; i < files.length; i++) {
-                Log.e("TESTE", "diretorio completo: " + diretorio + "/" + files[i].getName());
-                imagemFile = new File(diretorio.getAbsolutePath() + "/", files[i].getName());
+                Log.e("SENTIMENTOS", "diretorio completo: " + diretorio + "/" + files[i].getName());
                 listaArquivos.add(files[i]);
             }
             //https://acomputerengineer.wordpress.com/2018/04/15/display-image-grid-in-recyclerview-in-android/
@@ -59,13 +56,8 @@ public class Sentimentos extends AppCompatActivity {
             StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(sglm);
 
-            ListarComunicacaoAdapter listarComunicacaoAdapter = new ListarComunicacaoAdapter(Sentimentos.this,listaArquivos);
-            recyclerView.setAdapter(listarComunicacaoAdapter);
-
-
-
-            /*Picasso.with(context).load(new File(YOUR_FILE_PATH)).into(imageView);*/
-
+            ListarSentimentosAdapter listarSentimentosAdapter = new ListarSentimentosAdapter(Sentimentos.this,listaArquivos);
+            recyclerView.setAdapter(listarSentimentosAdapter);
 
         }
 
