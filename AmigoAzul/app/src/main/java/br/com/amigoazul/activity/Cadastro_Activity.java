@@ -143,6 +143,7 @@ public class Cadastro_Activity extends AppCompatActivity {
 
                             listaUsuario.setEmail(email.getText().toString());
                             listaUsuario.setSenha(senha.getText().toString());
+                            listaUsuario.setUsuarioAtivo("S");
 
                             usuarioDAO.salvar(listaUsuario);
 

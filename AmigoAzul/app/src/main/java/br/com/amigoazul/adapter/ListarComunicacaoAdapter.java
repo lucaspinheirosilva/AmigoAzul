@@ -1,5 +1,6 @@
 package br.com.amigoazul.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.File;
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import br.com.amigoazul.R;
@@ -17,49 +19,54 @@ import br.com.amigoazul.model.ListaUsuario;
 /**
  * Criado por Lucas Pinheiro on 12/09/2019.
  */
-public class ListarComunicacaoAdapter extends RecyclerView.Adapter<ListarComunicacaoAdapter.MyViewHolder> {
+public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.GridItemViewHolder> {
 
-    List <File> listaComunicacao;
+    private List<String> imageList;
 
+    private Context c;
 
-    public ListarComunicacaoAdapter(List<File> listaComunicacao) {
-        this.listaComunicacao = listaComunicacao;
+    public class GridItemViewHolder extends RecyclerView.ViewHolder {
+        SquareImageView siv;
 
+        public GridItemViewHolder(View view) {
+            super(view);
+            siv = view.findViewById(R.id.rcrtvw_listarComunic);
+        }
     }
 
-    @NonNull
-    @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-
-        View itemLista = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.lista_sentimentos_adapter,viewGroup,false);
-        return new MyViewHolder(itemLista);
+    public ImageGridAdapter(Context c, List imageList) {
+        this.c = c;
+        this.imageList = imageList;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+    public GridItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_sentimentos_adapter, parent, false);
 
-        ListaUsuario listaUsuario = listaUsuarios.get(i);
-        String nomeUsuarioListagem = listaUsuario.getNomeUsuario()+" -- "+listaUsuario.getDataNasc()+" -- "+listaUsuario.getGrauTEA();
-        myViewHolder.txtvwListaUser.setText(nomeUsuarioListagem);
+        return new GridItemViewHolder(itemView);
+    }
 
+    @Override
+    public void onBindViewHolder(GridItemViewHolder holder, int position) {
+        final String path = imageList.get(position);
+
+        Picasso.get()
+                .load(path)
+                .resize(250, 250)
+                .centerCrop()
+                .into(holder.siv);
+
+        holder.siv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //handle click event on image
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return this.listaUsuarios.size();
+        return imageList.size();
     }
 
-
-    public  class MyViewHolder extends RecyclerView.ViewHolder{
-
-        TextView txtvwListaUser;
-
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            txtvwListaUser = itemView.findViewById(R.id.txtListaUser);
-        }
-    }
-
-}
+}}

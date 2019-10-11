@@ -1,14 +1,9 @@
 package br.com.amigoazul.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,39 +19,47 @@ public class Sentimentos extends AppCompatActivity {
     //instanciar outras classes
     Splash_Activity splash_activity = new Splash_Activity();
 
-    List<File> listaArquivos = new ArrayList<>();
+    List <String> listaArquivos = new ArrayList <>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();//esconder a actionBar
         setContentView(R.layout.sentimentos);
-        //TODO: tiras as imagens e colocar BOTOES e adicionar a FALA a eles
-
-
+        DOWNLOAD_TESTE();
 
 
     }
+
     //https://www.viralandroid.com/2016/02/android-listview-with-image-and-text.html
-    //https://www.tutorialspoint.com/android/android_camera.htm]
+    //https://www.tutorialspoint.com/android/android_camera.html
     //https://pt.stackoverflow.com/questions/119792/carregar-imageview-usando-caminho-da-imagem
     //https://stackoverflow.com/questions/8646984/how-to-list-files-in-an-android-directory
     public void DOWNLOAD_TESTE() {
-        File imgFile = new File(splash_activity.meuDirSentimentos.getAbsolutePath());
-        if (imgFile.exists()) {
-            Log.e("TESTE", "a pasta é " + imgFile.getAbsolutePath());
-            File[] files = imgFile.listFiles();
-            Log.e("TESTE", "o tamanho é " + files.length);
+        File diretorio = new File(splash_activity.meuDirSentimentos.getAbsolutePath());
+        if (diretorio.exists()) {
+            Log.e("TESTE", "a pasta é " + diretorio.getAbsolutePath());
+            File[] files = diretorio.listFiles();
+            Log.e("TESTE", "total de arquivos no diretorio: " + files.length);
+            File imagemFile;
             listaArquivos.clear();
 
             for (int i = 0; i < files.length; i++) {
-                Log.e("TESTE", "Nome do ARQUIVO " + files[i].getName());
-                listaArquivos.add(files[i]);
+                Log.e("TESTE", "diretorio completo: " + diretorio + "/" + files[i].getName());
+                imagemFile = new File(diretorio.getAbsolutePath() + "/", files[i].getName());
+
+
+                listaArquivos.add(imagemFile.getAbsolutePath());
+
+//https://acomputerengineer.wordpress.com/2018/04/15/display-image-grid-in-recyclerview-in-android/
+
+
+                /*Picasso.with(context).load(new File(YOUR_FILE_PATH)).into(imageView);*/
+
             }
 
+
         }
-        SimpleAdapter simpleAdapter = new SimpleAdapter(getBaseContext(), lis, R.layout.lista_sentimentos_adapter, from, to);
-        ListView androidListView = (ListView) findViewById(R.id.list_view);
-        androidListView.setAdapter(simpleAdapter);
+
     }
 }
