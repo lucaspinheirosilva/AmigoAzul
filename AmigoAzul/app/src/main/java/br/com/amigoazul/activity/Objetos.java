@@ -51,7 +51,7 @@ public class Objetos extends AppCompatActivity {
                 listaArquivos.add(files[i]);
             }
             //https://acomputerengineer.wordpress.com/2018/04/15/display-image-grid-in-recyclerview-in-android/
-            RecyclerView recyclerView = findViewById(R.id.rcrtvw_listarComunic);
+            RecyclerView recyclerView = findViewById(R.id.rcrtvw_listarObjetos);
 
             StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(sglm);

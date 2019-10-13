@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imgbtn_sentim_ID"
+        android:id="@+id/imgbtn_objetos_ID"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_margin="5dp"

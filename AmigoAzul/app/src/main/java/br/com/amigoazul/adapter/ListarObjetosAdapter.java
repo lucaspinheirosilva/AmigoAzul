@@ -29,7 +29,7 @@ public class ListarObjetosAdapter extends RecyclerView.Adapter<ListarObjetosAdap
 
         public ListarObjetosAdapterViewHolder(View view) {
             super(view);
-            imageViewObjetos = view.findViewById(R.id.imgbtn_sentim_ID);
+            imageViewObjetos = view.findViewById(R.id.imgbtn_objetos_ID);
         }
     }
 
@@ -40,7 +40,7 @@ public class ListarObjetosAdapter extends RecyclerView.Adapter<ListarObjetosAdap
 
     @Override
     public ListarObjetosAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_sentimentos_adapter, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_objetos_adapter, parent, false);
 
         return new ListarObjetosAdapterViewHolder(itemView);
     }
@@ -53,8 +53,6 @@ public class ListarObjetosAdapter extends RecyclerView.Adapter<ListarObjetosAdap
 
         Picasso.get()
                 .load(path)
-                //.resize(100,100)
-              //  .centerCrop()
                 .into(holder.imageViewObjetos);
 
         holder.imageViewObjetos.setOnClickListener(new View.OnClickListener() {

@@ -44,6 +44,8 @@ import br.com.amigoazul.model.ListaUsuario;
 /**PERMISSOES DO ANDROID**/
 // https://www.androidauthority.com/android-app-permissions-explained-642452/
 // https://developer.android.com/training/permissions/requesting?hl=pt-br
+    /**MULTIPLAS PERMISSOES*/
+    //https://www.youtube.com/watch?v=SV-J9JWLEDA
 public class Splash_Activity extends AppCompatActivity {
 
     private static int SPLASH_TIME_OUT = 2000;
@@ -337,5 +339,4 @@ public class Splash_Activity extends AppCompatActivity {
     }
 
 }
-
 

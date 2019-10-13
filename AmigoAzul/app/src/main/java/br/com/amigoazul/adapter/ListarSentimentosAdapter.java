@@ -29,7 +29,7 @@ public class ListarSentimentosAdapter extends RecyclerView.Adapter<ListarSentime
 
         public ListarComunicacaoAdapterViewHolder(View view) {
             super(view);
-            imageViewSentimentos = view.findViewById(R.id.imgbtn_sentim_ID);
+            imageViewSentimentos = view.findViewById(R.id.imgbtn_sentimentos_ID);
         }
     }
 
