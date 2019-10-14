@@ -11,6 +11,8 @@
         android:layout_margin="5dp"
         android:layout_weight="1"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/arrasta_solta" />
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/efeito_ripple"/>
 </LinearLayout>
 

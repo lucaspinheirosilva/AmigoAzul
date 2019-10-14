@@ -1,11 +1,16 @@
 package br.com.amigoazul.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +19,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,6 +39,8 @@ public class Sentimentos extends AppCompatActivity {
     Splash_Activity splash_activity = new Splash_Activity();
     SALVAR_FOTO salvar_foto = new SALVAR_FOTO();
 
+    AlertDialog alerta;
+
     List <File> listaArquivos = new ArrayList <>();
 
     @Override
@@ -42,15 +48,19 @@ public class Sentimentos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();//esconder a actionBar
         setContentView(R.layout.sentimentos);
+
+        //setar variaveis com IDs
+        FAB_camera_Sentimentos = findViewById(R.id.fab_cameraSentimentos);
+
         CARREGAR_FOTOS_SENTIMENTOS();
 
-        FAB_camera_Sentimentos = findViewById(R.id.fab_cameraSentimentos);
+
 
 
         FAB_camera_Sentimentos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TIRAR_FOTO();
+                TIRAR_FOTO_ou_GALERIA();
 
             }
         });
@@ -86,13 +96,53 @@ public class Sentimentos extends AppCompatActivity {
         }
 
     }
+
     /**
      * TIRAR FOTO CAMERA CELULAR
      */
     //https://www.youtube.com/watch?v=1oyvdqc_QZg
-    public void TIRAR_FOTO() {
-        Intent imageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(imageIntent, 1);
+    public void TIRAR_FOTO_ou_GALERIA() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(Sentimentos.this);
+
+       /*View mView = getLayoutInflater().inflate(R.layout.dialog_camera_galeria, null);
+
+        ImageButton img_btn_camera = mView.findViewById(R.id.imgbtn_camera);
+        ImageButton img_btn_galeria = mView.findViewById(R.id.imgbtn_galeria);
+
+        img_btn_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent imageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(imageIntent, 1);
+            }
+        });
+        img_btn_galeria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });*/ //arrumar depois
+
+        builder.setTitle("ESCOLHA");
+        builder.setMessage("selecione entre a CAMERA ou a GALERIA para escolher uma foto para adicionar ao AMIGO AZUL");
+        builder.setPositiveButton("CAMERA", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent imageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(imageIntent, 1);
+            }
+        });
+        builder.setNegativeButton("GALERIA", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intentPegaFoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                startActivityForResult(intentPegaFoto,11);
+            }
+        });
+
+        alerta=builder.create();
+        alerta.show();
     }
 
 
@@ -104,15 +154,19 @@ public class Sentimentos extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK) {
             Bundle extra = data.getExtras();
             Bitmap imagem = (Bitmap) extra.get("data");
-            salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, "AZ-"+dataFormatada+".JPG",splash_activity.meuDirSentimentos.getAbsolutePath());
-
+            salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, "AZ-" + dataFormatada + ".JPG", splash_activity.meuDirSentimentos.getAbsolutePath());
 
         }
+        if (requestCode==11){
+            Uri extra = data.getData();
+            Bitmap imagem = BitmapFactory.decodeFile(String.valueOf(extra));
+            salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, "AZ-" + dataFormatada + ".JPG", splash_activity.meuDirSentimentos.getAbsolutePath());
+
+        }
+
         super.onActivityResult(requestCode, resultCode, data);
 
     }
-
-
 
     public void onResume() {
         CARREGAR_FOTOS_SENTIMENTOS();
