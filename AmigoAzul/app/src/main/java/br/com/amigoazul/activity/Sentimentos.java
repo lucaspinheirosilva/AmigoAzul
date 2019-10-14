@@ -3,6 +3,7 @@ package br.com.amigoazul.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -151,16 +153,35 @@ public class Sentimentos extends AppCompatActivity {
         Date diaData = new Date();
         String dataFormatada = formataData.format(diaData);
 
-        if (requestCode == 1 && resultCode == RESULT_OK) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {//tirar foto
             Bundle extra = data.getExtras();
             Bitmap imagem = (Bitmap) extra.get("data");
             salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, "AZ-" + dataFormatada + ".JPG", splash_activity.meuDirSentimentos.getAbsolutePath());
 
         }
-        if (requestCode==11){
+        if (requestCode==11){//abrir galeria
             Uri extra = data.getData();
-            Bitmap imagem = BitmapFactory.decodeFile(String.valueOf(extra));
-            salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, "AZ-" + dataFormatada + ".JPG", splash_activity.meuDirSentimentos.getAbsolutePath());
+            Bitmap imagem = BitmapFactory.decodeFile(extra.getPath());
+            File files = new File(extra.getPath());
+
+            String s = files.getAbsolutePath();
+            String result = s.substring(s.lastIndexOf(System.getProperty("file.separator"))+1,s.length());
+            System.out.println(result);
+            Log.e("TESTESSSS",result);
+
+
+           /* String caminhoCompleto = files.getAbsolutePath();
+            int indiceBarra = caminhoCompleto.lastIndexOf("/") + 1;
+            if (indiceBarra == 0) {
+                indiceBarra = caminhoCompleto.lastIndexOf("/") + 1;
+            }
+            // Basta pegar o substring com o caminho da pasta.
+            String caminhoPasta = caminhoCompleto.substring(0, indiceBarra);
+            Log.e("TESTE",caminhoPasta);*/ //pegar apenas no nome do caminho sem o nome do arquivo
+
+            //salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, "AZ-" + dataFormatada + ".JPG", splash_activity.meuDirSentimentos.getAbsolutePath());
+
+                salvar_foto.COPIAR_GALERIA(files.getAbsolutePath(),result,splash_activity.meuDirSentimentos.toString());
 
         }
 
