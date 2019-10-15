@@ -30,22 +30,7 @@ import br.com.amigoazul.helper.UsuarioDAO;
 import br.com.amigoazul.model.ListaComunicacao;
 import br.com.amigoazul.model.ListaUsuario;
 
-/**
- * TUTORIAL TELA SE SPLASHT
- */
-//https://www.devmedia.com.br/como-criar-telas-de-abertura-no-android/33256
 
-/**TUTORIAL DOWNLOAD ARQUIVO FIREBASE P/ CELULAR*/
-// https://www.youtube.com/watch?v=SmXGlv7QEO0
-// https://grokonez.com/android/firebase-storage-get-list-files-display-image-firebase-ui-database-android
-// https://grokonez.com/android/firebase-storage-download-files-to-memory-local-file-android
-// https://firebase.google.com/docs/storage/android/list-files
-
-/**PERMISSOES DO ANDROID**/
-// https://www.androidauthority.com/android-app-permissions-explained-642452/
-// https://developer.android.com/training/permissions/requesting?hl=pt-br
-    /**MULTIPLAS PERMISSOES*/
-    //https://www.youtube.com/watch?v=SV-J9JWLEDA
 public class Splash_Activity extends AppCompatActivity {
 
     private static int SPLASH_TIME_OUT = 2000;

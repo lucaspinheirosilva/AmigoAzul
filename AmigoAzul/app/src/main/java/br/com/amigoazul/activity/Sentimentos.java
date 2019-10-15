@@ -3,15 +3,13 @@ package br.com.amigoazul.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,9 +28,6 @@ import br.com.amigoazul.R;
 import br.com.amigoazul.adapter.ListarSentimentosAdapter;
 import br.com.amigoazul.helper.SALVAR_FOTO;
 
-//VER ISSO...PODE AJUDAR
-//TODO: https://github.com/nostra13/Android-Universal-Image-Loader
-
 public class Sentimentos extends AppCompatActivity {
 
     FloatingActionButton FAB_camera_Sentimentos;
@@ -41,9 +36,14 @@ public class Sentimentos extends AppCompatActivity {
     Splash_Activity splash_activity = new Splash_Activity();
     SALVAR_FOTO salvar_foto = new SALVAR_FOTO();
 
+
     AlertDialog alerta;
 
     List <File> listaArquivos = new ArrayList <>();
+
+    SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy-HH:mm:ss");
+    Date diaData = new Date();
+    String dataFormatada = formataData.format(diaData);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +57,6 @@ public class Sentimentos extends AppCompatActivity {
         CARREGAR_FOTOS_SENTIMENTOS();
 
 
-
-
         FAB_camera_Sentimentos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,10 +68,7 @@ public class Sentimentos extends AppCompatActivity {
 
     }
 
-    //https://www.viralandroid.com/2016/02/android-listview-with-image-and-text.html
-    //https://www.tutorialspoint.com/android/android_camera.html
-    //https://pt.stackoverflow.com/questions/119792/carregar-imageview-usando-caminho-da-imagem
-    //https://stackoverflow.com/questions/8646984/how-to-list-files-in-an-android-directory
+
     public void CARREGAR_FOTOS_SENTIMENTOS() {
         File diretorio = new File(splash_activity.meuDirSentimentos.getAbsolutePath());
         if (diretorio.exists()) {
@@ -83,10 +78,10 @@ public class Sentimentos extends AppCompatActivity {
             listaArquivos.clear();
 
             for (int i = 0; i < files.length; i++) {
-                Log.e("SENTIMENTOS", "diretorio completo: " + diretorio + "/" + files[i].getName());
+                Log.e("SENTIMENTOS *****", (i+1) + "**** ====> diretorio completo: " + diretorio + "/" + files[i].getName());
                 listaArquivos.add(files[i]);
             }
-            //https://acomputerengineer.wordpress.com/2018/04/15/display-image-grid-in-recyclerview-in-android/
+
             RecyclerView recyclerView = findViewById(R.id.rcrtvw_listarComunic);
 
             StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
@@ -94,15 +89,10 @@ public class Sentimentos extends AppCompatActivity {
 
             ListarSentimentosAdapter listarSentimentosAdapter = new ListarSentimentosAdapter(Sentimentos.this, listaArquivos);
             recyclerView.setAdapter(listarSentimentosAdapter);
-
         }
-
     }
 
-    /**
-     * TIRAR FOTO CAMERA CELULAR
-     */
-    //https://www.youtube.com/watch?v=1oyvdqc_QZg
+
     public void TIRAR_FOTO_ou_GALERIA() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Sentimentos.this);
@@ -126,8 +116,8 @@ public class Sentimentos extends AppCompatActivity {
             }
         });*/ //arrumar depois
 
-        builder.setTitle("ESCOLHA");
-        builder.setMessage("selecione entre a CAMERA ou a GALERIA para escolher uma foto para adicionar ao AMIGO AZUL");
+        builder.setTitle("SENTIMENTOS");
+        builder.setMessage("selecione a CAMERA ou a GALERIA para escolher uma foto para adicionar ao AMIGO AZUL");
         builder.setPositiveButton("CAMERA", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -138,37 +128,57 @@ public class Sentimentos extends AppCompatActivity {
         builder.setNegativeButton("GALERIA", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intentPegaFoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                startActivityForResult(intentPegaFoto,11);
+                Intent intentPegaFoto = new Intent(Intent.ACTION_PICK);
+                intentPegaFoto.setType("image/*");
+                startActivityForResult(intentPegaFoto, 11);
             }
         });
 
-        alerta=builder.create();
+        alerta = builder.create();
         alerta.show();
     }
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy-HH:mm:ss");
-        Date diaData = new Date();
-        String dataFormatada = formataData.format(diaData);
+        super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1 && resultCode == RESULT_OK) {//tirar foto
             Bundle extra = data.getExtras();
             Bitmap imagem = (Bitmap) extra.get("data");
             salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, "AZ-" + dataFormatada + ".JPG", splash_activity.meuDirSentimentos.getAbsolutePath());
-
+            CARREGAR_FOTOS_SENTIMENTOS();
         }
-        if (requestCode==11){//abrir galeria
-            Uri extra = data.getData();
-            Bitmap imagem = BitmapFactory.decodeFile(extra.getPath());
-            File files = new File(extra.getPath());
 
-            String s = files.getAbsolutePath();
+
+        if (resultCode == RESULT_OK && requestCode == 11) { //foto da galeria
+            //Pegamos a URI da imagem...
+            Uri uriSelecionada = data.getData();
+            // criamos um File com o diretório selecionado!
+            final File selecionada = new File(salvar_foto.getRealPathFromURI(uriSelecionada, getApplicationContext()));
+            // Caso não exista o doretório, vamos criar!
+            final File rootPath = new File(splash_activity.meuDirSentimentos.getAbsolutePath());
+            if (!rootPath.exists()) {
+                rootPath.mkdirs();
+            }
+
+            // Criamos um file, com o no DIRETORIO, com o mesmo nome da anterior
+            final File novaImagem = new File(rootPath, "AZ-" + dataFormatada + ".JPG");
+
+            //Movemos o arquivo!
+            try {
+                salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
+                Toast.makeText(getApplicationContext(), "Imagem movida com sucesso!", Toast.LENGTH_SHORT).show();
+                CARREGAR_FOTOS_SENTIMENTOS();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+            /*String s = files.getAbsolutePath();
             String result = s.substring(s.lastIndexOf(System.getProperty("file.separator"))+1,s.length());
             System.out.println(result);
-            Log.e("TESTESSSS",result);
-
+            Log.e("TESTESSSS",result);*///pegar apenas o nome do arquivo sem o nome do diretorio
 
            /* String caminhoCompleto = files.getAbsolutePath();
             int indiceBarra = caminhoCompleto.lastIndexOf("/") + 1;
@@ -178,25 +188,7 @@ public class Sentimentos extends AppCompatActivity {
             // Basta pegar o substring com o caminho da pasta.
             String caminhoPasta = caminhoCompleto.substring(0, indiceBarra);
             Log.e("TESTE",caminhoPasta);*/ //pegar apenas no nome do caminho sem o nome do arquivo
-
-            //salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, "AZ-" + dataFormatada + ".JPG", splash_activity.meuDirSentimentos.getAbsolutePath());
-
-                salvar_foto.COPIAR_GALERIA(files.getAbsolutePath(),result,splash_activity.meuDirSentimentos.toString());
-
-        }
-
-        super.onActivityResult(requestCode, resultCode, data);
-
     }
 
-    public void onResume() {
-        CARREGAR_FOTOS_SENTIMENTOS();
-        super.onResume();
-    }
 
-    @Override
-    public void onRestart() {
-        CARREGAR_FOTOS_SENTIMENTOS();
-        super.onRestart();
-    }
 }
