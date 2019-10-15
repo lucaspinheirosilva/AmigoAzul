@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,6 +28,8 @@ import java.util.List;
 import br.com.amigoazul.R;
 import br.com.amigoazul.adapter.ListarObjetosAdapter;
 import br.com.amigoazul.helper.SALVAR_FOTO;
+import io.github.yavski.fabspeeddial.FabSpeedDial;
+import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
 
 public class Objetos extends AppCompatActivity {
     FloatingActionButton FAB_cameraObjetos;
@@ -48,16 +51,24 @@ public class Objetos extends AppCompatActivity {
         getSupportActionBar().hide();//esconder a actionBar
         setContentView(R.layout.objetos);
 
-        FAB_cameraObjetos = findViewById(R.id.fab_cameraObjetos);
+        FabSpeedDial FAB_camera_Objetos = (FabSpeedDial) findViewById(R.id.fab_speed_dial_objetos);
         CARREGAR_FOTOS_OBJETOS();
 
-        FAB_cameraObjetos.setOnClickListener(new View.OnClickListener() {
+        //FloatActionButton para menu de SENTIMENTOS
+        FAB_camera_Objetos.setMenuListener(new SimpleMenuListenerAdapter() {
             @Override
-            public void onClick(View v) {
-                TIRAR_FOTO_ou_GALERIA();
+            public boolean onMenuItemSelected(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.FAB_acao_addImagem:
+                        TIRAR_FOTO_ou_GALERIA();
+                        break;
+                    case R.id.FAB_acao_excluirImagem:
+                        Toast.makeText(getApplicationContext(), "EXCLUIR IMAGEM", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return false;
             }
         });
-
     }
 
 
@@ -73,7 +84,7 @@ public class Objetos extends AppCompatActivity {
             Log.e("OBJETOS", "total de arquivos no diretorio: " + files.length);
             listaArquivos.clear();
             for (int i = 0; i < files.length; i++) {
-                Log.e("OBJETOS *****", (i+1) + "**** ====> diretorio completo: " + diretorio + "/" + files[i].getName());
+                Log.e("OBJETOS *****", (i + 1) + "**** ====> diretorio completo: " + diretorio + "/" + files[i].getName());
                 listaArquivos.add(files[i]);
             }
             //https://acomputerengineer.wordpress.com/2018/04/15/display-image-grid-in-recyclerview-in-android/
@@ -96,34 +107,13 @@ public class Objetos extends AppCompatActivity {
     public void TIRAR_FOTO_ou_GALERIA() {
         AlertDialog alerta;
         AlertDialog.Builder builder = new AlertDialog.Builder(Objetos.this);
-        /*View mView = getLayoutInflater().inflate(R.layout.dialog_camera_galeria, null);
-
-        ImageButton img_btn_camera = mView.findViewById(R.id.imgbtn_camera);
-        ImageButton img_btn_galeria = mView.findViewById(R.id.imgbtn_galeria);
-
-        img_btn_camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent imageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(imageIntent, 2);
-            }
-        });
-        img_btn_galeria.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentPegaFoto = new Intent(Intent.ACTION_PICK);
-                intentPegaFoto.setType("image/*");
-                startActivityForResult(intentPegaFoto, 22);
-            }
-        });*/ //arrumar depois
-
         builder.setTitle("OBJETOS ");
         builder.setMessage("selecione a CAMERA ou a GALERIA para escolher uma foto para adicionar ao AMIGO AZUL");
         builder.setPositiveButton("CAMERA", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent imageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(imageIntent, 1);
+                startActivityForResult(imageIntent, 2);
             }
         });
         builder.setNegativeButton("GALERIA", new DialogInterface.OnClickListener() {
@@ -131,7 +121,7 @@ public class Objetos extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Intent intentPegaFoto = new Intent(Intent.ACTION_PICK);
                 intentPegaFoto.setType("image/*");
-                startActivityForResult(intentPegaFoto, 11);
+                startActivityForResult(intentPegaFoto, 22);
             }
         });
 
@@ -169,7 +159,6 @@ public class Objetos extends AppCompatActivity {
             try {
                 salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
                 Toast.makeText(getApplicationContext(), "Imagem copiada com sucesso!", Toast.LENGTH_SHORT).show();
-                CARREGAR_FOTOS_OBJETOS();
             } catch (IOException e) {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();

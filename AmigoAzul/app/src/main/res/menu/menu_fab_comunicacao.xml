@@ -4,10 +4,12 @@
     <item
         android:id="@+id/FAB_acao_addImagem"
         android:icon="@drawable/ic_add_imagem"
+        android:title="add foto" />
         android:title=""/>
     <item
         android:id="@+id/FAB_acao_excluirImagem"
         android:icon="@drawable/ic_deletar_imagem"
+        android:title="deletar foto" />
         android:title="" />
 
 </menu>

@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.internal.NavigationMenu;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,10 +29,11 @@ import java.util.List;
 import br.com.amigoazul.R;
 import br.com.amigoazul.adapter.ListarSentimentosAdapter;
 import br.com.amigoazul.helper.SALVAR_FOTO;
+import io.github.yavski.fabspeeddial.FabSpeedDial;
+import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
 
 public class Sentimentos extends AppCompatActivity {
 
-    FloatingActionButton FAB_camera_Sentimentos;
 
     //instanciar outras classes
     Splash_Activity splash_activity = new Splash_Activity();
@@ -51,17 +54,25 @@ public class Sentimentos extends AppCompatActivity {
         getSupportActionBar().hide();//esconder a actionBar
         setContentView(R.layout.sentimentos);
 
+
         //setar variaveis com IDs
-        FAB_camera_Sentimentos = findViewById(R.id.fab_cameraSentimentos);
+        FabSpeedDial FAB_camera_Sentimentos = (FabSpeedDial) findViewById(R.id.fab_speed_dial_sentimentos);
 
         CARREGAR_FOTOS_SENTIMENTOS();
 
-
-        FAB_camera_Sentimentos.setOnClickListener(new View.OnClickListener() {
+        //FloatActionButton para menu de SENTIMENTOS
+        FAB_camera_Sentimentos.setMenuListener(new SimpleMenuListenerAdapter() {
             @Override
-            public void onClick(View v) {
-                TIRAR_FOTO_ou_GALERIA();
-
+            public boolean onMenuItemSelected(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.FAB_acao_addImagem:
+                        TIRAR_FOTO_ou_GALERIA();
+                        break;
+                    case R.id.FAB_acao_excluirImagem:
+                        Toast.makeText(getApplicationContext(), "EXCLUIR IMAGEM", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return false;
             }
         });
 
@@ -78,7 +89,7 @@ public class Sentimentos extends AppCompatActivity {
             listaArquivos.clear();
 
             for (int i = 0; i < files.length; i++) {
-                Log.e("SENTIMENTOS *****", (i+1) + "**** ====> diretorio completo: " + diretorio + "/" + files[i].getName());
+                Log.e("SENTIMENTOS *****", (i + 1) + "**** ====> diretorio completo: " + diretorio + "/" + files[i].getName());
                 listaArquivos.add(files[i]);
             }
 
@@ -94,28 +105,8 @@ public class Sentimentos extends AppCompatActivity {
 
 
     public void TIRAR_FOTO_ou_GALERIA() {
-
+        //alertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(Sentimentos.this);
-
-       /*View mView = getLayoutInflater().inflate(R.layout.dialog_camera_galeria, null);
-
-        ImageButton img_btn_camera = mView.findViewById(R.id.imgbtn_camera);
-        ImageButton img_btn_galeria = mView.findViewById(R.id.imgbtn_galeria);
-
-        img_btn_camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent imageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(imageIntent, 1);
-            }
-        });
-        img_btn_galeria.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });*/ //arrumar depois
-
         builder.setTitle("SENTIMENTOS");
         builder.setMessage("selecione a CAMERA ou a GALERIA para escolher uma foto para adicionar ao AMIGO AZUL");
         builder.setPositiveButton("CAMERA", new DialogInterface.OnClickListener() {
@@ -164,8 +155,8 @@ public class Sentimentos extends AppCompatActivity {
             // Criamos um file, com o no DIRETORIO, com o mesmo nome da anterior
             final File novaImagem = new File(rootPath, "AZ-" + dataFormatada + ".JPG");
 
-            //Movemos o arquivo!
-            try {
+
+            try {//Movemos o arquivo!
                 salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
                 Toast.makeText(getApplicationContext(), "Imagem movida com sucesso!", Toast.LENGTH_SHORT).show();
                 CARREGAR_FOTOS_SENTIMENTOS();
