@@ -134,8 +134,6 @@ public class Splash_Activity extends AppCompatActivity {
         }
     }
 
-
-
     /**
      * METODO TESTE PARA BAIXAR IMAGENS FIREBASE
      */
@@ -212,6 +210,7 @@ public class Splash_Activity extends AppCompatActivity {
         }
 
     }*///metodo DOWNLOAD testar futuramente
+
     private boolean checkPermission() {
 
         int result_write = ContextCompat.checkSelfPermission(Splash_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -255,6 +254,8 @@ public class Splash_Activity extends AppCompatActivity {
                             if (SPLASH_listusers.size() > 0) {
                                 Toast.makeText(getApplicationContext(), "USUARIO ENCONTRADO", Toast.LENGTH_SHORT).show();
 
+                                //enviar uma String com uma mensagem para outra tela informando que esta bloqueado a
+                                //edição ou exclusao
                                 Intent i = new Intent(Splash_Activity.this, ListarUsuario.class);
                                 String blockSplash = "bloqueadoSplash";
                                 i.putExtra("BLOQUEIO_SPLASH", blockSplash);

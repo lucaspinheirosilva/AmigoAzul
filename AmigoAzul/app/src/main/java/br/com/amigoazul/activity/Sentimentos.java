@@ -93,6 +93,9 @@ public class Sentimentos extends AppCompatActivity {
                 listaArquivos.add(files[i]);
             }
 
+            if (listaArquivos.size()!= 0){
+                //TODO:chamar a tela de informar o texto a falar...se possivel trazer como DIALOG ALERT
+            }
             RecyclerView recyclerView = findViewById(R.id.rcrtvw_listarComunic);
 
             StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
