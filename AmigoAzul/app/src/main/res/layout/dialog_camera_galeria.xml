@@ -12,8 +12,8 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="204dp"
-        android:text="Selecione uma da Opções"
+        android:layout_marginTop="10dp"
+        android:text="Selecione uma das Opções"
         android:textAllCaps="false"
         android:textSize="24sp"
         android:textStyle="bold|italic" />
@@ -33,27 +33,26 @@
         android:layout_height="wrap_content">
 
         <ImageButton
-            android:id="@+id/imgbtn_camera"
+            android:id="@+id/imgbtn_alerDialcamera"
             android:layout_width="75dp"
             android:layout_height="75dp"
+            android:background="@drawable/camera"
+            android:foreground="@drawable/efeito_ripple"
             android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:src="@drawable/galeria" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/imgbtn_galeria"
+            android:id="@+id/imgbtn_alerDialgaleria"
             android:layout_width="75dp"
             android:layout_height="75dp"
+            android:background="@drawable/galeria"
+            android:foreground="@drawable/efeito_ripple"
             android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/camera" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline6"
@@ -63,6 +62,31 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintGuide_percent="0.5"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Galeria"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgbtn_alerDialgaleria"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Camera"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/imgbtn_alerDialcamera" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

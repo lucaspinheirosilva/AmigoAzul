@@ -3,13 +3,19 @@ package br.com.amigoazul.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,6 +51,9 @@ public class Objetos extends AppCompatActivity {
 
     List <File> listaArquivos = new ArrayList <>();
 
+    //AlertDialog
+    AlertDialog alerta;
+    AlertDialog.Builder builder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,11 +80,6 @@ public class Objetos extends AppCompatActivity {
         });
     }
 
-
-    //https://www.viralandroid.com/2016/02/android-listview-with-image-and-text.html
-    //https://www.tutorialspoint.com/android/android_camera.html
-    //https://pt.stackoverflow.com/questions/119792/carregar-imageview-usando-caminho-da-imagem
-    //https://stackoverflow.com/questions/8646984/how-to-list-files-in-an-android-directory
     public void CARREGAR_FOTOS_OBJETOS() {
         File diretorio = new File(splash_activity.meuDirObjetos.getAbsolutePath());
         if (diretorio.exists()) {
@@ -100,31 +104,33 @@ public class Objetos extends AppCompatActivity {
 
     }
 
-    /**
-     * TIRAR FOTO CAMERA CELULAR
-     */
-    //https://www.youtube.com/watch?v=1oyvdqc_QZg
+
     public void TIRAR_FOTO_ou_GALERIA() {
-        AlertDialog alerta;
+        //alertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(Objetos.this);
-        builder.setTitle("OBJETOS ");
-        builder.setMessage("selecione a CAMERA ou a GALERIA para escolher uma foto para adicionar ao AMIGO AZUL");
-        builder.setPositiveButton("CAMERA", new DialogInterface.OnClickListener() {
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogCameraGaleriaview = inflater.inflate(R.layout.dialog_camera_galeria, null);
+        builder.setView(dialogCameraGaleriaview);
+
+        ImageButton camera = dialogCameraGaleriaview.findViewById(R.id.imgbtn_alerDialcamera);
+        ImageButton galeria = dialogCameraGaleriaview.findViewById(R.id.imgbtn_alerDialgaleria);
+
+        camera.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 Intent imageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(imageIntent, 2);
             }
         });
-        builder.setNegativeButton("GALERIA", new DialogInterface.OnClickListener() {
+        galeria.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 Intent intentPegaFoto = new Intent(Intent.ACTION_PICK);
                 intentPegaFoto.setType("image/*");
                 startActivityForResult(intentPegaFoto, 22);
+                alerta.cancel();
             }
         });
-
         alerta = builder.create();
         alerta.show();
     }
@@ -135,15 +141,54 @@ public class Objetos extends AppCompatActivity {
 
         if (requestCode == 2 && resultCode == RESULT_OK) {//tirar foto
             Bundle extra = data.getExtras();
-            Bitmap imagem = (Bitmap) extra.get("data");
-            salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, "AZ-" + dataFormatada + ".JPG", splash_activity.meuDirObjetos.getAbsolutePath());
-            CARREGAR_FOTOS_OBJETOS();
+            final Bitmap imagem = (Bitmap) extra.get("data");
+
+            //alertDialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(Objetos.this);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogText_Fotoview = inflater.inflate(R.layout.texto_foto, null);
+            builder.setView(dialogText_Fotoview);
+            builder.setCancelable(false);
+
+            final ImageView imagemTirada = dialogText_Fotoview.findViewById(R.id.imgvw_fotoTirada);
+            imagemTirada.setImageBitmap(imagem);
+            final Button salvar = dialogText_Fotoview.findViewById(R.id.btnSalvar_TextoFalar);
+            Button cancelar = dialogText_Fotoview.findViewById(R.id.btnCancelar_TextoFalar);
+
+            salvar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, "AZ-" +
+                            dataFormatada + ".JPG", splash_activity.meuDirObjetos.getAbsolutePath());
+                    alerta.cancel();
+                    CARREGAR_FOTOS_OBJETOS();
+                }
+            });
+            cancelar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alerta.cancel();
+
+                }
+            });
+            alerta = builder.create();
+            alerta.show();
         }
 
-        /*https://pt.stackoverflow.com/questions/187457/pegar-uma-imagem-da-galeria-e-mover-para-uma-pasta*/
         if (resultCode == RESULT_OK && requestCode == 22) { //foto da galeria
             //Pegamos a URI da imagem...
             Uri uriSelecionada = data.getData();
+
+            //pegar a imagem e converte  para um path compativel para inserir no ImageView
+            String[] colunas = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(uriSelecionada, colunas, null, null, null);
+            cursor.moveToFirst();
+            int indexColuna = cursor.getColumnIndex(colunas[0]);
+            String pathImg = cursor.getString(indexColuna);
+            cursor.close();
+
+            final Bitmap imagem = BitmapFactory.decodeFile(pathImg);
             // criamos um File com o diretório selecionado!
             final File selecionada = new File(salvar_foto.getRealPathFromURI(uriSelecionada, getApplicationContext()));
             // Caso não exista o doretório, vamos criar!
@@ -155,14 +200,44 @@ public class Objetos extends AppCompatActivity {
             // Criamos um file, com o no DIRETORIO, com o mesmo nome da anterior
             final File novaImagem = new File(rootPath, "AZ-" + dataFormatada + ".JPG");
 
-            //Movemos o arquivo!
-            try {
-                salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
-                Toast.makeText(getApplicationContext(), "Imagem copiada com sucesso!", Toast.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+            //alertDialog
+            builder = new AlertDialog.Builder(this);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogText_Fotoview = inflater.inflate(R.layout.texto_foto, null);
+            builder.setView(dialogText_Fotoview);
+            builder.setCancelable(false);
+
+            final ImageView imagemTirada = dialogText_Fotoview.findViewById(R.id.imgvw_fotoTirada);
+            imagemTirada.setImageBitmap(imagem);
+            final Button salvar = dialogText_Fotoview.findViewById(R.id.btnSalvar_TextoFalar);
+            Button cancelar = dialogText_Fotoview.findViewById(R.id.btnCancelar_TextoFalar);
+
+            salvar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Movemos o arquivo!
+                    try {
+                        salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
+                        Toast.makeText(Objetos.this, "Imagem copiada com sucesso!", Toast.LENGTH_SHORT).show();
+                        alerta.cancel();
+                        CARREGAR_FOTOS_OBJETOS();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            cancelar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alerta.cancel();
+
+                }
+            });
+            alerta = builder.create();
+            alerta.show();
+
+
         }
 
             /*String s = files.getAbsolutePath();

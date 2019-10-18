@@ -1,23 +1,25 @@
 package br.com.amigoazul.activity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.internal.NavigationMenu;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,8 +41,9 @@ public class Sentimentos extends AppCompatActivity {
     Splash_Activity splash_activity = new Splash_Activity();
     SALVAR_FOTO salvar_foto = new SALVAR_FOTO();
 
-
+    //AlertDialog
     AlertDialog alerta;
+    AlertDialog.Builder builder;
 
     List <File> listaArquivos = new ArrayList <>();
 
@@ -53,7 +56,6 @@ public class Sentimentos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();//esconder a actionBar
         setContentView(R.layout.sentimentos);
-
 
         //setar variaveis com IDs
         FabSpeedDial FAB_camera_Sentimentos = (FabSpeedDial) findViewById(R.id.fab_speed_dial_sentimentos);
@@ -93,9 +95,6 @@ public class Sentimentos extends AppCompatActivity {
                 listaArquivos.add(files[i]);
             }
 
-            if (listaArquivos.size()!= 0){
-                //TODO:chamar a tela de informar o texto a falar...se possivel trazer como DIALOG ALERT
-            }
             RecyclerView recyclerView = findViewById(R.id.rcrtvw_listarComunic);
 
             StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
@@ -110,24 +109,31 @@ public class Sentimentos extends AppCompatActivity {
     public void TIRAR_FOTO_ou_GALERIA() {
         //alertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(Sentimentos.this);
-        builder.setTitle("SENTIMENTOS");
-        builder.setMessage("selecione a CAMERA ou a GALERIA para escolher uma foto para adicionar ao AMIGO AZUL");
-        builder.setPositiveButton("CAMERA", new DialogInterface.OnClickListener() {
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogCameraGaleriaview = inflater.inflate(R.layout.dialog_camera_galeria, null);
+        builder.setView(dialogCameraGaleriaview);
+
+        ImageButton camera = dialogCameraGaleriaview.findViewById(R.id.imgbtn_alerDialcamera);
+        ImageButton galeria = dialogCameraGaleriaview.findViewById(R.id.imgbtn_alerDialgaleria);
+
+        camera.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 Intent imageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(imageIntent, 1);
+                alerta.cancel();
             }
+
         });
-        builder.setNegativeButton("GALERIA", new DialogInterface.OnClickListener() {
+        galeria.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 Intent intentPegaFoto = new Intent(Intent.ACTION_PICK);
                 intentPegaFoto.setType("image/*");
                 startActivityForResult(intentPegaFoto, 11);
+                alerta.cancel();
             }
         });
-
         alerta = builder.create();
         alerta.show();
     }
@@ -138,15 +144,54 @@ public class Sentimentos extends AppCompatActivity {
 
         if (requestCode == 1 && resultCode == RESULT_OK) {//tirar foto
             Bundle extra = data.getExtras();
-            Bitmap imagem = (Bitmap) extra.get("data");
-            salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, "AZ-" + dataFormatada + ".JPG", splash_activity.meuDirSentimentos.getAbsolutePath());
-            CARREGAR_FOTOS_SENTIMENTOS();
+            final Bitmap imagem = (Bitmap) extra.get("data");
+
+            //alertDialog
+            builder = new AlertDialog.Builder(this);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogText_Fotoview = inflater.inflate(R.layout.texto_foto, null);
+            builder.setView(dialogText_Fotoview);
+            builder.setCancelable(false);
+
+            final ImageView imagemTirada = dialogText_Fotoview.findViewById(R.id.imgvw_fotoTirada);
+            imagemTirada.setImageBitmap(imagem);
+            final Button salvar = dialogText_Fotoview.findViewById(R.id.btnSalvar_TextoFalar);
+            Button cancelar = dialogText_Fotoview.findViewById(R.id.btnCancelar_TextoFalar);
+
+            salvar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, "AZ-" +
+                            dataFormatada + ".JPG", splash_activity.meuDirSentimentos.getAbsolutePath());
+                    alerta.cancel();
+                    CARREGAR_FOTOS_SENTIMENTOS();
+                }
+            });
+            cancelar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alerta.cancel();
+
+                }
+            });
+            alerta = builder.create();
+            alerta.show();
         }
 
 
         if (resultCode == RESULT_OK && requestCode == 11) { //foto da galeria
             //Pegamos a URI da imagem...
             Uri uriSelecionada = data.getData();
+
+            //pegar a imagem e converte  para um path compativel para inserir no ImageView
+            String[] colunas = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(uriSelecionada, colunas, null, null, null);
+            cursor.moveToFirst();
+            int indexColuna = cursor.getColumnIndex(colunas[0]);
+            String pathImg = cursor.getString(indexColuna);
+            cursor.close();
+
+            final Bitmap imagem = BitmapFactory.decodeFile(pathImg);
             // criamos um File com o diretório selecionado!
             final File selecionada = new File(salvar_foto.getRealPathFromURI(uriSelecionada, getApplicationContext()));
             // Caso não exista o doretório, vamos criar!
@@ -155,18 +200,46 @@ public class Sentimentos extends AppCompatActivity {
                 rootPath.mkdirs();
             }
 
-            // Criamos um file, com o no DIRETORIO, com o mesmo nome da anterior
+            // Criamos um file, com o DIRETORIO, com o mesmo nome novo
             final File novaImagem = new File(rootPath, "AZ-" + dataFormatada + ".JPG");
 
+            //alertDialog
+            builder = new AlertDialog.Builder(this);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogText_Fotoview = inflater.inflate(R.layout.texto_foto, null);
+            builder.setView(dialogText_Fotoview);
+            builder.setCancelable(false);
 
-            try {//Movemos o arquivo!
-                salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
-                Toast.makeText(getApplicationContext(), "Imagem movida com sucesso!", Toast.LENGTH_SHORT).show();
-                CARREGAR_FOTOS_SENTIMENTOS();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+            final ImageView imagemTirada = dialogText_Fotoview.findViewById(R.id.imgvw_fotoTirada);
+            imagemTirada.setImageBitmap(imagem);
+            final Button salvar = dialogText_Fotoview.findViewById(R.id.btnSalvar_TextoFalar);
+            Button cancelar = dialogText_Fotoview.findViewById(R.id.btnCancelar_TextoFalar);
+
+            salvar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {//Movemos o arquivo!
+                        salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
+                        Toast.makeText(Sentimentos.this, "Imagem movida com sucesso!", Toast.LENGTH_SHORT).show();
+                        alerta.cancel();
+                        CARREGAR_FOTOS_SENTIMENTOS();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            cancelar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alerta.cancel();
+
+                }
+            });
+            alerta = builder.create();
+            alerta.show();
+
+
         }
 
             /*String s = files.getAbsolutePath();

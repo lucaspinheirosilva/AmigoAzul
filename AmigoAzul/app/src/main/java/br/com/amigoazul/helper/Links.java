@@ -34,6 +34,21 @@ public class Links {
 
     /*ADAPTER DO RECYCLERVIEW*/
     //https://acomputerengineer.wordpress.com/2018/04/15/display-image-grid-in-recyclerview-in-android/
+
+    /* TIRAR FOTO CAMERA CELULAR*/
+    //https://www.youtube.com/watch?v=1oyvdqc_QZg
+
+    /*PEGAR IMAGEM DA PASTA E MOVER PARA OUTRA*/
+    //https://pt.stackoverflow.com/questions/187457/pegar-uma-imagem-da-galeria-e-mover-para-uma-pasta
+
+
+    /**OBJETOS*/
+    /*CARREGAR FOTOS*/
+    //https://www.viralandroid.com/2016/02/android-listview-with-image-and-text.html
+    //https://www.tutorialspoint.com/android/android_camera.html
+    //https://pt.stackoverflow.com/questions/119792/carregar-imageview-usando-caminho-da-imagem
+    //https://stackoverflow.com/questions/8646984/how-to-list-files-in-an-android-directory
+
     /* TIRAR FOTO CAMERA CELULAR*/
     //https://www.youtube.com/watch?v=1oyvdqc_QZg
 
