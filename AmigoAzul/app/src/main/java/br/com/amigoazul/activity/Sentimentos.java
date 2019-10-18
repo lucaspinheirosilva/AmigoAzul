@@ -1,6 +1,7 @@
 package br.com.amigoazul.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -30,7 +32,10 @@ import java.util.List;
 
 import br.com.amigoazul.R;
 import br.com.amigoazul.adapter.ListarSentimentosAdapter;
+import br.com.amigoazul.helper.ComunicacaoDAO;
 import br.com.amigoazul.helper.SALVAR_FOTO;
+import br.com.amigoazul.model.ListaComunicacao;
+import br.com.amigoazul.model.ListaUsuario;
 import io.github.yavski.fabspeeddial.FabSpeedDial;
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
 
@@ -40,12 +45,14 @@ public class Sentimentos extends AppCompatActivity {
     //instanciar outras classes
     Splash_Activity splash_activity = new Splash_Activity();
     SALVAR_FOTO salvar_foto = new SALVAR_FOTO();
+    ComunicacaoDAO comunicacaoDAO;
 
     //AlertDialog
     AlertDialog alerta;
     AlertDialog.Builder builder;
 
     List <File> listaArquivos = new ArrayList <>();
+    final ListaComunicacao listaComunicacao = new ListaComunicacao();
 
     SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy-HH:mm:ss");
     Date diaData = new Date();
@@ -58,7 +65,7 @@ public class Sentimentos extends AppCompatActivity {
         setContentView(R.layout.sentimentos);
 
         //setar variaveis com IDs
-        FabSpeedDial FAB_camera_Sentimentos = (FabSpeedDial) findViewById(R.id.fab_speed_dial_sentimentos);
+        FabSpeedDial FAB_camera_Sentimentos = findViewById(R.id.fab_speed_dial_sentimentos);
 
         CARREGAR_FOTOS_SENTIMENTOS();
 
@@ -142,6 +149,8 @@ public class Sentimentos extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
+
         if (requestCode == 1 && resultCode == RESULT_OK) {//tirar foto
             Bundle extra = data.getExtras();
             final Bitmap imagem = (Bitmap) extra.get("data");
@@ -154,17 +163,41 @@ public class Sentimentos extends AppCompatActivity {
             builder.setCancelable(false);
 
             final ImageView imagemTirada = dialogText_Fotoview.findViewById(R.id.imgvw_fotoTirada);
-            imagemTirada.setImageBitmap(imagem);
+            final EditText textoFalar = dialogText_Fotoview.findViewById(R.id.edttxt_textoFalar);
             final Button salvar = dialogText_Fotoview.findViewById(R.id.btnSalvar_TextoFalar);
             Button cancelar = dialogText_Fotoview.findViewById(R.id.btnCancelar_TextoFalar);
+
+            imagemTirada.setImageBitmap(imagem);
 
             salvar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, "AZ-" +
-                            dataFormatada + ".JPG", splash_activity.meuDirSentimentos.getAbsolutePath());
-                    alerta.cancel();
-                    CARREGAR_FOTOS_SENTIMENTOS();
+
+                    if (textoFalar.getText().length()<= 3) {
+                        textoFalar.setError("Informe o Texto por favor");
+                        textoFalar.setFocusable(true);
+
+                    } else {
+
+                        //Savar dados da imagem no BD
+                        if (imagem != null) {
+                            String nomeDoArquivo = "AZ-" + dataFormatada + ".JPG";
+                            listaComunicacao.setTextoFalar(textoFalar.getText().toString());
+                            listaComunicacao.setTextoFalar_MontarFrase(null);
+                            listaComunicacao.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
+                            listaComunicacao.setTipoComunic("sentimentos");
+                            listaComunicacao.setExcluido("N");
+
+                            comunicacaoDAO.salvar(listaComunicacao);
+
+                            salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, nomeDoArquivo, splash_activity.meuDirSentimentos.getAbsolutePath());
+                            alerta.cancel();
+                            CARREGAR_FOTOS_SENTIMENTOS();
+                        } else {
+                            Toast.makeText(Sentimentos.this, "Erro ao salvar imagem, refaça a operação por favor!", Toast.LENGTH_SHORT).show();
+                            alerta.cancel();
+                        }
+                    }
                 }
             });
             cancelar.setOnClickListener(new View.OnClickListener() {

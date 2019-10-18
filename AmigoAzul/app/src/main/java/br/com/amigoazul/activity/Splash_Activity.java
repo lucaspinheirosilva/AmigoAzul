@@ -73,9 +73,7 @@ public class Splash_Activity extends AppCompatActivity {
                 /**CRIAR PASTA PARA SALVAR AS FOTOS**/
                 if (!meuDiretorio.exists()) {
                     meuDiretorio.mkdirs();
-                    meuDirMontarFreses.mkdirs();
-                    meuDirObjetos.mkdirs();
-                    meuDirSentimentos.mkdirs();
+
                     Toast.makeText(getApplicationContext(), "DIRETORIO CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
 
                     if (!meuDirSentimentos.exists()) {
@@ -237,6 +235,19 @@ public class Splash_Activity extends AppCompatActivity {
                     /**CRIAR PASTA PARA SALVAR AS FOTOS**/
                     if (!meuDiretorio.exists()) {
                         meuDiretorio.mkdirs();
+
+                        if (!meuDirSentimentos.exists()) {
+                            meuDirSentimentos.mkdirs();
+                            Toast.makeText(getApplicationContext(), "DIRETORIO SENTIMENTOS CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                        }
+                        if (!meuDirObjetos.exists()) {
+                            meuDirObjetos.mkdirs();
+                            Toast.makeText(getApplicationContext(), "DIRETORIO OBJETOS CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                        }
+                        if (!meuDirMontarFreses.exists()) {
+                            meuDirMontarFreses.mkdirs();
+                            Toast.makeText(getApplicationContext(), "DIRETORIO MONTAR FRASES CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                        }
                         Toast.makeText(getApplicationContext(), "DIRETORIO CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "DIRETORIO JA EXISTE", Toast.LENGTH_SHORT).show();
