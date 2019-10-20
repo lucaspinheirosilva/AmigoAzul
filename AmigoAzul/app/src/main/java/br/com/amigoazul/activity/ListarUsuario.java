@@ -46,7 +46,7 @@ public class ListarUsuario extends AppCompatActivity {
         rcrvwListagemUsuario = findViewById(R.id.rcvw_listarUsuario);
         BtnNovoUsuario = findViewById(R.id.btn_novo_cadastro);
 
-        //Recuperar produto caso seja edição.
+        //Recuperar usuario caso seja edição.
         final String bloqueioSplash = (String) getIntent().getSerializableExtra("BLOQUEIO_SPLASH");
 
         CarregarListaUsuarios();
@@ -97,7 +97,7 @@ public class ListarUsuario extends AppCompatActivity {
 
     public void CarregarListaUsuarios() {/**metodos para fazer a listagem dos usuarios**/
 
-        //Listar tarefas
+        //Listar usuario
         UsuarioDAO usuarioDAO = new UsuarioDAO(getApplicationContext());
         listUsuario = new ArrayList <>();
         listUsuario = usuarioDAO.listar();

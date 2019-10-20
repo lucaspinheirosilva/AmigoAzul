@@ -1,6 +1,9 @@
 package br.com.amigoazul.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.List;
 
 import br.com.amigoazul.R;
+import br.com.amigoazul.model.ListaComunicacao;
 
 /**
  * Criado por Lucas Pinheiro on 12/09/2019.
@@ -49,12 +54,10 @@ public class ListarSentimentosAdapter extends RecyclerView.Adapter<ListarSentime
     public void onBindViewHolder(ListarComunicacaoAdapterViewHolder holder, int position) {
         final File path = imageList.get(position);
 
-
-
         Picasso.get()
                 .load(path)
                 //.resize(100,100)
-              //  .centerCrop()
+                //  .centerCrop()
                 .into(holder.imageViewSentimentos);
 
         holder.imageViewSentimentos.setOnClickListener(new View.OnClickListener() {

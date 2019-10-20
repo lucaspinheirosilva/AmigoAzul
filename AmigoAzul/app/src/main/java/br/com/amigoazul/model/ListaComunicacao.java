@@ -12,6 +12,7 @@ public class ListaComunicacao implements Serializable {
     private String tipoComunic;
     private String textoFalar;
     private String textoFalar_MontarFrase;
+    private byte[] foto;
     private String excluido;
 
     public Long getId() {
@@ -60,5 +61,13 @@ public class ListaComunicacao implements Serializable {
 
     public void setExcluido(String excluido) {
         this.excluido = excluido;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 }

@@ -23,8 +23,6 @@ public class Links {
     //https://www.youtube.com/watch?v=SV-J9JWLEDA
 
 
-
-
     /**SENTIMENTOS*/
     /*CARREGAR FOTOS*/
     //https://www.viralandroid.com/2016/02/android-listview-with-image-and-text.html
@@ -54,4 +52,23 @@ public class Links {
 
     /*PEGAR IMAGEM DA PASTA E MOVER PARA OUTRA*/
     //https://pt.stackoverflow.com/questions/187457/pegar-uma-imagem-da-galeria-e-mover-para-uma-pasta
+
+
+    /**UTIL*/
+    //pegar apenas o nome do arquivo sem o nome do diretorio
+     /*String s = files.getAbsolutePath();
+            String result = s.substring(s.lastIndexOf(System.getProperty("file.separator"))+1,s.length());
+            System.out.println(result);
+            Log.e("TESTESSSS",result);*/
+
+
+    //pegar apenas no nome do caminho sem o nome do arquivo
+           /* String caminhoCompleto = files.getAbsolutePath();
+            int indiceBarra = caminhoCompleto.lastIndexOf("/") + 1;
+            if (indiceBarra == 0) {
+                indiceBarra = caminhoCompleto.lastIndexOf("/") + 1;
+            }
+            // Basta pegar o substring com o caminho da pasta.
+            String caminhoPasta = caminhoCompleto.substring(0, indiceBarra);
+            Log.e("TESTE",caminhoPasta);*/
 }

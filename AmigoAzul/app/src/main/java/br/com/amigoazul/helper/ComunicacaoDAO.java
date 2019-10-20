@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class ComunicacaoDAO implements intfceComunicacaoDAO {
         contentValues.put("tipo_comunic", lista_comunic.getTipoComunic());
         contentValues.put("texto_falar", lista_comunic.getTextoFalar());
         contentValues.put("texto_falar_montarfrase", lista_comunic.getTextoFalar_MontarFrase());
+        contentValues.put("foto",lista_comunic.getFoto());
         contentValues.put("excluido", lista_comunic.getExcluido());
 
         try {
@@ -53,6 +55,7 @@ public class ComunicacaoDAO implements intfceComunicacaoDAO {
         contentValues.put("tipo_comunic", lista_comunic.getTipoComunic());
         contentValues.put("texto_falar", lista_comunic.getTextoFalar());
         contentValues.put("texto_falar_montarfrase", lista_comunic.getTextoFalar_MontarFrase());
+        contentValues.put("foto",lista_comunic.getFoto());
         contentValues.put("excluido", lista_comunic.getExcluido());
 
         try {
@@ -103,6 +106,7 @@ public class ComunicacaoDAO implements intfceComunicacaoDAO {
             String tipo_comunic = cursor.getString(cursor.getColumnIndex("tipo_comunic"));
             String textofalar = cursor.getString(cursor.getColumnIndex("texto_falar"));
             String textofalarMontarFrase = cursor.getString(cursor.getColumnIndex("texto_falar_montarfrase"));
+            byte[] foto = cursor.getBlob(cursor.getColumnIndex("foto"));
             String excluido = cursor.getString(cursor.getColumnIndex("excluido"));
 
 
@@ -111,10 +115,12 @@ public class ComunicacaoDAO implements intfceComunicacaoDAO {
             listaComunicacao.setTipoComunic(tipo_comunic);
             listaComunicacao.setTextoFalar(textofalar);
             listaComunicacao.setTextoFalar_MontarFrase(textofalarMontarFrase);
+            listaComunicacao.setFoto(foto);
             listaComunicacao.setExcluido(excluido);
 
             listarcomunicacao.add(listaComunicacao);
         }
         return listarcomunicacao;
     }
+
 }

@@ -47,6 +47,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 " tipo_comunic TEXT NOT NULL, " +
                 " texto_falar_montarfrase TEXT, " +
                 " texto_falar TEXT, " +
+                " foto BLOB, " +
                 " excluido TEXT) ";
 
         //CRIAR TABELA DE ATIVIDADES*/

@@ -1,7 +1,6 @@
 package br.com.amigoazul.activity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -23,11 +22,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import br.com.amigoazul.R;
@@ -35,7 +36,6 @@ import br.com.amigoazul.adapter.ListarSentimentosAdapter;
 import br.com.amigoazul.helper.ComunicacaoDAO;
 import br.com.amigoazul.helper.SALVAR_FOTO;
 import br.com.amigoazul.model.ListaComunicacao;
-import br.com.amigoazul.model.ListaUsuario;
 import io.github.yavski.fabspeeddial.FabSpeedDial;
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
 
@@ -84,23 +84,33 @@ public class Sentimentos extends AppCompatActivity {
                 return false;
             }
         });
-
-
     }
-
 
     public void CARREGAR_FOTOS_SENTIMENTOS() {
         File diretorio = new File(splash_activity.meuDirSentimentos.getAbsolutePath());
         if (diretorio.exists()) {
             Log.e("SENTIMENTOS", "a pasta é " + diretorio.getAbsolutePath());
-            File[] files = diretorio.listFiles();
-            Log.e("SENTIMENTOS", "total de arquivos no diretorio: " + files.length);
-            listaArquivos.clear();
 
-            for (int i = 0; i < files.length; i++) {
-                Log.e("SENTIMENTOS *****", (i + 1) + "**** ====> diretorio completo: " + diretorio + "/" + files[i].getName());
-                listaArquivos.add(files[i]);
+            if (diretorio.listFiles() != null) {
+               File[] files = diretorio.listFiles();
+
+                Log.e("SENTIMENTOS", "total de arquivos no diretorio: " + files.length);
+                listaArquivos.clear();
+
+
+
+                for (int i = 0; i < files.length; i++) {
+                    Log.e("SENTIMENTOS *****", (i + 1) + "**** ====> diretorio completo: " + diretorio + "/" + files[i].getName());
+
+                    listaArquivos.add(files[i]);
+
+
+                }
+
             }
+           /* List<ListaComunicacao> list = new ArrayList();
+            comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
+            list = comunicacaoDAO.listar();*/
 
             RecyclerView recyclerView = findViewById(R.id.rcrtvw_listarComunic);
 
@@ -109,8 +119,14 @@ public class Sentimentos extends AppCompatActivity {
 
             ListarSentimentosAdapter listarSentimentosAdapter = new ListarSentimentosAdapter(Sentimentos.this, listaArquivos);
             recyclerView.setAdapter(listarSentimentosAdapter);
+        } else {
+            splash_activity.meuDirSentimentos.mkdirs();
+            CARREGAR_FOTOS_SENTIMENTOS();//recursividade
         }
     }
+
+
+
 
 
     public void TIRAR_FOTO_ou_GALERIA() {
@@ -155,6 +171,10 @@ public class Sentimentos extends AppCompatActivity {
             Bundle extra = data.getExtras();
             final Bitmap imagem = (Bitmap) extra.get("data");
 
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            imagem.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            final byte[] bArray = bos.toByteArray();
+
             //alertDialog
             builder = new AlertDialog.Builder(this);
             LayoutInflater inflater = getLayoutInflater();
@@ -173,7 +193,7 @@ public class Sentimentos extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    if (textoFalar.getText().length()<= 3) {
+                    if (textoFalar.getText().length() <= 3) {
                         textoFalar.setError("Informe o Texto por favor");
                         textoFalar.setFocusable(true);
 
@@ -186,6 +206,7 @@ public class Sentimentos extends AppCompatActivity {
                             listaComunicacao.setTextoFalar_MontarFrase(null);
                             listaComunicacao.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
                             listaComunicacao.setTipoComunic("sentimentos");
+                            listaComunicacao.setFoto(bArray);
                             listaComunicacao.setExcluido("N");
 
                             comunicacaoDAO.salvar(listaComunicacao);
@@ -246,19 +267,39 @@ public class Sentimentos extends AppCompatActivity {
             final ImageView imagemTirada = dialogText_Fotoview.findViewById(R.id.imgvw_fotoTirada);
             imagemTirada.setImageBitmap(imagem);
             final Button salvar = dialogText_Fotoview.findViewById(R.id.btnSalvar_TextoFalar);
+            final EditText textoFalar = dialogText_Fotoview.findViewById(R.id.edttxt_textoFalar);
             Button cancelar = dialogText_Fotoview.findViewById(R.id.btnCancelar_TextoFalar);
 
             salvar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    try {//Movemos o arquivo!
-                        salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
-                        Toast.makeText(Sentimentos.this, "Imagem movida com sucesso!", Toast.LENGTH_SHORT).show();
-                        alerta.cancel();
-                        CARREGAR_FOTOS_SENTIMENTOS();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    if (textoFalar.getText().length() <= 3) {
+                        textoFalar.setError("Informe o Texto por favor");
+                        textoFalar.setFocusable(true);
+
+                    } else {
+                        //Savar dados da imagem no BD
+                        if (imagem != null) {
+                            String nomeDoArquivo = "AZ-" + dataFormatada + ".JPG";
+                            listaComunicacao.setTextoFalar(textoFalar.getText().toString());
+                            listaComunicacao.setTextoFalar_MontarFrase(null);
+                            listaComunicacao.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
+                            listaComunicacao.setTipoComunic("sentimentos");
+                            listaComunicacao.setExcluido("N");
+
+                            comunicacaoDAO.salvar(listaComunicacao);
+
+                            try {//Movemos o arquivo!
+                                salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
+                                Toast.makeText(Sentimentos.this, "Imagem movida com sucesso!", Toast.LENGTH_SHORT).show();
+                                alerta.cancel();
+                                CARREGAR_FOTOS_SENTIMENTOS();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
             });
@@ -275,19 +316,6 @@ public class Sentimentos extends AppCompatActivity {
 
         }
 
-            /*String s = files.getAbsolutePath();
-            String result = s.substring(s.lastIndexOf(System.getProperty("file.separator"))+1,s.length());
-            System.out.println(result);
-            Log.e("TESTESSSS",result);*///pegar apenas o nome do arquivo sem o nome do diretorio
-
-           /* String caminhoCompleto = files.getAbsolutePath();
-            int indiceBarra = caminhoCompleto.lastIndexOf("/") + 1;
-            if (indiceBarra == 0) {
-                indiceBarra = caminhoCompleto.lastIndexOf("/") + 1;
-            }
-            // Basta pegar o substring com o caminho da pasta.
-            String caminhoPasta = caminhoCompleto.substring(0, indiceBarra);
-            Log.e("TESTE",caminhoPasta);*/ //pegar apenas no nome do caminho sem o nome do arquivo
     }
 
 
