@@ -128,15 +128,6 @@
 
     </androidx.cardview.widget.CardView>
 
-    <io.github.yavski.fabspeeddial.FabSpeedDial
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:fabGravity="bottom_end"
-        app:fabMenu="@menu/menu_fab_comunicacao"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:miniFabBackgroundTint="@android:color/white" />
 
 
 

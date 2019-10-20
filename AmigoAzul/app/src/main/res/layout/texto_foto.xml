@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/txtvw_informAlterarFoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="CLIQUE NA FOTO PARA ALTERAR"
+        android:textColor="#FF0505"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        android:visibility="invisible" />
+
     <ImageView
         android:id="@+id/imgvw_fotoTirada"
         android:layout_width="190dp"

@@ -38,9 +38,7 @@ public class Cadastro_Activity extends AppCompatActivity {
     FloatingActionButton deletar;
     ListaUsuario usuarioAtual;
 
-    /**
-     * https://github.com/VicMikhailau/MaskedEditText
-     **/
+
     MaskedFormatter formatadorNascimento = new MaskedFormatter("##/##/####");
 
     @Override
@@ -195,7 +193,7 @@ public class Cadastro_Activity extends AppCompatActivity {
 
                             usuarioDAO.atualizar(listaUsuario);
 
-                            Toast.makeText(getApplicationContext(), "Produto ATUALIZADO com sucesso", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "usuario ATUALIZADO com sucesso", Toast.LENGTH_LONG).show();
                             finish();
                         }
                     } catch (Exception erro) {

@@ -30,7 +30,7 @@ import br.com.amigoazul.model.ListaComunicacao;
  */
 public class ListarSentimentosAdapter extends RecyclerView.Adapter<ListarSentimentosAdapter.ListarComunicacaoAdapterViewHolder> {
 
-    TextToSpeech textToSpeech;
+
 
 
     private List<ListaComunicacao> imageList;
@@ -62,7 +62,6 @@ public class ListarSentimentosAdapter extends RecyclerView.Adapter<ListarSentime
 
     @Override
     public void onBindViewHolder(ListarComunicacaoAdapterViewHolder holder, int position) {
-        //final File path = imageList.get(position);
 
         final ListaComunicacao listaComunicacao = imageList.get(position);
         final File pathFile = new File(listaComunicacao.getCaminhoFirebase());
@@ -74,43 +73,16 @@ public class ListarSentimentosAdapter extends RecyclerView.Adapter<ListarSentime
                 .into(holder.imageViewSentimentos);
 
 
-        textToSpeech = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    //int ttsLang = textToSpeech.setLanguage(Locale.US);
-                    int ttsLang = textToSpeech.setLanguage(new Locale("pt","BR"));
 
-                    if (ttsLang == TextToSpeech.LANG_MISSING_DATA
-                            || ttsLang == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Log.e("TTS", "a Linguagem nao é suportada!");
-                    } else {
-                        Log.i("TTS", "Lingua suportada.");
-                    }
-                    Log.i("TTS", "Inicializado com Sucesso.");
-                } else {
-                    Toast.makeText(context, "TTS Falha de Inicialização!", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-        });
-
-        holder.imageViewSentimentos.setOnClickListener(new View.OnClickListener() {
+       /* holder.imageViewSentimentos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context,listaComunicacao.getTextoFalar(),Toast.LENGTH_LONG).show();
 
 
-                String data = listaComunicacao.getTextoFalar();
-                Log.e("TTS", "Clicou no Botao: " + data);
-                int speechStatus = textToSpeech.speak(data, TextToSpeech.QUEUE_FLUSH, null);
-
-                if (speechStatus == TextToSpeech.ERROR) {
-                    Log.e("TTS", "Erro ao Converter Texto em Fala!");
-                }
 
             }
-        });
+        });*/
     }
 
     @Override

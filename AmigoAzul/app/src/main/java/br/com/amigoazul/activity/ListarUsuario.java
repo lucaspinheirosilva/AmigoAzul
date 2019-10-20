@@ -70,7 +70,7 @@ public class ListarUsuario extends AppCompatActivity {
                     @Override
                     public void onItemClick(View view, int position) {
 
-                        if (bloqueioSplash == null) {
+                        if (bloqueioSplash == null) {//seleciona usuario e vai para tela de edição de cadastro
                             //Recuper produto para edição
                             usuarioselecionado = listUsuario.get(position);
 
@@ -78,7 +78,7 @@ public class ListarUsuario extends AppCompatActivity {
                             Intent intent = new Intent(ListarUsuario.this, Cadastro_Activity.class);
                             intent.putExtra("usuarioSelecionado", usuarioselecionado);
                             startActivity(intent);
-                        } else {
+                        } else {//senão ele seleciona usuario e vai para tela de menu principal
                              Toast.makeText(getApplicationContext(), "usuario SELECIONADO", Toast.LENGTH_SHORT).show();
 
                             Intent intent = new Intent(ListarUsuario.this,MainMenu.class);

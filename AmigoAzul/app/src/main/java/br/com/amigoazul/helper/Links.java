@@ -54,6 +54,12 @@ public class Links {
     //https://pt.stackoverflow.com/questions/187457/pegar-uma-imagem-da-galeria-e-mover-para-uma-pasta
 
 
+    /**CADASTRO DE USUARIO*/
+    /*MASCARA DE DATA NO EDITTEXT*/
+     //https://github.com/VicMikhailau/MaskedEditText
+
+
+
     /**UTIL*/
     //pegar apenas o nome do arquivo sem o nome do diretorio
      /*String s = files.getAbsolutePath();

@@ -225,8 +225,7 @@ public class Splash_Activity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case Const_WRITE_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0
