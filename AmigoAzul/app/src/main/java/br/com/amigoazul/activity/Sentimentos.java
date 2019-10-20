@@ -91,7 +91,7 @@ public class Sentimentos extends AppCompatActivity {
         if (diretorio.exists()) {
             Log.e("SENTIMENTOS", "a pasta é " + diretorio.getAbsolutePath());
 
-            if (diretorio.listFiles() != null) {
+           /* if (diretorio.listFiles() != null) {
                File[] files = diretorio.listFiles();
 
                 Log.e("SENTIMENTOS", "total de arquivos no diretorio: " + files.length);
@@ -107,17 +107,17 @@ public class Sentimentos extends AppCompatActivity {
 
                 }
 
-            }
-           /* List<ListaComunicacao> list = new ArrayList();
+            }*/
+            List<ListaComunicacao> list = new ArrayList();
             comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
-            list = comunicacaoDAO.listar();*/
+            list = comunicacaoDAO.listar();
 
             RecyclerView recyclerView = findViewById(R.id.rcrtvw_listarComunic);
 
             StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(sglm);
 
-            ListarSentimentosAdapter listarSentimentosAdapter = new ListarSentimentosAdapter(Sentimentos.this, listaArquivos);
+            ListarSentimentosAdapter listarSentimentosAdapter = new ListarSentimentosAdapter(Sentimentos.this, list);
             recyclerView.setAdapter(listarSentimentosAdapter);
         } else {
             splash_activity.meuDirSentimentos.mkdirs();
@@ -171,10 +171,6 @@ public class Sentimentos extends AppCompatActivity {
             Bundle extra = data.getExtras();
             final Bitmap imagem = (Bitmap) extra.get("data");
 
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            imagem.compress(Bitmap.CompressFormat.PNG, 100, bos);
-            final byte[] bArray = bos.toByteArray();
-
             //alertDialog
             builder = new AlertDialog.Builder(this);
             LayoutInflater inflater = getLayoutInflater();
@@ -206,7 +202,6 @@ public class Sentimentos extends AppCompatActivity {
                             listaComunicacao.setTextoFalar_MontarFrase(null);
                             listaComunicacao.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
                             listaComunicacao.setTipoComunic("sentimentos");
-                            listaComunicacao.setFoto(bArray);
                             listaComunicacao.setExcluido("N");
 
                             comunicacaoDAO.salvar(listaComunicacao);

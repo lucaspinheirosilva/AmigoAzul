@@ -63,11 +63,4 @@ public class ListaComunicacao implements Serializable {
         this.excluido = excluido;
     }
 
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
 }

@@ -94,7 +94,7 @@ public class Splash_Activity extends AppCompatActivity {
                 }
 
                 //INSERIR DADOS DE COMUNICACAO NO BD
-                INSERIR_DADOS_BANCO();
+               /** INSERIR_DADOS_BANCO();*/
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -309,8 +309,8 @@ public class Splash_Activity extends AppCompatActivity {
         }
     }
 
-    public void INSERIR_DADOS_BANCO() {
-        /**verifica se existe comunicação cadastrado no BD**/
+    /*public void INSERIR_DADOS_BANCO() {
+        //verifica se existe comunicação cadastrado no BD
         ComunicacaoDAO comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
         List <ListaComunicacao> SPLASH_listComunic;
         //se a listagem for igual a 0 é inserido 2 registros na tabela COMUNICACAO por default
@@ -333,7 +333,7 @@ public class Splash_Activity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "SENTIMENTOS INSERIDOS COM SUCESSO", Toast.LENGTH_SHORT).show();
         }
 
-    }
+    }*/
 
 }
 
