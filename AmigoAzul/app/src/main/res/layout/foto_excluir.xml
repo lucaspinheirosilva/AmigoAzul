@@ -6,19 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txtvw_informAlterarFoto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="CLIQUE NA FOTO PARA ALTERAR"
-        android:textColor="#FF0505"
-        android:textSize="18sp"
-        android:textStyle="bold|italic"
-        android:visibility="invisible" />
-
     <ImageView
-        android:id="@+id/imgvw_fotoTirada"
+        android:id="@+id/imgvw_DELETAR_fotoTirada"
         android:layout_width="190dp"
         android:layout_height="203dp"
         android:layout_gravity="center_horizontal"
@@ -35,12 +24,32 @@
         android:text="Informe o texto ou palavra que o APP ira reproduzir" />
 
     <EditText
-        android:id="@+id/edttxt_textoFalar"
+        android:id="@+id/edttxt_Deletar_ID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:ems="10"
-        android:hint="EX: Bom dia mamãe"
+        android:hint="ID"
+        android:inputType="textPersonName"
+        android:maxLines="1" />
+
+    <EditText
+        android:id="@+id/edttxt_Deletar_textReproduzir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:ems="10"
+        android:hint="Texto a Reproduzir"
+        android:inputType="textPersonName"
+        android:maxLines="1" />
+
+    <EditText
+        android:id="@+id/edttxt_Deletar_TipoComunic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:ems="10"
+        android:hint="tipo de comunicacao"
         android:inputType="textPersonName"
         android:maxLines="1" />
 
@@ -51,7 +60,7 @@
         android:padding="5dp">
 
         <Button
-            android:id="@+id/btnCancelar_TextoFalar"
+            android:id="@+id/btnCancelar_FotoDeletar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -61,13 +70,13 @@
             android:text="CANCELAR" />
 
         <Button
-            android:id="@+id/btnSalvar_TextoFalar"
+            android:id="@+id/btnDeletar_FotoDeletar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="#ABEB97"
-            android:text="SALVAR" />
+            android:text="DELETAR" />
     </LinearLayout>
 </LinearLayout>

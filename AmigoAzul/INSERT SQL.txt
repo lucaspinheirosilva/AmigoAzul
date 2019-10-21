@@ -20,3 +20,18 @@ INSERT INTO tb_CAD_ATIVIDADE VALUES (1,"memoria com cores",1,05,85,"memoria",3);
 INSERT INTO tb_CAD_ATIVIDADE VALUES (2,"memoria 2x2",2,15,55,"memoria",3);
 INSERT INTO tb_CAD_ATIVIDADE VALUES (3,"memoria 4x4",3,10,95,"memoria",1);
 INSERT INTO tb_CAD_ATIVIDADE VALUES (4,"memoria 6x6",4,08,25,"memoria",2);
+
+
+
+1-MARANHAO--------------OK
+2-FABIO-----------------OK
+3-EDUARDO BATATA--------OK
+4-ANTONIO---------------OK
+5-EDUARDO PISCA---------OK
+6-CLAUDIO---------------OK
+7-FELIPE----------------OK
+8-GABRIO (KAKO)---------OK
+9-ALEX BIROLA-----------OK
+10-CESAR----------------OK
+11-EVERALDO-------------OK
+12-SOGRO FELIPE---------OK

@@ -167,7 +167,7 @@ public class Sentimentos extends AppCompatActivity {
                     } else {//se for identificado que foi clicado no botao EXCLUIR ele ira apresente um
                         // DIALOG com as informações da imagem para fazer a alteração
 
-                        //alertDialog
+                        //alertDialog para ALTERAR
                         builder = new AlertDialog.Builder(Sentimentos.this);
                         LayoutInflater inflater = getLayoutInflater();
                         View dialogText_Fotoview = inflater.inflate(R.layout.texto_foto, null);
@@ -177,7 +177,7 @@ public class Sentimentos extends AppCompatActivity {
                         final ImageView imagemTirada = dialogText_Fotoview.findViewById(R.id.imgvw_fotoTirada);
                         final EditText textoFalar = dialogText_Fotoview.findViewById(R.id.edttxt_textoFalar);
                         final TextView textInformativo = dialogText_Fotoview.findViewById(R.id.txtvw_informAlterarFoto);
-                        final Button salvar = dialogText_Fotoview.findViewById(R.id.btnSalvar_TextoFalar);
+                        final Button salvar = dialogText_Fotoview.findViewById(R.id.btnDeletar_FotoDeletar);
                         Button cancelar = dialogText_Fotoview.findViewById(R.id.btnCancelar_TextoFalar);
 
                         //seta o texto informativo para alterar a foto e deixa ele VISIVEL
@@ -192,12 +192,12 @@ public class Sentimentos extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 if (textoFalar.getText().length() <= 3) {
-                                    textoFalar.setError("Informe o Texto por favor");
+                                    textoFalar.setError("Informe o Texto por favor com no minimo 3 letras");
                                     textoFalar.setFocusable(true);
 
                                 } else {
 
-                                    //Savar dados da imagem no BD
+                                    //atualiza dados da imagem no BD
                                     if (bitmap != null) {
                                         listaComunicacao = new ListaComunicacao();
                                         listaComunicacao.setId(listaComunicacaoRCRVW.getId());
@@ -226,8 +226,7 @@ public class Sentimentos extends AppCompatActivity {
                         });
                         alerta = builder.create();
                         alerta.show();
-
-                        Toast.makeText(getApplicationContext(), "ALTERAÇÂO", Toast.LENGTH_LONG).show();
+                        //***fim do ALERTDIALOG
                     }
                 }
 
@@ -239,7 +238,69 @@ public class Sentimentos extends AppCompatActivity {
                     } else {
                         // caso o usuario pressione e segura a imagem, o app ira perguntar se ele
                         //quer excluir a imagem mesmo, perante ao click no FAB deletar
-                        Toast.makeText(getApplicationContext(), "EXCLUSAO", Toast.LENGTH_LONG).show();
+
+                        final ListaComunicacao listaComunicacaoRCRVW = finalList.get(position);// pega a posição do item clicado
+
+                        //alertDialog para EXCLUIR
+                        builder = new AlertDialog.Builder(Sentimentos.this);
+                        LayoutInflater inflater = getLayoutInflater();
+                        View dialogText_Fotoview = inflater.inflate(R.layout.foto_excluir, null);
+                        builder.setView(dialogText_Fotoview);
+                        builder.setCancelable(false);
+
+                        final ImageView imagemTirada_excluir = dialogText_Fotoview.findViewById(R.id.imgvw_DELETAR_fotoTirada);
+                        final EditText id = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_ID);
+                        final EditText tipoComunicacao = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_TipoComunic);
+                        final EditText textoFalar_excluir = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_textReproduzir);
+
+
+                        final Button deletar_excluir = dialogText_Fotoview.findViewById(R.id.btnDeletar_FotoDeletar);
+                        Button cancelar_excluir = dialogText_Fotoview.findViewById(R.id.btnCancelar_FotoDeletar);
+
+                        //preenche os campos com os dados
+                        id.setText(listaComunicacaoRCRVW.getId().toString());
+                        tipoComunicacao.setText(listaComunicacaoRCRVW.getTipoComunic());
+                        textoFalar_excluir.setText(listaComunicacaoRCRVW.getTextoFalar());
+
+                        //converte o caminho da imagem em um BITMAP
+                        final Bitmap bitmap = BitmapFactory.decodeFile(listaComunicacaoRCRVW.getCaminhoFirebase());
+                        imagemTirada_excluir.setImageBitmap(bitmap);
+
+                        //deixa os campos inativos para a alteração dos textos
+                        id.setEnabled(false);
+                        tipoComunicacao.setEnabled(false);
+                        textoFalar_excluir.setEnabled(false);
+
+                        deletar_excluir.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                //DELETAR dados da imagem no BD
+                                    listaComunicacao = new ListaComunicacao();
+                                    listaComunicacao.setId(listaComunicacaoRCRVW.getId());
+                                    listaComunicacao.setTextoFalar_MontarFrase(null);
+                                    listaComunicacao.setExcluido("S");
+                                    listaComunicacao.setTipoComunic(listaComunicacaoRCRVW.getTipoComunic());
+                                    listaComunicacao.setTextoFalar(listaComunicacaoRCRVW.getTextoFalar());
+                                    listaComunicacao.setCaminhoFirebase(listaComunicacaoRCRVW.getCaminhoFirebase());
+
+                                    comunicacaoDAO.atualizar(listaComunicacao);
+                                    alerta.cancel();
+                                    Intent intent = new Intent(Sentimentos.this,Sentimentos.class);
+                                    startActivity(intent);
+                                    Toast.makeText(getApplicationContext(), "EXCLUIDO COM SUCESSO", Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+                        cancelar_excluir.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                alerta.dismiss();
+                            }
+                        });
+                        alerta = builder.create();
+                        alerta.show();
+                        //***fim do ALERTDIALOG
                     }
                 }
 
@@ -319,7 +380,7 @@ public class Sentimentos extends AppCompatActivity {
                 public void onClick(View v) {
 
                     if (textoFalar.getText().length() <= 3) {
-                        textoFalar.setError("Informe o Texto por favor");
+                        textoFalar.setError("Informe o Texto por favor com no minimo 3 letras");
                         textoFalar.setFocusable(true);
 
                     } else {
