@@ -271,7 +271,7 @@ public class Objetos extends AppCompatActivity {
                         builder.setCancelable(false);
 
                         final ImageView imagemTirada_excluir = dialogText_Fotoview.findViewById(R.id.imgvw_DELETAR_fotoTirada);
-                        final TextInputEditText id = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_ID);
+                        final EditText id = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_ID);
                         final EditText tipoComunicacao = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_TipoComunic);
                         final EditText textoFalar_excluir = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_textReproduzir);
 
