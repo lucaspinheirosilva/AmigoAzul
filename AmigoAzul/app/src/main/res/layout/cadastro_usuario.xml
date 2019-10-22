@@ -234,7 +234,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:maxImageSize="35dp"
                         app:rippleColor="#CE3939"
-                        app:srcCompat="@drawable/ic_deletar_imagem" />
+                        app:srcCompat="@drawable/deletar_imagem" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/FAB_gravarCasUser"

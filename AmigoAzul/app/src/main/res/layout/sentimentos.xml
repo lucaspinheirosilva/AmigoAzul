@@ -26,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        app:fabDrawable="@drawable/add_imagem"
         app:fabGravity="bottom_end"
         app:fabMenu="@menu/menu_fab_comunicacao"
         app:layout_constraintBottom_toBottomOf="parent"

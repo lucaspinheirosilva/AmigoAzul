@@ -165,8 +165,8 @@ public class Sentimentos extends AppCompatActivity {
                             Log.e("TTS", "Erro ao Converter Texto em Fala!");
                         }
                     } else {//se for identificado que foi clicado no botao EXCLUIR ele ira apresente um
-                        // DIALOG com as informações da imagem para fazer a alteração
 
+                        // DIALOG com as informações da imagem para fazer a alteração
                         //alertDialog para ALTERAR
                         builder = new AlertDialog.Builder(Sentimentos.this);
                         LayoutInflater inflater = getLayoutInflater();
@@ -177,7 +177,7 @@ public class Sentimentos extends AppCompatActivity {
                         final ImageView imagemTirada = dialogText_Fotoview.findViewById(R.id.imgvw_fotoTirada);
                         final EditText textoFalar = dialogText_Fotoview.findViewById(R.id.edttxt_textoFalar);
                         final TextView textInformativo = dialogText_Fotoview.findViewById(R.id.txtvw_informAlterarFoto);
-                        final Button salvar = dialogText_Fotoview.findViewById(R.id.btnDeletar_FotoDeletar);
+                        final Button salvar = dialogText_Fotoview.findViewById(R.id.btnSalvar_TextoFalar);
                         Button cancelar = dialogText_Fotoview.findViewById(R.id.btnCancelar_TextoFalar);
 
                         //seta o texto informativo para alterar a foto e deixa ele VISIVEL

@@ -16,5 +16,11 @@
     <!--ARRASTA E SOLTA-->
     <color name="fundoTexto">#FAFAFA</color>
 
+    <integer-array name="fab_menu_item_colors">
+        <!-- A dark Holo shade of red -->
+        <item>@android:color/holo_red_dark</item>
+        <!-- A light Holo shade of green -->
+        <item>@android:color/holo_green_light</item>
+    </integer-array>
 
 </resources>

@@ -3,13 +3,15 @@
 
     <item
         android:id="@+id/FAB_acao_addImagem"
-        android:icon="@drawable/ic_add_imagem"
+        android:icon="@drawable/add_imagem"
+        android:orderInCategory="1"
         android:title="add foto" />
         android:title=""/>
     <item
         android:id="@+id/FAB_acao_excluirImagem"
-        android:icon="@drawable/ic_deletar_imagem"
-        android:title="deletar foto" />
+        android:icon="@drawable/deletar_imagem"
+        android:orderInCategory="2"
+        android:title="Alterar/Excluir" />
         android:title="" />
 
 </menu>
