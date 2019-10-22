@@ -39,6 +39,9 @@ public class Links {
     /*PEGAR IMAGEM DA PASTA E MOVER PARA OUTRA*/
     //https://pt.stackoverflow.com/questions/187457/pegar-uma-imagem-da-galeria-e-mover-para-uma-pasta
 
+    /*MONTAR IMAGEM NO GRID (exemplo do adapter utilizado)*/
+    //https://acomputerengineer.wordpress.com/2018/04/15/display-image-grid-in-recyclerview-in-android/
+
 
     /**OBJETOS*/
     /*CARREGAR FOTOS*/
@@ -53,6 +56,8 @@ public class Links {
     /*PEGAR IMAGEM DA PASTA E MOVER PARA OUTRA*/
     //https://pt.stackoverflow.com/questions/187457/pegar-uma-imagem-da-galeria-e-mover-para-uma-pasta
 
+    /*MONTAR IMAGEM NO GRID (exemplo do adapter utilizado)*/
+    //https://acomputerengineer.wordpress.com/2018/04/15/display-image-grid-in-recyclerview-in-android/
 
     /**CADASTRO DE USUARIO*/
     /*MASCARA DE DATA NO EDITTEXT*/

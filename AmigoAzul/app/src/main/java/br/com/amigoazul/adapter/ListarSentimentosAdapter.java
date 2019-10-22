@@ -30,9 +30,6 @@ import br.com.amigoazul.model.ListaComunicacao;
  */
 public class ListarSentimentosAdapter extends RecyclerView.Adapter<ListarSentimentosAdapter.ListarComunicacaoAdapterViewHolder> {
 
-
-
-
     private List<ListaComunicacao> imageList;
 
     private Context context;

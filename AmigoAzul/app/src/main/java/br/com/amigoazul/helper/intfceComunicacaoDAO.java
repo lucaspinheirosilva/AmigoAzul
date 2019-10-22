@@ -12,5 +12,7 @@ public interface intfceComunicacaoDAO {
     public boolean salvar(ListaComunicacao lista_comunic);
     public boolean atualizar(ListaComunicacao lista_comunic);
     public boolean deletar(ListaComunicacao lista_comunic);
-    public List <ListaComunicacao> listar();
+    public List <ListaComunicacao> listar_sentimentos();
+    public List <ListaComunicacao> listar_objetos();
+    public List <ListaComunicacao> listar_montarFrases();
 }

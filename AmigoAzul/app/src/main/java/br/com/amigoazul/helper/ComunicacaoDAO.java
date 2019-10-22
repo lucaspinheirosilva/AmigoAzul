@@ -69,7 +69,6 @@ public class ComunicacaoDAO implements intfceComunicacaoDAO {
         return true;
     }
 
-
     @Override
     public boolean deletar(ListaComunicacao lista_comunic) {
         Long idUser = lista_comunic.getId();
@@ -90,10 +89,10 @@ public class ComunicacaoDAO implements intfceComunicacaoDAO {
     }
 
     @Override
-    public List <ListaComunicacao> listar() {
-        List <ListaComunicacao> listarcomunicacao = new ArrayList <>();
+    public List <ListaComunicacao> listar_sentimentos() {
+        List <ListaComunicacao> listarSentimentos = new ArrayList <>();
 
-        String sqlListar = "SELECT * FROM " + DBHelper.TABELA_COMUNICACAO + " where excluido = 'N'; ";
+        String sqlListar = "SELECT * FROM " + DBHelper.TABELA_COMUNICACAO + " where excluido = 'N' and tipo_comunic='sentimentos' ";
         Cursor cursor = ler.rawQuery(sqlListar, null);
 
         while (cursor.moveToNext()) {
@@ -114,9 +113,71 @@ public class ComunicacaoDAO implements intfceComunicacaoDAO {
             listaComunicacao.setTextoFalar_MontarFrase(textofalarMontarFrase);
             listaComunicacao.setExcluido(excluido);
 
-            listarcomunicacao.add(listaComunicacao);
+            listarSentimentos.add(listaComunicacao);
         }
-        return listarcomunicacao;
+        return listarSentimentos;
     }
+
+    @Override
+    public List <ListaComunicacao> listar_objetos() {
+        List <ListaComunicacao> listarObjeto = new ArrayList <>();
+
+        String sqlListar = "SELECT * FROM " + DBHelper.TABELA_COMUNICACAO + " where excluido = 'N' and tipo_comunic='objetos'";
+        Cursor cursor = ler.rawQuery(sqlListar, null);
+
+        while (cursor.moveToNext()) {
+            ListaComunicacao listaComunicacao = new ListaComunicacao();
+
+            Long id = cursor.getLong(cursor.getColumnIndex("id"));
+            String caminhoFirebase = cursor.getString(cursor.getColumnIndex("caminho_fire"));
+            String tipo_comunic = cursor.getString(cursor.getColumnIndex("tipo_comunic"));
+            String textofalar = cursor.getString(cursor.getColumnIndex("texto_falar"));
+            String textofalarMontarFrase = cursor.getString(cursor.getColumnIndex("texto_falar_montarfrase"));
+            String excluido = cursor.getString(cursor.getColumnIndex("excluido"));
+
+
+            listaComunicacao.setId(id);
+            listaComunicacao.setCaminhoFirebase(caminhoFirebase);
+            listaComunicacao.setTipoComunic(tipo_comunic);
+            listaComunicacao.setTextoFalar(textofalar);
+            listaComunicacao.setTextoFalar_MontarFrase(textofalarMontarFrase);
+            listaComunicacao.setExcluido(excluido);
+
+            listarObjeto.add(listaComunicacao);
+        }
+        return listarObjeto;
+    }
+
+    @Override
+    public List <ListaComunicacao> listar_montarFrases() {
+        List <ListaComunicacao> listarMontarFrase = new ArrayList <>();
+
+        String sqlListar = "SELECT * FROM " + DBHelper.TABELA_COMUNICACAO + " where excluido = 'N' and tipo_comunic='montar frase' ";
+        Cursor cursor = ler.rawQuery(sqlListar, null);
+
+        while (cursor.moveToNext()) {
+            ListaComunicacao listaComunicacao = new ListaComunicacao();
+
+            Long id = cursor.getLong(cursor.getColumnIndex("id"));
+            String caminhoFirebase = cursor.getString(cursor.getColumnIndex("caminho_fire"));
+            String tipo_comunic = cursor.getString(cursor.getColumnIndex("tipo_comunic"));
+            String textofalar = cursor.getString(cursor.getColumnIndex("texto_falar"));
+            String textofalarMontarFrase = cursor.getString(cursor.getColumnIndex("texto_falar_montarfrase"));
+            String excluido = cursor.getString(cursor.getColumnIndex("excluido"));
+
+
+            listaComunicacao.setId(id);
+            listaComunicacao.setCaminhoFirebase(caminhoFirebase);
+            listaComunicacao.setTipoComunic(tipo_comunic);
+            listaComunicacao.setTextoFalar(textofalar);
+            listaComunicacao.setTextoFalar_MontarFrase(textofalarMontarFrase);
+            listaComunicacao.setExcluido(excluido);
+
+            listarMontarFrase.add(listaComunicacao);
+        }
+        return listarMontarFrase;
+    }
+
+
 
 }

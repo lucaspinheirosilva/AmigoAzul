@@ -14,15 +14,16 @@ import java.io.File;
 import java.util.List;
 
 import br.com.amigoazul.R;
+import br.com.amigoazul.model.ListaComunicacao;
 
 /**
  * Criado por Lucas Pinheiro on 12/09/2019.
  */
 public class ListarObjetosAdapter extends RecyclerView.Adapter<ListarObjetosAdapter.ListarObjetosAdapterViewHolder> {
 
-    private List<File> imageList;
+    private List<ListaComunicacao> imageList;
 
-    private Context c;
+    private Context context;
 
     public class ListarObjetosAdapterViewHolder extends RecyclerView.ViewHolder {
         ImageView imageViewObjetos;
@@ -34,7 +35,7 @@ public class ListarObjetosAdapter extends RecyclerView.Adapter<ListarObjetosAdap
     }
 
     public ListarObjetosAdapter(Context c, List imageList) {
-        this.c = c;
+        this.context = c;
         this.imageList = imageList;
     }
 
@@ -47,20 +48,20 @@ public class ListarObjetosAdapter extends RecyclerView.Adapter<ListarObjetosAdap
 
     @Override
     public void onBindViewHolder(ListarObjetosAdapterViewHolder holder, int position) {
-        final File path = imageList.get(position);
-
+        final ListaComunicacao listaComunicacao = imageList.get(position);
+        final File pathFile = new File(listaComunicacao.getCaminhoFirebase());
 
 
         Picasso.get()
-                .load(path)
+                .load(pathFile)
                 .into(holder.imageViewObjetos);
 
-        holder.imageViewObjetos.setOnClickListener(new View.OnClickListener() {
+    /*    holder.imageViewObjetos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //handle click event on image
             }
-        });
+        });*/
     }
 
     @Override

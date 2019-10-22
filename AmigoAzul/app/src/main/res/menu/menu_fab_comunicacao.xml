@@ -6,12 +6,12 @@
         android:icon="@drawable/add_imagem"
         android:orderInCategory="1"
         android:title="add foto" />
-        android:title=""/>
+
     <item
         android:id="@+id/FAB_acao_excluirImagem"
         android:icon="@drawable/deletar_imagem"
         android:orderInCategory="2"
         android:title="Alterar/Excluir" />
-        android:title="" />
+
 
 </menu>

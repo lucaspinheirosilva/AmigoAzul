@@ -57,7 +57,12 @@ public class Sentimentos extends AppCompatActivity {
     //Texto em fala
     TextToSpeech textToSpeech;
 
-    ListaComunicacao listaComunicacao = new ListaComunicacao();//instaciar objeto Lista de comunicação para obter os GETTER e SETTER
+    ListaComunicacao listaComunicacaoSentimentos = new ListaComunicacao();//instaciar objeto Lista de comunicação para obter os GETTER e SETTER
+
+
+    //Constantes
+    private final int CAMERA = 1;
+    private final int GALERIA = 2;
 
 
     //metodos para pegar a data e hora do disposivo para montar o nome das fotos ao salvar
@@ -78,11 +83,12 @@ public class Sentimentos extends AppCompatActivity {
 
         CARREGAR_FOTOS_SENTIMENTOS();
 
+        //configuração do idioma e gramatica da fala do dispositivo
         textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
-                    //int ttsLang = textToSpeech.setLanguage(Locale.US);
+
                     int ttsLang = textToSpeech.setLanguage(new Locale("pt", "BR"));
 
                     if (ttsLang == TextToSpeech.LANG_MISSING_DATA
@@ -110,8 +116,8 @@ public class Sentimentos extends AppCompatActivity {
                         break;
                     case R.id.FAB_acao_excluirImagem:
                         Intent intent = new Intent(Sentimentos.this, Sentimentos.class);
-                        String blockSplash = "LiberadoParaExclusao";
-                        intent.putExtra("LIBERA_EXCLUSAO", blockSplash);
+                        String blockSentimentos = "LiberadoParaExclusao";
+                        intent.putExtra("LIBERA_EXCLUSAO",blockSentimentos );
                         startActivity(intent);
                         break;
                 }
@@ -136,7 +142,7 @@ public class Sentimentos extends AppCompatActivity {
 
             List <ListaComunicacao> list = new ArrayList();
             comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
-            list = comunicacaoDAO.listar();
+            list = comunicacaoDAO.listar_sentimentos();
 
             //"ADAPTER" que monta as imagens no RecyclerView com 3 colunas
             StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
@@ -152,12 +158,12 @@ public class Sentimentos extends AppCompatActivity {
                 @Override
                 public void onItemClick(View view, int position) {
 
-                    final ListaComunicacao listaComunicacaoRCRVW = finalList.get(position);// pega a posição do item clicado
+                    final ListaComunicacao listaComunicacaoSentimentoRCRVW = finalList.get(position);// pega a posição do item clicado
 
                     if (sentimentosAtual == null) {//se for nulo, nao pode alterar,só vai falar
 
-                        //metodo que pega o que esta no banco (listaComunicacaoRCRVW.getTextoFalar()) e reproduz
-                        String data = listaComunicacaoRCRVW.getTextoFalar();
+                        //metodo que pega o que esta no banco (listaComunicacaoSentimentoRCRVW.getTextoFalar()) e reproduz
+                        String data = listaComunicacaoSentimentoRCRVW.getTextoFalar();
                         Log.e("TTS", "Clicou no Botao: " + data);
                         int speechStatus = textToSpeech.speak(data, TextToSpeech.QUEUE_FLUSH, null);
 
@@ -183,11 +189,18 @@ public class Sentimentos extends AppCompatActivity {
                         //seta o texto informativo para alterar a foto e deixa ele VISIVEL
                         textInformativo.setVisibility(View.VISIBLE);
                         //preenche os campos com os dados
-                        textoFalar.setText(listaComunicacaoRCRVW.getTextoFalar());
+                        textoFalar.setText(listaComunicacaoSentimentoRCRVW.getTextoFalar());
                         //converte o caminho da imagem em um BITMAP
-                        final Bitmap bitmap = BitmapFactory.decodeFile(listaComunicacaoRCRVW.getCaminhoFirebase());
+                        final Bitmap bitmap = BitmapFactory.decodeFile(listaComunicacaoSentimentoRCRVW.getCaminhoFirebase());
                         imagemTirada.setImageBitmap(bitmap);
 
+                        imagemTirada.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(getApplicationContext(), "Implementar essa Função", Toast.LENGTH_LONG).show();
+                            }
+
+                        });
                         salvar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -199,15 +212,15 @@ public class Sentimentos extends AppCompatActivity {
 
                                     //atualiza dados da imagem no BD
                                     if (bitmap != null) {
-                                        listaComunicacao = new ListaComunicacao();
-                                        listaComunicacao.setId(listaComunicacaoRCRVW.getId());
-                                        listaComunicacao.setTextoFalar_MontarFrase(null);
-                                        listaComunicacao.setExcluido("N");
-                                        listaComunicacao.setTipoComunic(listaComunicacaoRCRVW.getTipoComunic());
-                                        listaComunicacao.setTextoFalar(textoFalar.getText().toString());
-                                        listaComunicacao.setCaminhoFirebase(listaComunicacaoRCRVW.getCaminhoFirebase());
+                                        listaComunicacaoSentimentos = new ListaComunicacao();
+                                        listaComunicacaoSentimentos.setId(listaComunicacaoSentimentoRCRVW.getId());
+                                        listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
+                                        listaComunicacaoSentimentos.setExcluido("N");
+                                        listaComunicacaoSentimentos.setTipoComunic(listaComunicacaoSentimentoRCRVW.getTipoComunic());
+                                        listaComunicacaoSentimentos.setTextoFalar(textoFalar.getText().toString());
+                                        listaComunicacaoSentimentos.setCaminhoFirebase(listaComunicacaoSentimentoRCRVW.getCaminhoFirebase());
 
-                                        comunicacaoDAO.atualizar(listaComunicacao);
+                                        comunicacaoDAO.atualizar(listaComunicacaoSentimentos);
                                         alerta.cancel();
                                         Intent intent = new Intent(Sentimentos.this,Sentimentos.class);
                                         startActivity(intent);
@@ -226,7 +239,7 @@ public class Sentimentos extends AppCompatActivity {
                         });
                         alerta = builder.create();
                         alerta.show();
-                        //***fim do ALERTDIALOG
+                        //***fim do ALERTDIALOG ALTERAR
                     }
                 }
 
@@ -276,15 +289,15 @@ public class Sentimentos extends AppCompatActivity {
                             public void onClick(View view) {
 
                                 //DELETAR dados da imagem no BD
-                                    listaComunicacao = new ListaComunicacao();
-                                    listaComunicacao.setId(listaComunicacaoRCRVW.getId());
-                                    listaComunicacao.setTextoFalar_MontarFrase(null);
-                                    listaComunicacao.setExcluido("S");
-                                    listaComunicacao.setTipoComunic(listaComunicacaoRCRVW.getTipoComunic());
-                                    listaComunicacao.setTextoFalar(listaComunicacaoRCRVW.getTextoFalar());
-                                    listaComunicacao.setCaminhoFirebase(listaComunicacaoRCRVW.getCaminhoFirebase());
+                                listaComunicacaoSentimentos = new ListaComunicacao();
+                                listaComunicacaoSentimentos.setId(listaComunicacaoRCRVW.getId());
+                                listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
+                                listaComunicacaoSentimentos.setExcluido("S");
+                                listaComunicacaoSentimentos.setTipoComunic(listaComunicacaoRCRVW.getTipoComunic());
+                                listaComunicacaoSentimentos.setTextoFalar(listaComunicacaoRCRVW.getTextoFalar());
+                                listaComunicacaoSentimentos.setCaminhoFirebase(listaComunicacaoRCRVW.getCaminhoFirebase());
 
-                                    comunicacaoDAO.atualizar(listaComunicacao);
+                                    comunicacaoDAO.atualizar(listaComunicacaoSentimentos);
                                     alerta.cancel();
                                     Intent intent = new Intent(Sentimentos.this,Sentimentos.class);
                                     startActivity(intent);
@@ -333,7 +346,7 @@ public class Sentimentos extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent imageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(imageIntent, 1);
+                startActivityForResult(imageIntent, CAMERA);
                 alerta.cancel();
             }
 
@@ -343,7 +356,7 @@ public class Sentimentos extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentPegaFoto = new Intent(Intent.ACTION_PICK);
                 intentPegaFoto.setType("image/*");
-                startActivityForResult(intentPegaFoto, 11);
+                startActivityForResult(intentPegaFoto, GALERIA);
                 alerta.cancel();
             }
         });
@@ -357,7 +370,7 @@ public class Sentimentos extends AppCompatActivity {
 
         comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
 
-        if (requestCode == 1 && resultCode == RESULT_OK) {//tirar foto
+        if (requestCode == CAMERA && resultCode == RESULT_OK) {//tirar foto
             Bundle extra = data.getExtras();
             final Bitmap imagem = (Bitmap) extra.get("data");
 
@@ -388,13 +401,13 @@ public class Sentimentos extends AppCompatActivity {
                         //Savar dados da imagem no BD
                         if (imagem != null) {
                             String nomeDoArquivo = "AZ-" + dataFormatada + ".JPG";
-                            listaComunicacao.setTextoFalar(textoFalar.getText().toString());
-                            listaComunicacao.setTextoFalar_MontarFrase(null);
-                            listaComunicacao.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
-                            listaComunicacao.setTipoComunic("sentimentos");
-                            listaComunicacao.setExcluido("N");
+                            listaComunicacaoSentimentos.setTextoFalar(textoFalar.getText().toString());
+                            listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
+                            listaComunicacaoSentimentos.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
+                            listaComunicacaoSentimentos.setTipoComunic("sentimentos");
+                            listaComunicacaoSentimentos.setExcluido("N");
 
-                            comunicacaoDAO.salvar(listaComunicacao);
+                            comunicacaoDAO.salvar(listaComunicacaoSentimentos);
 
                             salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, nomeDoArquivo, splash_activity.meuDirSentimentos.getAbsolutePath());
                             alerta.cancel();
@@ -418,7 +431,7 @@ public class Sentimentos extends AppCompatActivity {
         }
 
 
-        if (resultCode == RESULT_OK && requestCode == 11) { //foto da galeria
+        if (resultCode == RESULT_OK && requestCode == GALERIA) { //foto da galeria
             //Pegamos a URI da imagem...
             Uri uriSelecionada = data.getData();
 
@@ -467,13 +480,13 @@ public class Sentimentos extends AppCompatActivity {
                         //Savar dados da imagem no BD
                         if (imagem != null) {
                             String nomeDoArquivo = "AZ-" + dataFormatada + ".JPG";
-                            listaComunicacao.setTextoFalar(textoFalar.getText().toString());
-                            listaComunicacao.setTextoFalar_MontarFrase(null);
-                            listaComunicacao.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
-                            listaComunicacao.setTipoComunic("sentimentos");
-                            listaComunicacao.setExcluido("N");
+                            listaComunicacaoSentimentos.setTextoFalar(textoFalar.getText().toString());
+                            listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
+                            listaComunicacaoSentimentos.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
+                            listaComunicacaoSentimentos.setTipoComunic("sentimentos");
+                            listaComunicacaoSentimentos.setExcluido("N");
 
-                            comunicacaoDAO.salvar(listaComunicacao);
+                            comunicacaoDAO.salvar(listaComunicacaoSentimentos);
 
                             try {//Movemos o arquivo!
                                 salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
