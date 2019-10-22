@@ -23,6 +23,7 @@
         android:layout_gravity="center_horizontal"
         android:text="Informe o texto ou palavra que o APP ira reproduzir" />
 
+
     <EditText
         android:id="@+id/edttxt_Deletar_ID"
         android:layout_width="match_parent"
@@ -32,6 +33,7 @@
         android:hint="ID"
         android:inputType="textPersonName"
         android:maxLines="1" />
+
 
     <EditText
         android:id="@+id/edttxt_Deletar_textReproduzir"

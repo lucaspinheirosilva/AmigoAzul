@@ -25,6 +25,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -181,7 +183,7 @@ public class Sentimentos extends AppCompatActivity {
                         builder.setCancelable(false);
 
                         final ImageView imagemTirada = dialogText_Fotoview.findViewById(R.id.imgvw_fotoTirada);
-                        final EditText textoFalar = dialogText_Fotoview.findViewById(R.id.edttxt_textoFalar);
+                        final TextInputEditText textoFalar = dialogText_Fotoview.findViewById(R.id.edttxt_textoFalar);
                         final TextView textInformativo = dialogText_Fotoview.findViewById(R.id.txtvw_informAlterarFoto);
                         final Button salvar = dialogText_Fotoview.findViewById(R.id.btnSalvar_TextoFalar);
                         Button cancelar = dialogText_Fotoview.findViewById(R.id.btnCancelar_TextoFalar);

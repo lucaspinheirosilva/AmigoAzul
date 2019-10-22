@@ -35,15 +35,33 @@
         android:layout_gravity="center_horizontal"
         android:text="Informe o texto ou palavra que o APP ira reproduzir" />
 
-    <EditText
-        android:id="@+id/edttxt_textoFalar"
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:ems="10"
-        android:hint="EX: Bom dia mamãe"
-        android:inputType="textPersonName"
-        android:maxLines="1" />
+        android:hint="Texto a reproduzir:"
+        android:textColorHint="#969696"
+        app:counterMaxLength="70"
+        app:hintTextAppearance="@style/HintTextFloating">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edttxt_textoFalar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/bg_edttxt"
+            android:inputType="text"
+            android:maxLength="70"
+            android:singleLine="true"
+            android:textColor="#000000"
+            android:textSize="@dimen/tamanho_fonte" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"

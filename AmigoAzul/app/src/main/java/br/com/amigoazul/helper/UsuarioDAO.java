@@ -94,7 +94,7 @@ public class UsuarioDAO implements intfceUsuarioDAO {
     public List <ListaUsuario> listar() {
         List <ListaUsuario> listaruser = new ArrayList <>();
 
-        String sqlListar = "SELECT * FROM " + DBHelper.TABELA_USUARIO + " ; ";
+        String sqlListar = "SELECT * FROM " + DBHelper.TABELA_USUARIO + " where usuario_ativo='S' ; ";
         Cursor cursor = ler.rawQuery(sqlListar, null);
 
         while (cursor.moveToNext()) {

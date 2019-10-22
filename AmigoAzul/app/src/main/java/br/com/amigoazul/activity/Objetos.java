@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 import java.io.IOException;
@@ -270,7 +271,7 @@ public class Objetos extends AppCompatActivity {
                         builder.setCancelable(false);
 
                         final ImageView imagemTirada_excluir = dialogText_Fotoview.findViewById(R.id.imgvw_DELETAR_fotoTirada);
-                        final EditText id = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_ID);
+                        final TextInputEditText id = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_ID);
                         final EditText tipoComunicacao = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_TipoComunic);
                         final EditText textoFalar_excluir = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_textReproduzir);
 

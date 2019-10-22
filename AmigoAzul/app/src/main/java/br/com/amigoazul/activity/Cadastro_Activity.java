@@ -216,7 +216,15 @@ public class Cadastro_Activity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         if (usuarioAtual != null) {
-                            usuarioDAO.deletar(usuarioAtual);
+                            listaUsuario.setId(usuarioAtual.getId());
+                            listaUsuario.setNomeUsuario(usuarioAtual.getNomeUsuario());
+                            listaUsuario.setDataNasc(usuarioAtual.getDataNasc());
+                            listaUsuario.setEmail(usuarioAtual.getEmail());
+                            listaUsuario.setSenha(usuarioAtual.getSenha());
+                            listaUsuario.setGrauTEA(usuarioAtual.getGrauTEA());
+                            listaUsuario.setUsuarioAtivo("N");
+
+                            usuarioDAO.atualizar(listaUsuario);
                             Toast.makeText(getApplicationContext(), "Excluido com Sucesso!!", Toast.LENGTH_LONG).show();
                             finish();
                         } else {
