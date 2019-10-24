@@ -16,7 +16,7 @@ public class ListaUsuario implements Serializable {
     String nomeUsuario;
     String dataNasc;
     String grauTEA;
-    String usuarioAtivo;
+    String excluido;
     String email;
     String senha;
 
@@ -52,13 +52,11 @@ public class ListaUsuario implements Serializable {
         this.grauTEA = grauTEA;
     }
 
-    public String getUsuarioAtivo() {
-        return usuarioAtivo;
+    public String getExcluido() {
+        return excluido;
     }
 
-    public void setUsuarioAtivo(String usuarioAtivo) {
-        this.usuarioAtivo = usuarioAtivo;
-    }
+    public void setExcluido(String excluido) { this.excluido = excluido;}
 
     public String getEmail() {
         return email;

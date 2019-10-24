@@ -133,7 +133,7 @@ public class Sentimentos extends AppCompatActivity {
         final String sentimentosAtual = (String) getIntent().getSerializableExtra("LIBERA_EXCLUSAO");
 
         //refencia o ID do recyclerView com a variavel
-        RecyclerView RCRVW_listarSentimentos = findViewById(R.id.rcrtvw_listarComunic);
+        RecyclerView RCRVW_listarSentimentos = findViewById(R.id.rcrtvw_listarComunicSentimentos);
 
 
         File diretorio = new File(splash_activity.meuDirSentimentos.getAbsolutePath());
@@ -217,7 +217,7 @@ public class Sentimentos extends AppCompatActivity {
                                         listaComunicacaoSentimentos = new ListaComunicacao();
                                         listaComunicacaoSentimentos.setId(listaComunicacaoSentimentoRCRVW.getId());
                                         listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
-                                        listaComunicacaoSentimentos.setExcluido("N");
+                                        listaComunicacaoSentimentos.setExcluido("n");
                                         listaComunicacaoSentimentos.setTipoComunic(listaComunicacaoSentimentoRCRVW.getTipoComunic());
                                         listaComunicacaoSentimentos.setTextoFalar(textoFalar.getText().toString());
                                         listaComunicacaoSentimentos.setCaminhoFirebase(listaComunicacaoSentimentoRCRVW.getCaminhoFirebase());
@@ -294,7 +294,7 @@ public class Sentimentos extends AppCompatActivity {
                                 listaComunicacaoSentimentos = new ListaComunicacao();
                                 listaComunicacaoSentimentos.setId(listaComunicacaoRCRVW.getId());
                                 listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
-                                listaComunicacaoSentimentos.setExcluido("S");
+                                listaComunicacaoSentimentos.setExcluido("s");
                                 listaComunicacaoSentimentos.setTipoComunic(listaComunicacaoRCRVW.getTipoComunic());
                                 listaComunicacaoSentimentos.setTextoFalar(listaComunicacaoRCRVW.getTextoFalar());
                                 listaComunicacaoSentimentos.setCaminhoFirebase(listaComunicacaoRCRVW.getCaminhoFirebase());
@@ -407,7 +407,7 @@ public class Sentimentos extends AppCompatActivity {
                             listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
                             listaComunicacaoSentimentos.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
                             listaComunicacaoSentimentos.setTipoComunic("sentimentos");
-                            listaComunicacaoSentimentos.setExcluido("N");
+                            listaComunicacaoSentimentos.setExcluido("n");
 
                             comunicacaoDAO.salvar(listaComunicacaoSentimentos);
 
@@ -486,7 +486,7 @@ public class Sentimentos extends AppCompatActivity {
                             listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
                             listaComunicacaoSentimentos.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
                             listaComunicacaoSentimentos.setTipoComunic("sentimentos");
-                            listaComunicacaoSentimentos.setExcluido("N");
+                            listaComunicacaoSentimentos.setExcluido("n");
 
                             comunicacaoDAO.salvar(listaComunicacaoSentimentos);
 

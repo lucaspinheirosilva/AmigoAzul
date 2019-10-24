@@ -36,7 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 " nomeuser TEXT NOT NULL, " +
                 " dataNasc TEXT NOT NULL, " +
                 " grauTEA TEXT NOT NULL, " +
-                " usuario_ativo TEXT NOT NULL, " +
+                " excluido TEXT NOT NULL, " +
                 " email TEXT, " +
                 "senha TEXT ) ";//TODO:criar sistema de criptografia da senha
 

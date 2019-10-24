@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayInputStream;
@@ -63,11 +64,18 @@ public class ListarSentimentosAdapter extends RecyclerView.Adapter<ListarSentime
         final ListaComunicacao listaComunicacao = imageList.get(position);
         final File pathFile = new File(listaComunicacao.getCaminhoFirebase());
 
-        Picasso.get()
+        Glide
+                .with(context)
+                .load(pathFile)
+                .centerCrop()
+                //.placeholder(R.drawable.loading_spinner)
+                .into(holder.imageViewSentimentos);
+
+        /*Picasso.get()
                 .load(pathFile)
                 //.resize(100,100)
                 //  .centerCrop()
-                .into(holder.imageViewSentimentos);
+                .into(holder.imageViewSentimentos);*/
 
 
 

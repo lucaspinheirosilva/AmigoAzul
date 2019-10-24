@@ -8,12 +8,14 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.List;
 
 import br.com.amigoazul.R;
+import br.com.amigoazul.activity.Objetos;
 import br.com.amigoazul.model.ListaComunicacao;
 
 /**
@@ -51,10 +53,16 @@ public class ListarObjetosAdapter extends RecyclerView.Adapter<ListarObjetosAdap
         final ListaComunicacao listaComunicacao = imageList.get(position);
         final File pathFile = new File(listaComunicacao.getCaminhoFirebase());
 
-
-        Picasso.get()
+        Glide
+                .with(context)
                 .load(pathFile)
+                .centerCrop()
+                //.placeholder(R.drawable.loading_spinner)
                 .into(holder.imageViewObjetos);
+
+       /* Picasso.get()
+                .load(pathFile)
+                .into(holder.imageViewObjetos);*/
 
     /*    holder.imageViewObjetos.setOnClickListener(new View.OnClickListener() {
             @Override

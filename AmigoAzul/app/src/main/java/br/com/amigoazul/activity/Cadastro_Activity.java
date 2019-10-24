@@ -113,7 +113,7 @@ public class Cadastro_Activity extends AppCompatActivity {
                             dataNasc.setFocusable(true);
                             dataNasc.setError("data Invalida");
                         } else if ((Nivel1.isChecked()==false) && (Nivel2.isChecked()==false) && (Nivel3.isChecked()==false)) {
-                            Toast.makeText(getApplicationContext(), "Selecione o NIVEL do TEA", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Selecione o NÍVEL do TEA", Toast.LENGTH_SHORT).show();
                             Nivel1.setTextColor(Color.RED);
                             Nivel2.setTextColor(Color.RED);
                             Nivel3.setTextColor(Color.RED);
@@ -141,18 +141,18 @@ public class Cadastro_Activity extends AppCompatActivity {
 
                             listaUsuario.setEmail(email.getText().toString());
                             listaUsuario.setSenha(senha.getText().toString());
-                            listaUsuario.setUsuarioAtivo("S");
+                            listaUsuario.setExcluido("n");
 
                             usuarioDAO.salvar(listaUsuario);
 
-                            Toast.makeText(getApplicationContext(), "SALVO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "cadastro de usuário salvo com sucesso", Toast.LENGTH_SHORT).show();
 
                             Intent intent = new Intent(Cadastro_Activity.this, MainMenu.class);
                             startActivity(intent);
                             finish();
                         }
                     } catch (Exception erro) {
-                        Toast.makeText(getApplicationContext(), "ERRO AO SALVAR " + erro.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "erro ao salvar cadastro de usuário " + erro.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 } else {//****ALTERAR****//
 
@@ -176,28 +176,29 @@ public class Cadastro_Activity extends AppCompatActivity {
                             listaUsuario.setDataNasc(dataNasc.getText().toString());
 
                             if (Nivel1.isChecked()) {
-                                NIVELTEA = "Nivel 1";
+                                NIVELTEA = "nivel 1";
                                 listaUsuario.setGrauTEA(NIVELTEA);
                             }
                             if (Nivel2.isChecked()) {
-                                NIVELTEA = "Nivel 2";
+                                NIVELTEA = "nivel 2";
                                 listaUsuario.setGrauTEA(NIVELTEA);
                             }
                             if (Nivel3.isChecked()) {
-                                NIVELTEA = "Nivel 3";
+                                NIVELTEA = "nivel 3";
                                 listaUsuario.setGrauTEA(NIVELTEA);
                             }
 
                             listaUsuario.setEmail(email.getText().toString());
                             listaUsuario.setSenha(senha.getText().toString());
+                            listaUsuario.setExcluido(usuarioAtual.getExcluido());
 
                             usuarioDAO.atualizar(listaUsuario);
 
-                            Toast.makeText(getApplicationContext(), "usuario ATUALIZADO com sucesso", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), " cadastro de usuario atualizado com sucesso", Toast.LENGTH_LONG).show();
                             finish();
                         }
                     } catch (Exception erro) {
-                        Toast.makeText(getApplicationContext(), "ERRO AO ATUALIZAR " + erro.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "erro ao atualizar cadastro de usuario " + erro.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -222,7 +223,7 @@ public class Cadastro_Activity extends AppCompatActivity {
                             listaUsuario.setEmail(usuarioAtual.getEmail());
                             listaUsuario.setSenha(usuarioAtual.getSenha());
                             listaUsuario.setGrauTEA(usuarioAtual.getGrauTEA());
-                            listaUsuario.setUsuarioAtivo("N");
+                            listaUsuario.setExcluido("S");
 
                             usuarioDAO.atualizar(listaUsuario);
                             Toast.makeText(getApplicationContext(), "Excluido com Sucesso!!", Toast.LENGTH_LONG).show();

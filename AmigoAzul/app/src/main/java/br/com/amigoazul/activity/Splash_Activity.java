@@ -94,7 +94,7 @@ public class Splash_Activity extends AppCompatActivity {
                 }
 
                 //INSERIR DADOS DE COMUNICACAO NO BD
-               /** INSERIR_DADOS_BANCO();*/
+                INSERIR_DADOS_BANCO();
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -114,7 +114,7 @@ public class Splash_Activity extends AppCompatActivity {
                             startActivity(i);
                             finish();
                         } else {
-                            Toast.makeText(getApplicationContext(), "NADA ENCONTRADO", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "NENHUM USUARIO ENCONTRADO", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(Splash_Activity.this, Introducao_Activity.class);
                             startActivity(i);
                             // Fecha esta activity
@@ -308,31 +308,52 @@ public class Splash_Activity extends AppCompatActivity {
         }
     }
 
-    /*public void INSERIR_DADOS_BANCO() {
+    public void INSERIR_DADOS_BANCO() {
         //verifica se existe comunicação cadastrado no BD
         ComunicacaoDAO comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
-        List <ListaComunicacao> SPLASH_listComunic;
+        List <ListaComunicacao> SPLASH_listComunicSentimentos;
+        List <ListaComunicacao> SPLASH_listComunicObjetos;
         //se a listagem for igual a 0 é inserido 2 registros na tabela COMUNICACAO por default
-        SPLASH_listComunic = comunicacaoDAO.listar();
-        if (SPLASH_listComunic.size() == 0) {
-            listaComunicacao.setCaminhoFirebase("sentimento_1.png");
-            listaComunicacao.setTextoFalar("eu te amo");
+        SPLASH_listComunicSentimentos = comunicacaoDAO.listar_sentimentos();
+        SPLASH_listComunicObjetos = comunicacaoDAO.listar_objetos();
+
+        if ((SPLASH_listComunicSentimentos.size() == 0)||(SPLASH_listComunicObjetos.size()==00)) {
+
+            //INSERE SENTIMENTOS
+            listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Sentimentos/AZ-22-10-2019-19:55:00.JPG");
+            listaComunicacao.setTextoFalar("estou com dor");
             listaComunicacao.setTextoFalar_MontarFrase(null);
             listaComunicacao.setTipoComunic("sentimentos");
-            listaComunicacao.setExcluido("N");
+            listaComunicacao.setExcluido("n");
             comunicacaoDAO.salvar(listaComunicacao);
 
-            listaComunicacao.setCaminhoFirebase("sentimento_2.jpg");
-            listaComunicacao.setTextoFalar("estou triste");
+            listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Sentimentos/AZ-22-10-2019-19:55:42.JPG");
+            listaComunicacao.setTextoFalar("estou com fome");
             listaComunicacao.setTextoFalar_MontarFrase(null);
             listaComunicacao.setTipoComunic("sentimentos");
-            listaComunicacao.setExcluido("S");
-
+            listaComunicacao.setExcluido("n");
             comunicacaoDAO.salvar(listaComunicacao);
-            Toast.makeText(getApplicationContext(), "SENTIMENTOS INSERIDOS COM SUCESSO", Toast.LENGTH_SHORT).show();
+
+
+            //INSERE OBJETOS
+            listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Objetos/AZ-22-10-2019-19:56:11.JPG");
+            listaComunicacao.setTextoFalar("quero brincar com a bola");
+            listaComunicacao.setTextoFalar_MontarFrase(null);
+            listaComunicacao.setTipoComunic("objetos");
+            listaComunicacao.setExcluido("n");
+            comunicacaoDAO.salvar(listaComunicacao);
+
+            listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Objetos/AZ-22-10-2019-19:56:42.JPG");
+            listaComunicacao.setTextoFalar("quero ver televisão");
+            listaComunicacao.setTextoFalar_MontarFrase(null);
+            listaComunicacao.setTipoComunic("objetos");
+            listaComunicacao.setExcluido("n");
+            comunicacaoDAO.salvar(listaComunicacao);
+
+            Toast.makeText(getApplicationContext(), "SENTIMENTOS TESTE INSERIDOS COM SUCESSO INSERIDOS COM SUCESSO", Toast.LENGTH_SHORT).show();
         }
 
-    }*/
+    }
 
 }
 

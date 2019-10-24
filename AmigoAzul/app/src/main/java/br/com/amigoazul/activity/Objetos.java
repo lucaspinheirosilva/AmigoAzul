@@ -222,7 +222,7 @@ public class Objetos extends AppCompatActivity {
                                         listaComunicacaoObjetos = new ListaComunicacao();
                                         listaComunicacaoObjetos.setId(listaComunicacaoObjetoRCRVW.getId());
                                         listaComunicacaoObjetos.setTextoFalar_MontarFrase(null);
-                                        listaComunicacaoObjetos.setExcluido("N");
+                                        listaComunicacaoObjetos.setExcluido("n");
                                         listaComunicacaoObjetos.setTipoComunic(listaComunicacaoObjetoRCRVW.getTipoComunic());
                                         listaComunicacaoObjetos.setTextoFalar(textoFalar.getText().toString());
                                         listaComunicacaoObjetos.setCaminhoFirebase(listaComunicacaoObjetoRCRVW.getCaminhoFirebase());
@@ -301,7 +301,7 @@ public class Objetos extends AppCompatActivity {
                                 listaComunicacaoObjetos = new ListaComunicacao();
                                 listaComunicacaoObjetos.setId(listaComunicacaoRCRVW.getId());
                                 listaComunicacaoObjetos.setTextoFalar_MontarFrase(null);
-                                listaComunicacaoObjetos.setExcluido("S");
+                                listaComunicacaoObjetos.setExcluido("s");
                                 listaComunicacaoObjetos.setTipoComunic(listaComunicacaoRCRVW.getTipoComunic());
                                 listaComunicacaoObjetos.setTextoFalar(listaComunicacaoRCRVW.getTextoFalar());
                                 listaComunicacaoObjetos.setCaminhoFirebase(listaComunicacaoRCRVW.getCaminhoFirebase());
@@ -409,7 +409,7 @@ public class Objetos extends AppCompatActivity {
                             listaComunicacaoObjetos.setTextoFalar_MontarFrase(null);
                             listaComunicacaoObjetos.setCaminhoFirebase(splash_activity.meuDirObjetos + "/" + nomeDoArquivo);
                             listaComunicacaoObjetos.setTipoComunic("objetos");
-                            listaComunicacaoObjetos.setExcluido("N");
+                            listaComunicacaoObjetos.setExcluido("n");
 
                             comunicacaoDAO.salvar(listaComunicacaoObjetos);
 
@@ -488,7 +488,7 @@ public class Objetos extends AppCompatActivity {
                             listaComunicacaoObjetos.setTextoFalar_MontarFrase(null);
                             listaComunicacaoObjetos.setCaminhoFirebase(splash_activity.meuDirObjetos + "/" + nomeDoArquivo);
                             listaComunicacaoObjetos.setTipoComunic("objetos");
-                            listaComunicacaoObjetos.setExcluido("N");
+                            listaComunicacaoObjetos.setExcluido("n");
 
                             comunicacaoDAO.salvar(listaComunicacaoObjetos);
 

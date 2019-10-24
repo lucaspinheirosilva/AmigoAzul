@@ -26,14 +26,6 @@ public class MontarFrase extends AppCompatActivity {
         getSupportActionBar().hide();//esconder a actionBar
         setContentView(R.layout.montar_frase);
 
-        euQuero = findViewById(R.id.img_MF_euQuero);
-        brincar = findViewById(R.id.img_MF_brincar);
-        cachorro = findViewById(R.id.img_MF_cachorro);
-        bola = findViewById(R.id.img_MF_bola);
-        fraseMontada = findViewById(R.id.edttxt_MF_fraseMontada);
-        PlayAudio = findViewById(R.id.imgbtn_MF_playAudio);
-
-        //TODO: pensar em alguma forma de implementar essa tela
 
 
 

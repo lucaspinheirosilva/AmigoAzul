@@ -92,7 +92,7 @@ public class ComunicacaoDAO implements intfceComunicacaoDAO {
     public List <ListaComunicacao> listar_sentimentos() {
         List <ListaComunicacao> listarSentimentos = new ArrayList <>();
 
-        String sqlListar = "SELECT * FROM " + DBHelper.TABELA_COMUNICACAO + " where excluido = 'N' and tipo_comunic='sentimentos' ";
+        String sqlListar = "SELECT * FROM " + DBHelper.TABELA_COMUNICACAO + " where excluido = 'n' and tipo_comunic='sentimentos' ";
         Cursor cursor = ler.rawQuery(sqlListar, null);
 
         while (cursor.moveToNext()) {
@@ -122,7 +122,7 @@ public class ComunicacaoDAO implements intfceComunicacaoDAO {
     public List <ListaComunicacao> listar_objetos() {
         List <ListaComunicacao> listarObjeto = new ArrayList <>();
 
-        String sqlListar = "SELECT * FROM " + DBHelper.TABELA_COMUNICACAO + " where excluido = 'N' and tipo_comunic='objetos'";
+        String sqlListar = "SELECT * FROM " + DBHelper.TABELA_COMUNICACAO + " where excluido = 'n' and tipo_comunic='objetos'";
         Cursor cursor = ler.rawQuery(sqlListar, null);
 
         while (cursor.moveToNext()) {
@@ -152,7 +152,7 @@ public class ComunicacaoDAO implements intfceComunicacaoDAO {
     public List <ListaComunicacao> listar_montarFrases() {
         List <ListaComunicacao> listarMontarFrase = new ArrayList <>();
 
-        String sqlListar = "SELECT * FROM " + DBHelper.TABELA_COMUNICACAO + " where excluido = 'N' and tipo_comunic='montar frase' ";
+        String sqlListar = "SELECT * FROM " + DBHelper.TABELA_COMUNICACAO + " where excluido = 'n' and tipo_comunic='montar frase' ";
         Cursor cursor = ler.rawQuery(sqlListar, null);
 
         while (cursor.moveToNext()) {

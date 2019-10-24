@@ -21,55 +21,99 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Informe o texto ou palavra que o APP ira reproduzir" />
+        android:layout_marginBottom="5dp"
+        android:text="Tem certeza que deseja EXCLUIR os dados abaixo?"
+        android:textColor="#FF0303" />
 
 
-    <EditText
-        android:id="@+id/edttxt_Deletar_ID"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:ems="10"
-        android:hint="ID"
-        android:inputType="textPersonName"
-        android:maxLines="1" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="38dp"
+            android:paddingLeft="10dp"
+            android:text="ID:"
+            android:textColor="#000000"
+            android:textSize="17sp" />
+
+        <EditText
+            android:id="@+id/edttxt_Deletar_ID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:ems="10"
+            android:hint="ID"
+            android:inputType="textPersonName"
+            android:maxLines="1" />
+    </LinearLayout>
 
 
-    <EditText
-        android:id="@+id/edttxt_Deletar_textReproduzir"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:ems="10"
-        android:hint="Texto a Reproduzir"
-        android:inputType="textPersonName"
-        android:maxLines="1" />
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/edttxt_Deletar_TipoComunic"
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:text="TEXTO:"
+            android:textColor="#0A0A0A"
+            android:textSize="17sp" />
+
+        <EditText
+            android:id="@+id/edttxt_Deletar_textReproduzir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:ems="10"
+            android:hint="Texto a Reproduzir"
+            android:inputType="textPersonName"
+            android:maxLines="1" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:ems="10"
-        android:hint="tipo de comunicacao"
-        android:inputType="textPersonName"
-        android:maxLines="1" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="16dp"
+            android:paddingLeft="10dp"
+            android:text="TIPO:"
+            android:textColor="#090909"
+            android:textSize="17sp" />
+
+        <EditText
+            android:id="@+id/edttxt_Deletar_TipoComunic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:ems="10"
+            android:hint="tipo de comunicacao"
+            android:inputType="textPersonName"
+            android:maxLines="1" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="5dp">
-
-        <Button
-            android:id="@+id/btnCancelar_FotoDeletar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="#F59393"
-            android:text="CANCELAR" />
 
         <Button
             android:id="@+id/btnDeletar_FotoDeletar"
@@ -80,5 +124,15 @@
             android:layout_weight="1"
             android:background="#ABEB97"
             android:text="DELETAR" />
+
+        <Button
+            android:id="@+id/btnCancelar_FotoDeletar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="#F59393"
+            android:text="CANCELAR" />
     </LinearLayout>
 </LinearLayout>
