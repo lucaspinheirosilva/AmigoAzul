@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,9 +31,11 @@ public class ListarMontarFreseAdapter extends RecyclerView.Adapter<ListarMontarF
     public class ListarComunicacaoAdapterViewHolder extends RecyclerView.ViewHolder {
         ImageView imageViewMontarFrase;
 
+
         public ListarComunicacaoAdapterViewHolder(View view) {
             super(view);
             imageViewMontarFrase = view.findViewById(R.id.imgbtn_montarFrase_ID);
+
         }
     }
 
@@ -60,17 +63,7 @@ public class ListarMontarFreseAdapter extends RecyclerView.Adapter<ListarMontarF
                 .centerCrop()
                 //.placeholder(R.drawable.loading_spinner)
                 .into(holder.imageViewMontarFrase);
-
-       /* holder.imageViewSentimentos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context,listaComunicacao.getTextoFalar(),Toast.LENGTH_LONG).show();
-
-
-
-            }
-        });*/
-    }
+        }
 
     @Override
     public int getItemCount() {

@@ -554,6 +554,7 @@ public class MontarFrase extends AppCompatActivity {
         }
     }
 
+    //metodo para parar a reprodução do audio
     public void PARAR_REPRODUZIR_SOM() {
         if (textToSpeech != null) {
             if (textToSpeech.isSpeaking()) {
