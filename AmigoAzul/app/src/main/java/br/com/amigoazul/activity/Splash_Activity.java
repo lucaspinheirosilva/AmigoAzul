@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.amigoazul.R;
-import br.com.amigoazul.helper.ComunicacaoDAO;
+import br.com.amigoazul.helper.InserirDadosBD;
 import br.com.amigoazul.helper.UsuarioDAO;
 import br.com.amigoazul.model.ListaComunicacao;
 import br.com.amigoazul.model.ListaUsuario;
@@ -47,7 +47,9 @@ public class Splash_Activity extends AppCompatActivity {
     ProgressDialog progressDialog;
 
 
-    /**CRIAR DIRETORIO NO CELULAR DO USUARIO*/
+    /**
+     * CRIAR DIRETORIO NO CELULAR DO USUARIO
+     */
     public final File meuDiretorio = new File(Environment.getExternalStorageDirectory(), "AmigoAzul_Fotos");
     public final File meuDirSentimentos = new File(Environment.getExternalStorageDirectory(), "AmigoAzul_Fotos/Sentimentos");
     public final File meuDirObjetos = new File(Environment.getExternalStorageDirectory(), "AmigoAzul_Fotos/Objetos");
@@ -56,8 +58,11 @@ public class Splash_Activity extends AppCompatActivity {
     /***ALERTDIALOG*/
     private AlertDialog alerta;
 
-    /**ESTANCIAR OUTRAS CLASSES*/
+    /**
+     * ESTANCIAR OUTRAS CLASSES
+     */
     ListaComunicacao listaComunicacao = new ListaComunicacao();
+    InserirDadosBD inserirDadosAutomaticos = new InserirDadosBD();
 
 
     @Override
@@ -94,7 +99,7 @@ public class Splash_Activity extends AppCompatActivity {
                 }
 
                 //INSERIR DADOS DE COMUNICACAO NO BD
-                INSERIR_DADOS_BANCO();
+                inserirDadosAutomaticos.INSERIR_DADOS_BANCO(getApplicationContext());
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -208,7 +213,6 @@ public class Splash_Activity extends AppCompatActivity {
         }
 
     }*///metodo DOWNLOAD testar futuramente
-
     private boolean checkPermission() {
 
         int result_write = ContextCompat.checkSelfPermission(Splash_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -225,7 +229,7 @@ public class Splash_Activity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case Const_WRITE_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0
@@ -308,52 +312,6 @@ public class Splash_Activity extends AppCompatActivity {
         }
     }
 
-    public void INSERIR_DADOS_BANCO() {
-        //verifica se existe comunicação cadastrado no BD
-        ComunicacaoDAO comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
-        List <ListaComunicacao> SPLASH_listComunicSentimentos;
-        List <ListaComunicacao> SPLASH_listComunicObjetos;
-        //se a listagem for igual a 0 é inserido 2 registros na tabela COMUNICACAO por default
-        SPLASH_listComunicSentimentos = comunicacaoDAO.listar_sentimentos();
-        SPLASH_listComunicObjetos = comunicacaoDAO.listar_objetos();
-
-        if ((SPLASH_listComunicSentimentos.size() == 0)||(SPLASH_listComunicObjetos.size()==00)) {
-
-            //INSERE SENTIMENTOS
-            listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Sentimentos/AZ-22-10-2019-19:55:00.JPG");
-            listaComunicacao.setTextoFalar("estou com dor");
-            listaComunicacao.setTextoFalar_MontarFrase(null);
-            listaComunicacao.setTipoComunic("sentimentos");
-            listaComunicacao.setExcluido("n");
-            comunicacaoDAO.salvar(listaComunicacao);
-
-            listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Sentimentos/AZ-22-10-2019-19:55:42.JPG");
-            listaComunicacao.setTextoFalar("estou com fome");
-            listaComunicacao.setTextoFalar_MontarFrase(null);
-            listaComunicacao.setTipoComunic("sentimentos");
-            listaComunicacao.setExcluido("n");
-            comunicacaoDAO.salvar(listaComunicacao);
-
-
-            //INSERE OBJETOS
-            listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Objetos/AZ-22-10-2019-19:56:11.JPG");
-            listaComunicacao.setTextoFalar("quero brincar com a bola");
-            listaComunicacao.setTextoFalar_MontarFrase(null);
-            listaComunicacao.setTipoComunic("objetos");
-            listaComunicacao.setExcluido("n");
-            comunicacaoDAO.salvar(listaComunicacao);
-
-            listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Objetos/AZ-22-10-2019-19:56:42.JPG");
-            listaComunicacao.setTextoFalar("quero ver televisão");
-            listaComunicacao.setTextoFalar_MontarFrase(null);
-            listaComunicacao.setTipoComunic("objetos");
-            listaComunicacao.setExcluido("n");
-            comunicacaoDAO.salvar(listaComunicacao);
-
-            Toast.makeText(getApplicationContext(), "SENTIMENTOS TESTE INSERIDOS COM SUCESSO INSERIDOS COM SUCESSO", Toast.LENGTH_SHORT).show();
-        }
-
-    }
 
 }
 
