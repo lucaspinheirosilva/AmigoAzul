@@ -201,7 +201,7 @@ public class Sentimentos extends AppCompatActivity {
                         imagemTirada.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                //alertDialog
+                             /*   //alertDialog
                                 AlertDialog.Builder builder = new AlertDialog.Builder(Sentimentos.this);
                                 LayoutInflater inflater = getLayoutInflater();
                                 View dialogCameraGaleriaview = inflater.inflate(R.layout.dialog_camera_galeria, null);
@@ -215,7 +215,7 @@ public class Sentimentos extends AppCompatActivity {
                                     public void onClick(View v) {
 
                                         Intent imageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                        imageIntent.putExtra("libera_alteracao",listaComunicacaoSentimentoRCRVW);
+                                        imageIntent.putExtra("libera_alteracao", listaComunicacaoSentimentoRCRVW);
                                         startActivityForResult(imageIntent, ALTERA_CAMERA);
                                         alerta.cancel();
 
@@ -226,7 +226,7 @@ public class Sentimentos extends AppCompatActivity {
                                     public void onClick(View v) {
                                         Intent intentPegaFoto = new Intent(Intent.ACTION_PICK);
                                         intentPegaFoto.setType("image/*");
-                                        intentPegaFoto.putExtra("libera_alteracao",finalList.get(position));
+                                        intentPegaFoto.putExtra("libera_alteracao", finalList.get(position));
                                         startActivityForResult(intentPegaFoto, ALTERA_GALERIA);
                                         alerta.cancel();
 
@@ -234,7 +234,7 @@ public class Sentimentos extends AppCompatActivity {
                                     }
                                 });
                                 alerta = builder.create();
-                                alerta.show();
+                                alerta.show();*/
                             }
 
                         });
@@ -612,9 +612,9 @@ public class Sentimentos extends AppCompatActivity {
 
 
                             String s = liberadoParaAlterar.getCaminhoFirebase();
-                            String result = s.substring(s.lastIndexOf(System.getProperty("file.separator"))+1,s.length());
+                            String result = s.substring(s.lastIndexOf(System.getProperty("file.separator")) + 1, s.length());
                             System.out.println(result);
-                            Log.e("TESTESSSS",result);
+                            Log.e("TESTESSSS", result);
 
 
                             comunicacaoDAO.atualizar(listaComunicacaoSentimentos);
@@ -644,7 +644,94 @@ public class Sentimentos extends AppCompatActivity {
         //foto da galeria (ALTERAR)
         if (resultCode == RESULT_OK && requestCode == ALTERA_GALERIA) {
 
-            Toast.makeText(getApplicationContext(), "ALTERACAO GALERIA FEITA COM SUCESSO", Toast.LENGTH_LONG).show();
+            final ListaComunicacao libera_alteracao = (ListaComunicacao) getIntent().getSerializableExtra("libera_alteracao");
+
+            //Pegamos a URI da imagem...
+            Uri uriSelecionada = data.getData();
+
+            //pegar a imagem e converte  para um path compativel para inserir no ImageView
+            String[] colunas = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(uriSelecionada, colunas, null, null, null);
+            cursor.moveToFirst();
+            int indexColuna = cursor.getColumnIndex(colunas[0]);
+            String pathImg = cursor.getString(indexColuna);
+            cursor.close();
+
+            final Bitmap imagem = BitmapFactory.decodeFile(pathImg);
+            // criamos um File com o diretório selecionado!
+            final File selecionada = new File(salvar_foto.getRealPathFromURI(uriSelecionada, getApplicationContext()));
+            // Caso não exista o doretório, vamos criar!
+            final File rootPath = new File(splash_activity.meuDirSentimentos.getAbsolutePath());
+            if (!rootPath.exists()) {
+                rootPath.mkdirs();
+            }
+
+
+            //pegar apenas o nome do arquivo sem o nome do diretorio
+            String s = libera_alteracao.getCaminhoFirebase();
+            String result = s.substring(s.lastIndexOf(System.getProperty("file.separator")) + 1, s.length());
+            System.out.println(result);
+            Log.e("TESTESSSS", result);
+
+
+            // Criamos um file, com o DIRETORIO, com o mesmo nome novo
+            final File novaImagem = new File(rootPath, result);
+
+            //alertDialog
+            builder = new AlertDialog.Builder(this);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogText_Fotoview = inflater.inflate(R.layout.texto_foto, null);
+            builder.setView(dialogText_Fotoview);
+            builder.setCancelable(false);
+
+            final ImageView imagemTirada = dialogText_Fotoview.findViewById(R.id.imgvw_fotoTirada);
+            imagemTirada.setImageBitmap(imagem);
+            final Button salvar = dialogText_Fotoview.findViewById(R.id.btnSalvar_TextoFalar);
+            final EditText textoFalar = dialogText_Fotoview.findViewById(R.id.edttxt_textoFalar);
+            Button cancelar = dialogText_Fotoview.findViewById(R.id.btnCancelar_TextoFalar);
+
+            salvar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (textoFalar.getText().length() <= 3) {
+                        textoFalar.setError("Informe o Texto por favor");
+                        textoFalar.setFocusable(true);
+
+                    } else {
+                        //Savar dados da imagem no BD
+                        if (imagem != null) {
+                            String nomeDoArquivo = "AZ-" + dataFormatada + ".JPG";
+                            listaComunicacaoSentimentos.setTextoFalar(textoFalar.getText().toString());
+                            listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
+                            listaComunicacaoSentimentos.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
+                            listaComunicacaoSentimentos.setTipoComunic("sentimentos");
+                            listaComunicacaoSentimentos.setExcluido("n");
+
+                            comunicacaoDAO.salvar(listaComunicacaoSentimentos);
+
+                            try {//Movemos o arquivo!
+                                salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
+                                Toast.makeText(Sentimentos.this, "Imagem Salva com sucesso!", Toast.LENGTH_SHORT).show();
+                                alerta.cancel();
+                                CARREGAR_FOTOS_SENTIMENTOS();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }
+            });
+            cancelar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alerta.cancel();
+
+                }
+            });
+            alerta = builder.create();
+            alerta.show();
         }
     }
 

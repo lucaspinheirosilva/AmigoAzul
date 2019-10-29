@@ -89,7 +89,7 @@ public class InserirDadosBD {
 
             comunicacaoDAO.salvar(listaComunicacao);
 
-            listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Montar_Frase/AZ-27-10-2019-10:08:39.JPG");
+            listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Montar_Frase/AZ-29-10-2019-14:14:15.JPG");
             listaComunicacao.setTextoFalar(null);
             listaComunicacao.setTextoFalar_MontarFrase("não");
             listaComunicacao.setTipoComunic("montar frase");
