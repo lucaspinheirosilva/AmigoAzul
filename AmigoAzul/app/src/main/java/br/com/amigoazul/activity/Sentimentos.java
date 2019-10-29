@@ -65,6 +65,8 @@ public class Sentimentos extends AppCompatActivity {
     //Constantes
     private final int CAMERA = 1;
     private final int GALERIA = 2;
+    private final int ALTERA_CAMERA = 3;
+    private final int ALTERA_GALERIA = 4;
 
 
     //metodos para pegar a data e hora do disposivo para montar o nome das fotos ao salvar
@@ -114,12 +116,12 @@ public class Sentimentos extends AppCompatActivity {
             public boolean onMenuItemSelected(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.FAB_acao_addImagem:
-                        TIRAR_FOTO_ou_GALERIA();
+                        TIRAR_FOTO_ou_GALERIA(false);
                         break;
                     case R.id.FAB_acao_excluirImagem:
                         Intent intent = new Intent(Sentimentos.this, Sentimentos.class);
                         String blockSentimentos = "LiberadoParaExclusao";
-                        intent.putExtra("LIBERA_EXCLUSAO",blockSentimentos );
+                        intent.putExtra("LIBERA_EXCLUSAO", blockSentimentos);
                         startActivity(intent);
                         break;
                 }
@@ -158,7 +160,7 @@ public class Sentimentos extends AppCompatActivity {
             RCRVW_listarSentimentos.addOnItemTouchListener(new RecyclerItemClickListiner(getApplicationContext(),
                     RCRVW_listarSentimentos, new RecyclerItemClickListiner.OnItemClickListener() {
                 @Override
-                public void onItemClick(View view, int position) {
+                public void onItemClick(View view, final int position) {
 
                     final ListaComunicacao listaComunicacaoSentimentoRCRVW = finalList.get(position);// pega a posição do item clicado
 
@@ -173,8 +175,8 @@ public class Sentimentos extends AppCompatActivity {
                             Log.e("TTS", "Erro ao Converter Texto em Fala!");
                         }
                     } else {//se for identificado que foi clicado no botao EXCLUIR ele ira apresente um
-
                         // DIALOG com as informações da imagem para fazer a alteração
+
                         //alertDialog para ALTERAR
                         builder = new AlertDialog.Builder(Sentimentos.this);
                         LayoutInflater inflater = getLayoutInflater();
@@ -199,7 +201,40 @@ public class Sentimentos extends AppCompatActivity {
                         imagemTirada.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Toast.makeText(getApplicationContext(), "Implementar essa Função", Toast.LENGTH_LONG).show();
+                                //alertDialog
+                                AlertDialog.Builder builder = new AlertDialog.Builder(Sentimentos.this);
+                                LayoutInflater inflater = getLayoutInflater();
+                                View dialogCameraGaleriaview = inflater.inflate(R.layout.dialog_camera_galeria, null);
+                                builder.setView(dialogCameraGaleriaview);
+
+                                ImageButton camera = dialogCameraGaleriaview.findViewById(R.id.imgbtn_alerDialcamera);
+                                ImageButton galeria = dialogCameraGaleriaview.findViewById(R.id.imgbtn_alerDialgaleria);
+
+                                camera.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        Intent imageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                        imageIntent.putExtra("libera_alteracao",listaComunicacaoSentimentoRCRVW);
+                                        startActivityForResult(imageIntent, ALTERA_CAMERA);
+                                        alerta.cancel();
+
+                                    }
+                                });
+                                galeria.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intentPegaFoto = new Intent(Intent.ACTION_PICK);
+                                        intentPegaFoto.setType("image/*");
+                                        intentPegaFoto.putExtra("libera_alteracao",finalList.get(position));
+                                        startActivityForResult(intentPegaFoto, ALTERA_GALERIA);
+                                        alerta.cancel();
+
+
+                                    }
+                                });
+                                alerta = builder.create();
+                                alerta.show();
                             }
 
                         });
@@ -224,7 +259,7 @@ public class Sentimentos extends AppCompatActivity {
 
                                         comunicacaoDAO.atualizar(listaComunicacaoSentimentos);
                                         alerta.cancel();
-                                        Intent intent = new Intent(Sentimentos.this,Sentimentos.class);
+                                        Intent intent = new Intent(Sentimentos.this, Sentimentos.class);
                                         startActivity(intent);
                                         Toast.makeText(getApplicationContext(), "SALVO COM SUCESSO", Toast.LENGTH_LONG).show();
                                     }
@@ -236,7 +271,7 @@ public class Sentimentos extends AppCompatActivity {
                         cancelar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                alerta.dismiss();
+                                alerta.cancel();
                             }
                         });
                         alerta = builder.create();
@@ -299,11 +334,11 @@ public class Sentimentos extends AppCompatActivity {
                                 listaComunicacaoSentimentos.setTextoFalar(listaComunicacaoRCRVW.getTextoFalar());
                                 listaComunicacaoSentimentos.setCaminhoFirebase(listaComunicacaoRCRVW.getCaminhoFirebase());
 
-                                    comunicacaoDAO.atualizar(listaComunicacaoSentimentos);
-                                    alerta.cancel();
-                                    Intent intent = new Intent(Sentimentos.this,Sentimentos.class);
-                                    startActivity(intent);
-                                    Toast.makeText(getApplicationContext(), "EXCLUIDO COM SUCESSO", Toast.LENGTH_LONG).show();
+                                comunicacaoDAO.atualizar(listaComunicacaoSentimentos);
+                                alerta.cancel();
+                                Intent intent = new Intent(Sentimentos.this, Sentimentos.class);
+                                startActivity(intent);
+                                Toast.makeText(getApplicationContext(), "EXCLUIDO COM SUCESSO", Toast.LENGTH_LONG).show();
 
                             }
                         });
@@ -334,7 +369,7 @@ public class Sentimentos extends AppCompatActivity {
     }
 
 
-    public void TIRAR_FOTO_ou_GALERIA() {
+    public void TIRAR_FOTO_ou_GALERIA(final Boolean alteracao) {
         //alertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(Sentimentos.this);
         LayoutInflater inflater = getLayoutInflater();
@@ -348,18 +383,28 @@ public class Sentimentos extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent imageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(imageIntent, CAMERA);
+                if (alteracao == false) {
+                    startActivityForResult(imageIntent, CAMERA);
+                } else {
+                    startActivityForResult(imageIntent, ALTERA_CAMERA);
+                }
                 alerta.cancel();
-            }
 
+            }
         });
         galeria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentPegaFoto = new Intent(Intent.ACTION_PICK);
                 intentPegaFoto.setType("image/*");
-                startActivityForResult(intentPegaFoto, GALERIA);
+                if (alteracao == false) {
+                    startActivityForResult(intentPegaFoto, GALERIA);
+                } else {
+                    startActivityForResult(intentPegaFoto, ALTERA_GALERIA);
+                }
                 alerta.cancel();
+
+
             }
         });
         alerta = builder.create();
@@ -372,7 +417,7 @@ public class Sentimentos extends AppCompatActivity {
 
         comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
 
-        if (requestCode == CAMERA && resultCode == RESULT_OK) {//tirar foto
+        if (requestCode == CAMERA && resultCode == RESULT_OK) {//tirar foto(SALVAR)
             Bundle extra = data.getExtras();
             final Bitmap imagem = (Bitmap) extra.get("data");
 
@@ -432,8 +477,10 @@ public class Sentimentos extends AppCompatActivity {
             alerta.show();
         }
 
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-        if (resultCode == RESULT_OK && requestCode == GALERIA) { //foto da galeria
+        //foto da galeria (SALVAR)
+        if (resultCode == RESULT_OK && requestCode == GALERIA) {
             //Pegamos a URI da imagem...
             Uri uriSelecionada = data.getData();
 
@@ -492,7 +539,7 @@ public class Sentimentos extends AppCompatActivity {
 
                             try {//Movemos o arquivo!
                                 salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
-                                Toast.makeText(Sentimentos.this, "Imagem movida com sucesso!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Sentimentos.this, "Imagem Salva com sucesso!", Toast.LENGTH_SHORT).show();
                                 alerta.cancel();
                                 CARREGAR_FOTOS_SENTIMENTOS();
                             } catch (IOException e) {
@@ -512,10 +559,93 @@ public class Sentimentos extends AppCompatActivity {
             });
             alerta = builder.create();
             alerta.show();
+        }
+
+
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+        if (requestCode == ALTERA_CAMERA && resultCode == RESULT_OK) {//tirar foto(ALTERAR)
+            Toast.makeText(getApplicationContext(), "ALTERACAO CAMERA FEITA COM SUCESSO", Toast.LENGTH_LONG).show();
+            Bundle extra = data.getExtras();
+            final Bitmap imagem = (Bitmap) extra.get("data");
+
+            //alertDialog para ALTERAR
+            builder = new AlertDialog.Builder(Sentimentos.this);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogText_Fotoview = inflater.inflate(R.layout.texto_foto, null);
+            builder.setView(dialogText_Fotoview);
+            builder.setCancelable(false);
+
+            final ImageView imagemTirada = dialogText_Fotoview.findViewById(R.id.imgvw_fotoTirada);
+            final TextInputEditText textoFalar = dialogText_Fotoview.findViewById(R.id.edttxt_textoFalar);
+            final TextView textInformativo = dialogText_Fotoview.findViewById(R.id.txtvw_informAlterarFoto);
+            final Button salvar = dialogText_Fotoview.findViewById(R.id.btnSalvar_TextoFalar);
+            Button cancelar = dialogText_Fotoview.findViewById(R.id.btnCancelar_TextoFalar);
+
+            final ListaComunicacao liberadoParaAlterar = (ListaComunicacao) getIntent().getSerializableExtra("libera_alteracao");
+
+
+            //seta o texto informativo para alterar a foto e deixa ele VISIVEL
+            textInformativo.setVisibility(View.VISIBLE);
+            //preenche os campos com os dados
+            textoFalar.setText(liberadoParaAlterar.getTextoFalar());
+            //converte o caminho da imagem em um BITMAP
+            imagemTirada.setImageBitmap(imagem);
+
+            salvar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (textoFalar.getText().length() <= 3) {
+                        textoFalar.setError("Informe o Texto por favor com no minimo 3 letras");
+                        textoFalar.setFocusable(true);
+
+                    } else {
+
+                        //atualiza dados da imagem no BD
+                        if (imagem != null) {
+                            listaComunicacaoSentimentos = new ListaComunicacao();
+                            listaComunicacaoSentimentos.setId(liberadoParaAlterar.getId());
+                            listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
+                            listaComunicacaoSentimentos.setExcluido("n");
+                            listaComunicacaoSentimentos.setTipoComunic(liberadoParaAlterar.getTipoComunic());
+                            listaComunicacaoSentimentos.setTextoFalar(textoFalar.getText().toString());
+                            listaComunicacaoSentimentos.setCaminhoFirebase(liberadoParaAlterar.getCaminhoFirebase());
+
+
+                            String s = liberadoParaAlterar.getCaminhoFirebase();
+                            String result = s.substring(s.lastIndexOf(System.getProperty("file.separator"))+1,s.length());
+                            System.out.println(result);
+                            Log.e("TESTESSSS",result);
+
+
+                            comunicacaoDAO.atualizar(listaComunicacaoSentimentos);
+                            alerta.cancel();
+                            Intent intent = new Intent(Sentimentos.this, Sentimentos.class);
+                            startActivity(intent);
+                            Toast.makeText(getApplicationContext(), "ALTERADP COM SUCESSO", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+
+                }
+            });
+            cancelar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alerta.cancel();
+                }
+            });
+            alerta = builder.create();
+            alerta.show();
+            //***fim do ALERTDIALOG ALTERAR
 
 
         }
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+        //foto da galeria (ALTERAR)
+        if (resultCode == RESULT_OK && requestCode == ALTERA_GALERIA) {
 
+            Toast.makeText(getApplicationContext(), "ALTERACAO GALERIA FEITA COM SUCESSO", Toast.LENGTH_LONG).show();
+        }
     }
 
 

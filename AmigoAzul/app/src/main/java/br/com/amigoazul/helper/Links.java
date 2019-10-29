@@ -1,5 +1,7 @@
 package br.com.amigoazul.helper;
 
+import android.util.Log;
+
 /**
  * Criado por Lucas Pinheiro on 14/10/2019.
  */
@@ -79,7 +81,7 @@ public class Links {
             if (indiceBarra == 0) {
                 indiceBarra = caminhoCompleto.lastIndexOf("/") + 1;
             }
-            // Basta pegar o substring com o caminho da pasta.
-            String caminhoPasta = caminhoCompleto.substring(0, indiceBarra);
+           // Basta pegar o substring com o caminho da pasta.
+            /*String caminhoPasta = caminhoCompleto.substring(0, indiceBarra);
             Log.e("TESTE",caminhoPasta);*/
 }
