@@ -201,40 +201,7 @@ public class Sentimentos extends AppCompatActivity {
                         imagemTirada.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                             /*   //alertDialog
-                                AlertDialog.Builder builder = new AlertDialog.Builder(Sentimentos.this);
-                                LayoutInflater inflater = getLayoutInflater();
-                                View dialogCameraGaleriaview = inflater.inflate(R.layout.dialog_camera_galeria, null);
-                                builder.setView(dialogCameraGaleriaview);
 
-                                ImageButton camera = dialogCameraGaleriaview.findViewById(R.id.imgbtn_alerDialcamera);
-                                ImageButton galeria = dialogCameraGaleriaview.findViewById(R.id.imgbtn_alerDialgaleria);
-
-                                camera.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-
-                                        Intent imageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                        imageIntent.putExtra("libera_alteracao", listaComunicacaoSentimentoRCRVW);
-                                        startActivityForResult(imageIntent, ALTERA_CAMERA);
-                                        alerta.cancel();
-
-                                    }
-                                });
-                                galeria.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intentPegaFoto = new Intent(Intent.ACTION_PICK);
-                                        intentPegaFoto.setType("image/*");
-                                        intentPegaFoto.putExtra("libera_alteracao", finalList.get(position));
-                                        startActivityForResult(intentPegaFoto, ALTERA_GALERIA);
-                                        alerta.cancel();
-
-
-                                    }
-                                });
-                                alerta = builder.create();
-                                alerta.show();*/
                             }
 
                         });
