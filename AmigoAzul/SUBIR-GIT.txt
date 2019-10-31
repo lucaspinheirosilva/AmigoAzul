@@ -9,7 +9,7 @@ COMANDO ATUALIZAR DO GIT
 =>git pull
 
 COMANDO BAIXAR DO GIT(maquina nova)
-=>git config --global user.name "seu nome aqui"
-=>git config --global user.email "seu email aqui"
+=>git config --global user.name "Lucas Pinheiro"
+=>git config --global user.email "lucas_pinheiro.silva@hotmail.com"
 =>git init
 =>git clone https://github.com/lucaspinheirosilva/AmigoAzul.git
