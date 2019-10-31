@@ -2,6 +2,7 @@ http://haylson.com.br/como-usar-o-git-e-o-github/
 
 COMANDO SUBIR PARA O GIT
 =>git status
+=>git add .
 =>git commit -a -m "MENSAGEM AQUI"
 =>git push
 
