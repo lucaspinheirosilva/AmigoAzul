@@ -11,7 +11,7 @@
     <color name="bg_intro4">#E1BDF7</color>
     <!--CADASTRO-->
     <color name="bg_cadastro">#E9E6FF</color>
-    <color name="bg_edttxt">#e0f7fa</color>
+    <color name="bg_edttxt">#192964</color>
 
     <!--ARRASTA E SOLTA-->
     <color name="fundoTexto">#FAFAFA</color>
