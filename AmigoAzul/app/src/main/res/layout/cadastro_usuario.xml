@@ -18,27 +18,16 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txtImptNome"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+            <TextView
+                android:id="@+id/textView15"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:hint="Nome"
-                android:textColorHint="#969696"
-                app:counterEnabled="true"
-                app:counterMaxLength="70"
-                app:counterTextAppearance="@style/contador_Text"
-                app:hintTextAppearance="@style/HintTextFloating"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_marginTop="10dp"
+                android:text="NOME:" />
 
-                <com.google.android.material.textfield.TextInputEditText
+            <EditText
                     android:id="@+id/edt_nome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,32 +38,18 @@
                     android:inputType="text"
                     android:maxLength="70"
                     android:singleLine="true"
+                    android:background="@drawable/custom_edttext"
                     android:textColor="#000000"
                     android:textSize="@dimen/tamanho_fonte" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txtImptIdade"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <TextView
+                android:id="@+id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:hint="Data Nasc."
-                android:textColorHint="#969696"
-                app:counterEnabled="true"
-                app:counterMaxLength="10"
-                app:counterTextAppearance="@style/contador_Text"
-                app:hintTextAppearance="@style/HintTextFloating"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:text="DATA NASCIMENTO:" />
 
-                <com.google.android.material.textfield.TextInputEditText
+            <EditText
                     android:id="@+id/edt_nascimento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -82,14 +57,20 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
-                    android:background="@color/bg_edttxt"
+                    android:background="@drawable/custom_edttext"
                     android:inputType="date"
                     android:singleLine="true"
                     android:textColor="#000000"
                     android:textSize="@dimen/tamanho_fonte" />
 
 
-            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="15dp"
+                android:text="NIVEL TEA:" />
 
             <RadioGroup
                 android:id="@+id/rdGp_GrauTEA"
@@ -135,27 +116,15 @@
                 android:text="Não Obrigatório"
                 android:textColor="#B71C1C" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txtImptEmail"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+            <TextView
+                android:id="@+id/textView18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:hint="E-mail"
-                android:textColorHint="#969696"
-                app:counterEnabled="true"
-                app:counterMaxLength="70"
-                app:counterTextAppearance="@style/contador_Text"
-                app:hintTextAppearance="@style/HintTextFloating"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:text="E-MAIL:" />
 
-                <com.google.android.material.textfield.TextInputEditText
+            <EditText
                     android:id="@+id/edt_Email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -163,36 +132,21 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
-                    android:background="@color/bg_edttxt"
+                    android:background="@drawable/custom_edttext"
                     android:inputType="textEmailAddress"
                     android:maxLength="70"
                     android:singleLine="true"
                     android:textColor="#000000"
                     android:textSize="@dimen/tamanho_fonte" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txtImptSenha"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <TextView
+                android:id="@+id/textView19"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:hint="Senha"
-                android:textColorHint="#969696"
-                app:counterEnabled="true"
-                app:counterMaxLength="30"
-                app:counterTextAppearance="@style/contador_Text"
-                app:hintTextAppearance="@style/HintTextFloating"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:text="SENHA:" />
 
-                <com.google.android.material.textfield.TextInputEditText
+            <EditText
                     android:id="@+id/edt_Senha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -200,14 +154,13 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
-                    android:background="@color/bg_edttxt"
+                    android:background="@drawable/custom_edttext"
                     android:inputType="textPassword"
                     android:maxLength="30"
                     android:singleLine="true"
                     android:textColor="#000000"
                     android:textSize="@dimen/tamanho_fonte" />
 
-            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:id="@+id/ll_FAB"
@@ -215,45 +168,26 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/imgbtn_deletarCadastro"
+                    android:layout_width="190dp"
+                    android:layout_height="55dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:visibility="invisible"
+                    android:foreground="@drawable/efeito_ripple"
+                    app:srcCompat="@drawable/btn_deletar" />
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/FAB_DeletarCasUser"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginLeft="24dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="16dp"
-                        android:clickable="true"
-                        app:backgroundTint="#F8B8B8"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:maxImageSize="35dp"
-                        app:rippleColor="#CE3939"
-                        app:srcCompat="@drawable/deletar_imagem" />
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/FAB_gravarCasUser"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|right|end"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="24dp"
-                        android:layout_marginRight="24dp"
-                        android:layout_marginBottom="16dp"
-                        android:clickable="true"
-                        app:backgroundTint="#E2AFEE9D"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:maxImageSize="35dp"
-                        app:rippleColor="#FC13F100"
-                        app:srcCompat="@drawable/certo" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/imgbtn_SalvarCadastro"
+                    android:layout_width="190dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:foreground="@drawable/efeito_ripple"
+                    app:srcCompat="@drawable/btn_salvar" />
 
             </LinearLayout>
 

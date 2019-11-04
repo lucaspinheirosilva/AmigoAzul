@@ -6,6 +6,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -25,17 +28,17 @@ import br.com.amigoazul.model.ListaUsuario;
 public class Cadastro_Activity extends AppCompatActivity {
 
     //VARIAVEIS
-    TextInputEditText nome;
-    TextInputEditText dataNasc;
-    TextInputEditText email;
-    TextInputEditText senha;
+    EditText nome;
+    EditText dataNasc;
+    EditText email;
+    EditText senha;
     RadioButton Nivel1;
     RadioButton Nivel2;
     RadioButton Nivel3;
     RadioGroup rdGp_GrauTEA;
     String NIVELTEA = "NAO DEFINIDO";
-    FloatingActionButton gravar;
-    FloatingActionButton deletar;
+    ImageView gravar;
+    ImageView deletar;
     ListaUsuario usuarioAtual;
 
 
@@ -68,17 +71,17 @@ public class Cadastro_Activity extends AppCompatActivity {
         rdGp_GrauTEA = findViewById(R.id.rdGp_GrauTEA);
 
         //FABs
-        gravar = findViewById(R.id.FAB_gravarCasUser);
-        deletar = findViewById(R.id.FAB_DeletarCasUser);
+        gravar = findViewById(R.id.imgbtn_SalvarCadastro);
+        deletar = findViewById(R.id.imgbtn_deletarCadastro);
 
         //marcara da data de aniversario
         dataNasc.addTextChangedListener(new MaskedWatcher(formatadorNascimento, dataNasc));
 
         //deixar FAB DELETAR invisivel ou visivel
         if (usuarioAtual!=null){
-            deletar.show();
+            deletar.setVisibility(View.VISIBLE);
         }else {
-            deletar.hide();
+            deletar.setVisibility(View.INVISIBLE);
         }
 
 
