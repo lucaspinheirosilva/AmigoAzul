@@ -205,23 +205,18 @@ public class Cadastro_Activity extends AppCompatActivity {
 
                         }
                         //validados de email
-                        else if (email.getText().length() != 0) {
+                        if (email.getText().length() != 0) {
                             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()) {
                                 email.setError("Email Invalido");
                             }
                         }
-                        else if (senha.getText().length() != 0) {
-
-                                if (senha.getText().equals("123")){
-                                    senha.setError("Senha Muito Fraca..");
-                                }
-                                else {
-                                    Toast.makeText(getApplicationContext(),"ERROU",Toast.LENGTH_LONG).show();
-                                }
-                            }
-
-                        else {
-
+                         if ((senha.getText().length() > 0) && (email.getText().length() == 0)) {
+                            email.setError("Por favor, informe o E-MAIL");
+                        }
+                        if ((senha.getText().length() > 0) && (senha.getText().length() < 8)) {
+                            senha.setError("minimo 8 digitos");
+                            Toast.makeText(getApplicationContext(), "Senha Muito Fraca..", Toast.LENGTH_SHORT).show();
+                        } else {
                             //salva as informaçoes digitadas nos GETTERS AND SETTERS
 
                             listaUsuario.setNomeUsuario(nome.getText().toString());
@@ -269,7 +264,18 @@ public class Cadastro_Activity extends AppCompatActivity {
                             Nivel1.setTextColor(Color.RED);
                             Nivel2.setTextColor(Color.RED);
                             Nivel3.setTextColor(Color.RED);
+                        }
 
+                        //validados de email
+                        else if (email.getText().length() != 0) {
+                            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()) {
+                                email.setError("Email Invalido");
+                            }
+                        } else if ((senha.getText().length() > 0) && (senha.getText().length() < 8)) {
+                            senha.setError("minimo 8 digitos");
+                            Toast.makeText(getApplicationContext(), "Senha Muito Fraca..", Toast.LENGTH_SHORT).show();
+                        } else if ((senha.getText().length() > 0) && (email.getText().length() == 0)) {
+                            email.setError("Por favor, informe o E-MAIL");
                         } else {
 
                             listaUsuario.setId(usuarioAtual.getId());
