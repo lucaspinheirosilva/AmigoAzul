@@ -19,49 +19,62 @@
             android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/textView15"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtImptNome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="10dp"
-                android:text="NOME:" />
-
-            <EditText
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:hint="NOME:"
+                android:textColorHint="#969696"
+                app:counterEnabled="true"
+                app:counterMaxLength="49"
+                app:counterTextAppearance="@style/contador_Text"
+                app:hintTextAppearance="@style/HintTextFloating"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <EditText
                     android:id="@+id/edt_nome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:inputType="text"
-                    android:maxLength="70"
-                    android:singleLine="true"
                     android:background="@drawable/custom_edttext"
+                    android:inputType="text"
+                    android:maxLength="50"
+                    android:singleLine="true"
                     android:textColor="#000000"
                     android:textSize="@dimen/tamanho_fonte" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textView16"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtImptDataNasc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:text="DATA NASCIMENTO:" />
-
-            <EditText
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:hint="DATA NASCIMENTO:"
+                android:textColorHint="#969696"
+                app:counterTextAppearance="@style/contador_Text"
+                app:hintTextAppearance="@style/HintTextFloating"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <EditText
                     android:id="@+id/edt_nascimento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
                     android:background="@drawable/custom_edttext"
                     android:inputType="date"
                     android:singleLine="true"
                     android:textColor="#000000"
                     android:textSize="@dimen/tamanho_fonte" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <TextView
@@ -112,54 +125,69 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Não Obrigatório"
                 android:textColor="#B71C1C" />
 
-
-            <TextView
-                android:id="@+id/textView18"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtImptEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:text="E-MAIL:" />
-
-            <EditText
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:hint="E-MAIL:"
+                android:textColorHint="#969696"
+                app:counterEnabled="true"
+                app:counterMaxLength="59"
+                app:counterTextAppearance="@style/contador_Text"
+                app:hintTextAppearance="@style/HintTextFloating"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <EditText
                     android:id="@+id/edt_Email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_gravity="bottom"
                     android:background="@drawable/custom_edttext"
                     android:inputType="textEmailAddress"
-                    android:maxLength="70"
+                    android:maxLength="60"
                     android:singleLine="true"
                     android:textColor="#000000"
                     android:textSize="@dimen/tamanho_fonte" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textView19"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtImptSenha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:text="SENHA:" />
-
-            <EditText
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:hint="SENHA:"
+                android:textColorHint="#969696"
+                app:counterEnabled="true"
+                app:counterMaxLength="14"
+                app:counterTextAppearance="@style/contador_Text"
+                app:hintTextAppearance="@style/HintTextFloating"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <EditText
                     android:id="@+id/edt_Senha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
                     android:background="@drawable/custom_edttext"
                     android:inputType="textPassword"
-                    android:maxLength="30"
+                    android:maxLength="15"
                     android:singleLine="true"
                     android:textColor="#000000"
                     android:textSize="@dimen/tamanho_fonte" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <LinearLayout
@@ -174,9 +202,9 @@
                     android:layout_height="55dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
+                    android:foreground="@drawable/efeito_ripple"
                     android:scaleType="fitXY"
                     android:visibility="invisible"
-                    android:foreground="@drawable/efeito_ripple"
                     app:srcCompat="@drawable/btn_deletar" />
 
                 <ImageView
@@ -185,8 +213,8 @@
                     android:layout_height="50dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:scaleType="fitXY"
                     android:foreground="@drawable/efeito_ripple"
+                    android:scaleType="fitXY"
                     app:srcCompat="@drawable/btn_salvar" />
 
             </LinearLayout>

@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -20,6 +22,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.vicmikhailau.maskededittext.MaskedFormatter;
 import com.vicmikhailau.maskededittext.MaskedWatcher;
+
+import java.util.ArrayList;
 
 import br.com.amigoazul.R;
 import br.com.amigoazul.helper.UsuarioDAO;
@@ -70,19 +74,97 @@ public class Cadastro_Activity extends AppCompatActivity {
         Nivel3 = findViewById(R.id.rdbtn_nivel3);
         rdGp_GrauTEA = findViewById(R.id.rdGp_GrauTEA);
 
-        //FABs
+        //BOTOES
         gravar = findViewById(R.id.imgbtn_SalvarCadastro);
         deletar = findViewById(R.id.imgbtn_deletarCadastro);
 
         //marcara da data de aniversario
         dataNasc.addTextChangedListener(new MaskedWatcher(formatadorNascimento, dataNasc));
 
-        //deixar FAB DELETAR invisivel ou visivel
-        if (usuarioAtual!=null){
+        //deixar botao DELETAR invisivel ou visivel
+        if (usuarioAtual != null) {
             deletar.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             deletar.setVisibility(View.INVISIBLE);
         }
+
+
+        //verificação de texto digitado
+        nome.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if (nome.getText().length() > 49) {
+                    nome.setError("Limite de caracteres Atingido");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        dataNasc.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (dataNasc.getText().length() > 59) {
+                    dataNasc.setError("Limite de caracteres Atingido");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        dataNasc.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (dataNasc.getText().length() > 59) {
+                    dataNasc.setError("Limite de caracteres Atingido");
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        senha.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (senha.getText().length() > 14) {
+                    senha.setError("Limite de caracteres Atingido");
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
 
         //Configurar produto na caixa de texto
@@ -115,14 +197,30 @@ public class Cadastro_Activity extends AppCompatActivity {
                         } else if (dataNasc.getText().length() < 10) {
                             dataNasc.setFocusable(true);
                             dataNasc.setError("data Invalida");
-                        } else if ((Nivel1.isChecked()==false) && (Nivel2.isChecked()==false) && (Nivel3.isChecked()==false)) {
+                        } else if ((Nivel1.isChecked() == false) && (Nivel2.isChecked() == false) && (Nivel3.isChecked() == false)) {
                             Toast.makeText(getApplicationContext(), "Selecione o NÍVEL do TEA", Toast.LENGTH_SHORT).show();
                             Nivel1.setTextColor(Color.RED);
                             Nivel2.setTextColor(Color.RED);
                             Nivel3.setTextColor(Color.RED);
 
                         }
-                        else{
+                        //validados de email
+                        else if (email.getText().length() != 0) {
+                            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()) {
+                                email.setError("Email Invalido");
+                            }
+                        }
+                        else if (senha.getText().length() != 0) {
+
+                                if (senha.getText().equals("123")){
+                                    senha.setError("Senha Muito Fraca..");
+                                }
+                                else {
+                                    Toast.makeText(getApplicationContext(),"ERROU",Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                        else {
 
                             //salva as informaçoes digitadas nos GETTERS AND SETTERS
 
@@ -166,7 +264,7 @@ public class Cadastro_Activity extends AppCompatActivity {
                         } else if (dataNasc.getText().length() < 10) {
                             dataNasc.setFocusable(true);
                             dataNasc.setError("data Invalida");
-                        } else if ((Nivel1.isChecked()==false) && (Nivel2.isChecked()==false) && (Nivel3.isChecked()==false)) {
+                        } else if ((Nivel1.isChecked() == false) && (Nivel2.isChecked() == false) && (Nivel3.isChecked() == false)) {
                             Toast.makeText(getApplicationContext(), "Selecione o NIVEL do TEA", Toast.LENGTH_SHORT).show();
                             Nivel1.setTextColor(Color.RED);
                             Nivel2.setTextColor(Color.RED);
