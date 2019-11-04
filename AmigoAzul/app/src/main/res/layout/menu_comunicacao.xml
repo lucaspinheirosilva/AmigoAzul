@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/fundo"
     android:layout_height="match_parent"
     tools:context=".activity.MenuComunicacao">
 
@@ -45,14 +46,9 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:padding="10dp"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/img_sentimento" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Sentimentos" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -82,12 +78,6 @@
                 android:padding="10dp"
                 app:srcCompat="@drawable/img_objeto" />
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Objetos" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -116,13 +106,6 @@
                 android:layout_height="150dp"
                 android:padding="10dp"
                 app:srcCompat="@drawable/img_montarfrase" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Montar Frase" />
 
         </LinearLayout>
 
