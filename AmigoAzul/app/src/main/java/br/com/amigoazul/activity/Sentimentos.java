@@ -406,6 +406,24 @@ public class Sentimentos extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
+                    //todo:ARRUMAR ESSA BUDEGA!
+                    /*String[] palavroes = {"porra","caralho","filha da puta","buceta"};
+
+                    int Wrongword=0;
+                    for (int i = 0; i < palavroes.length; i++) {
+                        if (textoFalar.getText().toString()==palavroes[i]){
+                            i++;
+                            Wrongword = Wrongword+1;
+                        }
+                    }
+
+                    if (Wrongword>=1){
+                        Toast.makeText(getApplicationContext(),"Palavra Inapropriada encontrada",Toast.LENGTH_LONG).show();
+                        textoFalar.setFocusable(true);
+                        textoFalar.setError("*");
+                    }*/
+
+
                     if (textoFalar.getText().length() <= 3) {
                         textoFalar.setError("Informe o Texto por favor com no minimo 3 letras");
                         textoFalar.setFocusable(true);

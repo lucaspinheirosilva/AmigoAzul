@@ -5,12 +5,10 @@
     <color name="colorAccent">#D81B60</color>
 
     <!--INTRODUÇÂO-->
-    <color name="bg_intro1">#98B3F3</color>
-    <color name="bg_intro2">#8FDF90</color>
-    <color name="bg_intro3">#F3F198</color>
-    <color name="bg_intro4">#E1BDF7</color>
+    <color name="bg_intro">#B5E4FA</color>
+
     <!--CADASTRO-->
-    <color name="bg_cadastro">#E9E6FF</color>
+    <color name="bg_cadastro">#B5E4FA</color>
     <color name="bg_edttxt">#192964</color>
 
     <!--ARRASTA E SOLTA-->

@@ -21,34 +21,32 @@ public class Introducao_Activity extends IntroActivity {
         setButtonNextVisible(false);
         setFullscreen(true);
 
-                addSlide(new SimpleSlide.Builder()
-                .title("É para voce!")
-                .description("Quem precisar pode usar sem nenhuma cobraça infortuna")
-                .image(R.drawable.intro_1)
-                .background(R.color.bg_intro1)
+        addSlide(new FragmentSlide.Builder()
+                .background(R.color.bg_intro)
+                .fragment(R.layout.chamada_1)
+                .canGoForward(true)
+                .canGoBackward(false)
                 .build());
 
-        addSlide(new SimpleSlide.Builder()
-                .title("A qualquer Hora")
-                .description("Disponha de uma ferramenta a qualquer Hora do seu Dia")
-                .image(R.drawable.intro_2)
-                .background(R.color.bg_intro2)
+        addSlide(new FragmentSlide.Builder()
+                .background(R.color.bg_intro)
+                .fragment(R.layout.chamada_2)
+                .canGoForward(true)
+                .canGoBackward(true)
                 .build());
 
-        addSlide(new SimpleSlide.Builder()
-                .title("Relatorio de acompanhamento")
-                .description("Utilize o relatorio a qualquer" +
-                        " hora para acompanhar o desenvolvimento do seu filho(a)")
-                .image(R.drawable.intro_3)
-                .background(R.color.bg_intro3)
-
+        addSlide(new FragmentSlide.Builder()
+                .background(R.color.bg_intro)
+                .fragment(R.layout.chamada_3)
+                .canGoForward(true)
+                .canGoBackward(true)
                 .build());
 
-        addSlide(new SimpleSlide.Builder()
-                .title("JUNTE-SE A NÓS")
-                .description("Junte-se a Nós, é super rapido!!")
-                .image(R.drawable.intro_4)
-                .background(R.color.bg_intro4)
+        addSlide(new FragmentSlide.Builder()
+                .background(R.color.bg_intro)
+                .fragment(R.layout.chamada_4)
+                .canGoForward(true)
+                .canGoBackward(true)
                 .build());
 
         addSlide(new FragmentSlide.Builder()
@@ -59,7 +57,7 @@ public class Introducao_Activity extends IntroActivity {
                 .build());
     }
 
-    public  void BtnChamarCadastro(View view){
+    public void BtnChamarCadastro(View view) {
         startActivity(new Intent(Introducao_Activity.this, Cadastro_Activity.class));
         finish();
     }

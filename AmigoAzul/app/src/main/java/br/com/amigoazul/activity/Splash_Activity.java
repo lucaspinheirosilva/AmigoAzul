@@ -33,7 +33,7 @@ import br.com.amigoazul.model.ListaUsuario;
 
 public class Splash_Activity extends AppCompatActivity {
 
-    private static int SPLASH_TIME_OUT = 2000;
+    private static int SPLASH_TIME_OUT = 1000;
     final static int Const_WRITE_EXTERNAL_STORAGE = 001;
 
 

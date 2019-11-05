@@ -6,71 +6,32 @@
     android:layout_height="match_parent"
     android:layout_alignParentTop="false"
     android:layout_alignParentRight="false"
-    android:background="#DFDDDD"
+    android:background="@drawable/fundo"
     android:baselineAligned="false"
     android:orientation="vertical"
     tools:context=".activity.MenuAtividades">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="24dp"
-        android:clickable="true"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="5dp"
+    <ImageView
+        android:id="@+id/img_arrastaSolta"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="32dp"
+        android:padding="10dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrasta_solta" />
 
-        <ImageView
-            android:id="@+id/img_arrastaSolta"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="20dp"
-            android:padding="10dp"
-            app:srcCompat="@drawable/arrasta_solta" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="148dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Arrasta e Solta" />
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-
-        android:clickable="true"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="5dp"
+    <ImageView
+        android:id="@+id/img_memoria"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="32dp"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/img_memoria"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="20dp"
-            android:padding="10dp"
-            app:srcCompat="@drawable/memoria" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="148dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Memoria" />
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/memoria" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
