@@ -228,7 +228,7 @@ public class MontarFrase extends AppCompatActivity {
                         imagemTirada.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Toast.makeText(getApplicationContext(), "Implementar essa Função", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(),"Rotina ainda não implementada, aguarde as proximas versões...",Toast.LENGTH_LONG).show();
                             }
 
                         });

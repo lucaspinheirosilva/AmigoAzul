@@ -201,6 +201,7 @@ public class Sentimentos extends AppCompatActivity {
                         imagemTirada.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                Toast.makeText(getApplicationContext(),"Rotina ainda não implementada, aguarde as proximas versões...",Toast.LENGTH_LONG).show();
 
                             }
 
@@ -506,8 +507,8 @@ public class Sentimentos extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    if (textoFalar.getText().length() <= 3) {
-                        textoFalar.setError("Informe o Texto por favor");
+                    if (textoFalar.getText().length() < 2) {
+                        textoFalar.setError("Informe o Texto por favor com no minimo 3 letras");
                         textoFalar.setFocusable(true);
 
                     } else {
@@ -579,7 +580,7 @@ public class Sentimentos extends AppCompatActivity {
             salvar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (textoFalar.getText().length() <= 3) {
+                    if (textoFalar.getText().length() < 2) {
                         textoFalar.setError("Informe o Texto por favor com no minimo 3 letras");
                         textoFalar.setFocusable(true);
 
@@ -606,7 +607,7 @@ public class Sentimentos extends AppCompatActivity {
                             alerta.cancel();
                             Intent intent = new Intent(Sentimentos.this, Sentimentos.class);
                             startActivity(intent);
-                            Toast.makeText(getApplicationContext(), "ALTERADP COM SUCESSO", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "ALTERADO COM SUCESSO", Toast.LENGTH_LONG).show();
                         }
                     }
 

@@ -14,5 +14,7 @@
     <!--ARRASTA E SOLTA-->
     <color name="fundoTexto">#FAFAFA</color>
 
+    <color name="black_overlay">#66000000</color>
+
 
 </resources>
