@@ -14,11 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".construct_arrasta_solta"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_construct_arrasta_solta"
-            android:theme="@style/FullscreenTheme"></activity>
+        <activity android:name=".jogo_arrasta_solta"></activity>
         <activity
             android:name=".activity.ListarUsuario"
             android:screenOrientation="portrait" />
