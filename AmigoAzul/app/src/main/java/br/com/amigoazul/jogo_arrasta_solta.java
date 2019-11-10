@@ -3,6 +3,7 @@ package br.com.amigoazul;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.webkit.WebView;
 
 
@@ -22,6 +23,8 @@ public class jogo_arrasta_solta extends AppCompatActivity {
         jogoArrastaSolta.getSettings().setAllowFileAccessFromFileURLs(true);
 
         jogoArrastaSolta.loadUrl("file:///android_asset/index.html");
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
     }
