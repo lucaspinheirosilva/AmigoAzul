@@ -7,11 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.QuickContactBadge;
 import android.widget.Toast;
 
 import br.com.amigoazul.R;
-import br.com.amigoazul.jogo_arrasta_solta;
 
 public class MenuAtividades extends AppCompatActivity {
 
@@ -29,6 +27,8 @@ public class MenuAtividades extends AppCompatActivity {
         setContentView(R.layout.menu_atividades);
 
         testarJogo = findViewById(R.id.btn_testarJogoConstruct);
+
+        testarJogo.setVisibility(View.INVISIBLE);
         testarJogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,7 +45,7 @@ public class MenuAtividades extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(MenuAtividades.this, ArrastaSolta_Activity.class);
+                Intent intent = new Intent(MenuAtividades.this, jogo_arrasta_solta.class);
                 startActivity(intent);
             }
         });

@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".jogo_arrasta_solta" android:screenOrientation="landscape"></activity>
+        <activity android:name=".activity.jogo_arrasta_solta" android:screenOrientation="landscape"></activity>
         <activity
             android:name=".activity.ListarUsuario"
             android:screenOrientation="portrait" />
@@ -23,9 +23,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MenuAtividades"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.ArrastaSolta_Activity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.Objetos"

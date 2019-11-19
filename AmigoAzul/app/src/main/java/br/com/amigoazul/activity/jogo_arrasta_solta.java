@@ -1,10 +1,12 @@
-package br.com.amigoazul;
+package br.com.amigoazul.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.webkit.WebView;
+
+import br.com.amigoazul.R;
 
 
 public class jogo_arrasta_solta extends AppCompatActivity {
