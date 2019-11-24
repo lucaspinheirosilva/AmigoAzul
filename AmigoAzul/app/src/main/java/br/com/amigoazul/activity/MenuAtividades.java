@@ -37,7 +37,6 @@ public class MenuAtividades extends AppCompatActivity {
             }
         });
 
-
         arrastaSolta = findViewById(R.id.img_arrastaSolta);
         memoria = findViewById(R.id.img_memoria);
 
