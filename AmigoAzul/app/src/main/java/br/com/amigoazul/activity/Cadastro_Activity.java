@@ -18,6 +18,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.vicmikhailau.maskededittext.MaskedFormatter;
@@ -44,6 +46,10 @@ public class Cadastro_Activity extends AppCompatActivity {
     ImageView gravar;
     ImageView deletar;
     ListaUsuario usuarioAtual;
+
+    YoYo.YoYoString animacaoRequired;
+
+
 
 
     MaskedFormatter formatadorNascimento = new MaskedFormatter("##/##/####");
@@ -194,14 +200,35 @@ public class Cadastro_Activity extends AppCompatActivity {
                         if (nome.getText().length() < 3) {
                             nome.setFocusable(true);
                             nome.setError("Minimo 3 letras");
+                            animacaoRequired = YoYo.with(Techniques.Tada)
+                                    .duration(900)
+                                    .repeat(0)
+                                    .playOn(findViewById(R.id.txtImptNome));
                         } else if (dataNasc.getText().length() < 10) {
                             dataNasc.setFocusable(true);
                             dataNasc.setError("data Invalida");
+                            animacaoRequired = YoYo.with(Techniques.Tada)
+                                    .duration(900)
+                                    .repeat(0)
+                                    .playOn(findViewById(R.id.txtImptDataNasc));
                         } else if ((Nivel1.isChecked() == false) && (Nivel2.isChecked() == false) && (Nivel3.isChecked() == false)) {
                             Toast.makeText(getApplicationContext(), "Selecione o NÍVEL do TEA", Toast.LENGTH_SHORT).show();
                             Nivel1.setTextColor(Color.RED);
                             Nivel2.setTextColor(Color.RED);
                             Nivel3.setTextColor(Color.RED);
+
+                            animacaoRequired = YoYo.with(Techniques.Shake)
+                                    .duration(900)
+                                    .repeat(0)
+                                    .playOn(findViewById(R.id.rdbtn_nivel1));
+                            animacaoRequired = YoYo.with(Techniques.Shake)
+                                    .duration(900)
+                                    .repeat(0)
+                                    .playOn(findViewById(R.id.rdbtn_nivel2));
+                            animacaoRequired = YoYo.with(Techniques.Shake)
+                                    .duration(900)
+                                    .repeat(0)
+                                    .playOn(findViewById(R.id.rdbtn_nivel3));
 
                         }
                         //validados de email

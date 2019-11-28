@@ -24,7 +24,7 @@ public class jogo_arrasta_solta extends AppCompatActivity {
         jogoArrastaSolta.getSettings().setJavaScriptEnabled(true);
         jogoArrastaSolta.getSettings().setAllowFileAccessFromFileURLs(true);
 
-        jogoArrastaSolta.loadUrl("file:///android_asset/index.html");
+        jogoArrastaSolta.loadUrl("file:///android_asset/arrasta_solta/index.html");
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 

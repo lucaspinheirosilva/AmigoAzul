@@ -51,7 +51,8 @@ public class MenuAtividades extends AppCompatActivity {
         memoria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Não foi IMPLEMENTADO ESTA TELA!", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MenuAtividades.this, jogo_memoria.class);
+                startActivity(intent);
             }
         });
     }
