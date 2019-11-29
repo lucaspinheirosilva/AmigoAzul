@@ -10,6 +10,7 @@ import com.heinrichreimersoftware.materialintro.slide.SimpleSlide;
 
 import br.com.amigoazul.R;
 
+
 public class Introducao_Activity extends IntroActivity {
 
     @Override
@@ -59,6 +60,7 @@ public class Introducao_Activity extends IntroActivity {
 
     public void BtnChamarCadastro(View view) {
         startActivity(new Intent(Introducao_Activity.this, Cadastro_Activity.class));
+
         finish();
     }
 

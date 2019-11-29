@@ -2,17 +2,22 @@ package br.com.amigoazul.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -29,6 +34,7 @@ import java.util.ArrayList;
 
 import br.com.amigoazul.R;
 import br.com.amigoazul.helper.UsuarioDAO;
+import br.com.amigoazul.model.ListaComunicacao;
 import br.com.amigoazul.model.ListaUsuario;
 
 public class Cadastro_Activity extends AppCompatActivity {
@@ -50,8 +56,6 @@ public class Cadastro_Activity extends AppCompatActivity {
     YoYo.YoYoString animacaoRequired;
 
 
-
-
     MaskedFormatter formatadorNascimento = new MaskedFormatter("##/##/####");
 
     @Override
@@ -59,6 +63,7 @@ public class Cadastro_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();//esconder a actionBar
         setContentView(R.layout.cadastro_usuario);
+      
 
         //Recuperar produto caso seja edição.
         usuarioAtual = (ListaUsuario) getIntent().getSerializableExtra("usuarioSelecionado");
@@ -67,6 +72,10 @@ public class Cadastro_Activity extends AppCompatActivity {
         final UsuarioDAO usuarioDAO = new UsuarioDAO(getApplicationContext());
         final ListaUsuario listaUsuario = new ListaUsuario();
 
+        //AlertDialog
+        AlertDialog alerta = null;
+        AlertDialog.Builder builder;
+        
         /**SETAR AS VARIAVEIS COM OS ID DO COMPONENTE DA TELA**/
         //CAMPOS DE TEXTOS
         nome = findViewById(R.id.edt_nome);
@@ -231,19 +240,32 @@ public class Cadastro_Activity extends AppCompatActivity {
                                     .playOn(findViewById(R.id.rdbtn_nivel3));
 
                         }
-                        //validados de email
-                         /*if (email.getText().length() != 0) {
-                            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()) {
-                                email.setError("Email Invalido");
-                            }
-                        }
-                         if ((senha.getText().length() > 0) && (email.getText().length() == 0)) {
-                            email.setError("Por favor, informe o E-MAIL");
-                        }
-                       if ((senha.getText().length() > 0) && (senha.getText().length() < 8)) {
-                            senha.setError("minimo 8 digitos");
-                            Toast.makeText(getApplicationContext(), "Senha Muito Fraca..", Toast.LENGTH_SHORT).show();
-                        }*/ else {
+                        //VALIDAÇÃO DE EMAIL
+                        else if ((email.getText().length() != 0) &&
+                                (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches())) {
+
+                            email.setError("Email Invalido");
+                            animacaoRequired = YoYo.with(Techniques.Tada)
+                                    .duration(900)
+                                    .repeat(0)
+                                    .playOn(findViewById(R.id.txtImptEmail));
+
+                        } else if ((email.getText().length() != 0) && (senha.getText().length() == 0)) {
+                            senha.setError("Senha requerida");
+                            Toast.makeText(getApplicationContext(), "Voce informou um E-mail, é OBRIGATÓRIO você " +
+                                    "informar a senha para a segurança dos dados", Toast.LENGTH_LONG).show();
+                            animacaoRequired = YoYo.with(Techniques.Tada)
+                                    .duration(900)
+                                    .repeat(0)
+                                    .playOn(findViewById(R.id.txtImptSenha));
+                        } else if ((email.getText().length() != 0) && (senha.getText().length() > 1) && (senha.getText().length() <= 5)) {
+                            senha.setError("Minimo 6 Caracteres");
+                            animacaoRequired = YoYo.with(Techniques.Tada)
+                                    .duration(900)
+                                    .repeat(0)
+                                    .playOn(findViewById(R.id.txtImptSenha));
+
+                        } else {
                             //salva as informaçoes digitadas nos GETTERS AND SETTERS
 
                             listaUsuario.setNomeUsuario(nome.getText().toString());
@@ -260,6 +282,7 @@ public class Cadastro_Activity extends AppCompatActivity {
                             if (Nivel3.isChecked()) {
                                 NIVELTEA = "nivel 3";
                                 listaUsuario.setGrauTEA(NIVELTEA);
+
                             }
 
                             listaUsuario.setEmail(email.getText().toString());
@@ -283,9 +306,17 @@ public class Cadastro_Activity extends AppCompatActivity {
                         if (nome.getText().length() < 3) {
                             nome.setFocusable(true);
                             nome.setError("Minimo 3 letras");
+                            animacaoRequired = YoYo.with(Techniques.Tada)
+                                    .duration(900)
+                                    .repeat(0)
+                                    .playOn(findViewById(R.id.txtImptNome));
                         } else if (dataNasc.getText().length() < 10) {
                             dataNasc.setFocusable(true);
                             dataNasc.setError("data Invalida");
+                            animacaoRequired = YoYo.with(Techniques.Tada)
+                                    .duration(900)
+                                    .repeat(0)
+                                    .playOn(findViewById(R.id.txtImptDataNasc));
                         } else if ((Nivel1.isChecked() == false) && (Nivel2.isChecked() == false) && (Nivel3.isChecked() == false)) {
                             Toast.makeText(getApplicationContext(), "Selecione o NIVEL do TEA", Toast.LENGTH_SHORT).show();
                             Nivel1.setTextColor(Color.RED);
@@ -293,16 +324,31 @@ public class Cadastro_Activity extends AppCompatActivity {
                             Nivel3.setTextColor(Color.RED);
                         }
 
-                        //validados de email
-                        else if (email.getText().length() != 0) {
-                            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()) {
-                                email.setError("Email Invalido");
-                            }
-                        } else if ((senha.getText().length() > 0) && (senha.getText().length() < 8)) {
-                            senha.setError("minimo 8 digitos");
-                            Toast.makeText(getApplicationContext(), "Senha Muito Fraca..", Toast.LENGTH_SHORT).show();
-                        } else if ((senha.getText().length() > 0) && (email.getText().length() == 0)) {
-                            email.setError("Por favor, informe o E-MAIL");
+                        //VALIDAÇÃO DE EMAIL
+                        else if ((email.getText().length() != 0) &&
+                                (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches())) {
+
+                            email.setError("Email Invalido");
+                            animacaoRequired = YoYo.with(Techniques.Tada)
+                                    .duration(900)
+                                    .repeat(0)
+                                    .playOn(findViewById(R.id.txtImptEmail));
+
+                        } else if ((email.getText().length() != 0) && (senha.getText().length() == 0)) {
+                            senha.setError("Senha requerida");
+                            Toast.makeText(getApplicationContext(), "Voce informou um E-mail, é OBRIGATÓRIO você " +
+                                    "informar a senha para a segurança dos dados", Toast.LENGTH_LONG).show();
+                            animacaoRequired = YoYo.with(Techniques.Tada)
+                                    .duration(900)
+                                    .repeat(0)
+                                    .playOn(findViewById(R.id.txtImptSenha));
+                        } else if ((email.getText().length() != 0) && (senha.getText().length() > 1) && (senha.getText().length() <= 5)) {
+                            senha.setError("Minimo 6 Caracteres");
+                            animacaoRequired = YoYo.with(Techniques.Tada)
+                                    .duration(900)
+                                    .repeat(0)
+                                    .playOn(findViewById(R.id.txtImptSenha));
+
                         } else {
 
                             listaUsuario.setId(usuarioAtual.getId());
@@ -338,7 +384,7 @@ public class Cadastro_Activity extends AppCompatActivity {
             }
         });
         //FAB deletar
-        deletar.setOnClickListener(new View.OnClickListener() {
+  deletar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -380,6 +426,65 @@ public class Cadastro_Activity extends AppCompatActivity {
 
             }
         });
+
+        /*// DIALOG com as informações da imagem para fazer a alteração
+        //alertDialog para ALTERAR
+        builder = new AlertDialog.Builder(Cadastro_Activity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogText_ExcluirUserview = inflater.inflate(R.layout.usuario_excluir, null);
+        builder.setView(dialogText_ExcluirUserview);
+        builder.setCancelable(false);
+
+        final EditText vDeletarUsuario = dialogText_ExcluirUserview.findViewById(R.id.edttxt_Deletar_NomeUsuario);
+        final EditText vDeletarDataNasc = dialogText_ExcluirUserview.findViewById(R.id.edttxt_Deletar_DataNasc);
+        final EditText vDeletarGrauTEA = dialogText_ExcluirUserview.findViewById(R.id.edttxt_Deletar_GrauTEA);
+        final Button vDeletar = dialogText_ExcluirUserview.findViewById(R.id.btnDeletar_UsuarioDeletar);
+        final Button vCancelar = dialogText_ExcluirUserview.findViewById(R.id.btnCancelar_UsuarioCancelar);
+
+
+        //preenche os campos com os dados        
+        vDeletarUsuario.setText(usuarioAtual.getNomeUsuario());
+        vDeletarDataNasc.setText(usuarioAtual.getNomeUsuario());
+        vDeletarGrauTEA.setText(usuarioAtual.getGrauTEA());
+
+        vDeletar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (usuarioAtual != null) {
+                    listaUsuario.setId(usuarioAtual.getId());
+                    listaUsuario.setNomeUsuario(usuarioAtual.getNomeUsuario());
+                    listaUsuario.setDataNasc(usuarioAtual.getDataNasc());
+                    listaUsuario.setEmail(usuarioAtual.getEmail());
+                    listaUsuario.setSenha(usuarioAtual.getSenha());
+                    listaUsuario.setGrauTEA(usuarioAtual.getGrauTEA());
+                    listaUsuario.setExcluido("S");
+
+                    usuarioDAO.atualizar(listaUsuario);
+                    Toast.makeText(getApplicationContext(), "Excluido com Sucesso!!", Toast.LENGTH_LONG).show();
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "ERRO AO EXCLUIR!!", Toast.LENGTH_LONG).show();
+                    Log.i("ERRO", "ERRO AO EXCLUIR USUARIO DO CADASTRO!!");
+
+                }
+
+            }
+        });
+        final AlertDialog finalAlerta = alerta;
+        vCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalAlerta.dismiss();
+            }
+        });
+        alerta = builder.create();
+        alerta.show();
+        //***fim do ALERTDIALOG ALTERAR
+*/
+
+
     }
 
 }
+
+

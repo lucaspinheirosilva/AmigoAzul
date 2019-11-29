@@ -30,7 +30,6 @@ import br.com.amigoazul.helper.UsuarioDAO;
 import br.com.amigoazul.model.ListaComunicacao;
 import br.com.amigoazul.model.ListaUsuario;
 
-
 public class Splash_Activity extends AppCompatActivity {
 
     private static int SPLASH_TIME_OUT = 1000;
@@ -122,6 +121,7 @@ public class Splash_Activity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "NENHUM USUARIO ENCONTRADO", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(Splash_Activity.this, Introducao_Activity.class);
                             startActivity(i);
+
                             // Fecha esta activity
                             finish();
                         }
