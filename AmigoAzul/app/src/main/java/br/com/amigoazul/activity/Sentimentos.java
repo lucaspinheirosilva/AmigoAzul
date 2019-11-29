@@ -25,6 +25,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
@@ -67,6 +69,10 @@ public class Sentimentos extends AppCompatActivity {
     private final int GALERIA = 2;
     private final int ALTERA_CAMERA = 3;
     private final int ALTERA_GALERIA = 4;
+
+
+    //tremer a tela
+    YoYo.YoYoString animacaoRequired;
 
 
     //metodos para pegar a data e hora do disposivo para montar o nome das fotos ao salvar
@@ -174,7 +180,7 @@ public class Sentimentos extends AppCompatActivity {
                         if (speechStatus == TextToSpeech.ERROR) {
                             Log.e("TTS", "Erro ao Converter Texto em Fala!");
                         }
-                    } else {//se for identificado que foi clicado no botao EXCLUIR ele ira apresente um
+                    } else {//se for identificado que foi clicado no botao ALTERAR ele ira apresente um
                         // DIALOG com as informações da imagem para fazer a alteração
 
                         //alertDialog para ALTERAR
@@ -201,7 +207,7 @@ public class Sentimentos extends AppCompatActivity {
                         imagemTirada.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Toast.makeText(getApplicationContext(),"Rotina ainda não implementada, aguarde as proximas versões...",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Rotina ainda não implementada, aguarde as proximas versões...", Toast.LENGTH_LONG).show();
 
                             }
 
@@ -406,28 +412,33 @@ public class Sentimentos extends AppCompatActivity {
             salvar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (textoFalar.getText().length() <= 2) {
+                        textoFalar.setError("minimo 3 letras");
+                        textoFalar.setFocusable(true);
+                        animacaoRequired = YoYo.with(Techniques.Tada)
+                                .duration(900)
+                                .repeat(0)
+                                .playOn(textoFalar);
 
-                    //todo:ARRUMAR ESSA BUDEGA!
-                    /*String[] palavroes = {"porra","caralho","filha da puta","buceta"};
-
-                    int Wrongword=0;
-                    for (int i = 0; i < palavroes.length; i++) {
-                        if (textoFalar.getText().toString()==palavroes[i]){
-                            i++;
-                            Wrongword = Wrongword+1;
-                        }
                     }
+                    //VALIDAÇÂO DE PALAVROES DIGITADOS
+                    else if (textoFalar.getText().length() >= 3) {
+                        String[] palavroes = {"porra", "caralho", "filha da puta", "buceta", "merda","vai toma no cu","puta que pariu" +
+                                "fuder", "cacete", "vai se foder", "xereca", "vai a merda"};
+                        for (int i = 0; i < palavroes.length; i++) {
+                            if (textoFalar.getText().toString().equals(palavroes[i])){
+                                Toast.makeText(getApplicationContext(),"Palavra Inapropriada encontrada..Mude a" +
+                                        " palavra/frase por favor",Toast.LENGTH_LONG).show();
+                                textoFalar.setFocusable(true);
+                                textoFalar.setError("palavra inapropriada");
 
-                    if (Wrongword>=1){
-                        Toast.makeText(getApplicationContext(),"Palavra Inapropriada encontrada",Toast.LENGTH_LONG).show();
-                        textoFalar.setFocusable(true);
-                        textoFalar.setError("*");
-                    }*/
-
-
-                    if (textoFalar.getText().length() <= 3) {
-                        textoFalar.setError("Informe o Texto por favor com no minimo 3 letras");
-                        textoFalar.setFocusable(true);
+                                animacaoRequired = YoYo.with(Techniques.Tada)
+                                        .duration(900)
+                                        .repeat(0)
+                                        .playOn(textoFalar);
+                                i++;
+                            }
+                        }
 
                     } else {
 
