@@ -2,22 +2,16 @@ package br.com.amigoazul.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -25,16 +19,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
 import com.vicmikhailau.maskededittext.MaskedFormatter;
 import com.vicmikhailau.maskededittext.MaskedWatcher;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 
 import br.com.amigoazul.R;
 import br.com.amigoazul.helper.UsuarioDAO;
-import br.com.amigoazul.model.ListaComunicacao;
 import br.com.amigoazul.model.ListaUsuario;
 
 public class Cadastro_Activity extends AppCompatActivity {
@@ -63,7 +54,7 @@ public class Cadastro_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();//esconder a actionBar
         setContentView(R.layout.cadastro_usuario);
-      
+
 
         //Recuperar produto caso seja edição.
         usuarioAtual = (ListaUsuario) getIntent().getSerializableExtra("usuarioSelecionado");
@@ -75,7 +66,7 @@ public class Cadastro_Activity extends AppCompatActivity {
         //AlertDialog
         AlertDialog alerta = null;
         AlertDialog.Builder builder;
-        
+
         /**SETAR AS VARIAVEIS COM OS ID DO COMPONENTE DA TELA**/
         //CAMPOS DE TEXTOS
         nome = findViewById(R.id.edt_nome);
@@ -124,43 +115,6 @@ public class Cadastro_Activity extends AppCompatActivity {
 
             }
         });
-        dataNasc.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (dataNasc.getText().length() > 59) {
-                    dataNasc.setError("Limite de caracteres Atingido");
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        dataNasc.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (dataNasc.getText().length() > 59) {
-                    dataNasc.setError("Limite de caracteres Atingido");
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
         senha.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -182,7 +136,7 @@ public class Cadastro_Activity extends AppCompatActivity {
         });
 
 
-        //Configurar produto na caixa de texto
+        //Configurar usuario na caixa de texto
         if (usuarioAtual != null) {
             nome.setText(usuarioAtual.getNomeUsuario());
             dataNasc.setText(usuarioAtual.getDataNasc());
@@ -203,6 +157,69 @@ public class Cadastro_Activity extends AppCompatActivity {
         gravar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (dataNasc.getText().length() == 10) {
+
+                    long date = System.currentTimeMillis();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    String dateString = sdf.format(date);
+
+
+                    String[] arrayDataSistema = dateString.split("/");//separa a frase em palavras e guarda em array
+                    String[] arrayDataInformada = dataNasc.getText().toString().split("/");//separa a frase em palavras e guarda em array
+                    int[] arrayDataDigitadaConvertida = new int[3];
+                    int[] arrayDataSistemaConvertida = new int[3];
+                    for (int i = 0; i < arrayDataInformada.length; i++) {
+                        arrayDataInformada[i] = arrayDataInformada[i].trim();//percorre o array e tira os espaços em branco
+                        arrayDataSistema[i]= arrayDataSistema[i].trim();
+                        arrayDataDigitadaConvertida[i] = Integer.parseInt(arrayDataInformada[i]);//pega os dados do array de String e passa para o array de inteiro
+                        arrayDataSistemaConvertida[i]= Integer.parseInt(arrayDataSistema[i]);
+
+                    }
+                    for (int i = 0; i < arrayDataInformada.length; i++) {
+                        if ((arrayDataDigitadaConvertida[0] <= 0 || arrayDataDigitadaConvertida[0] > 31)) {
+                            dataNasc.setFocusable(true);
+                            dataNasc.setError("DIA Invalido");
+                            animacaoRequired = YoYo.with(Techniques.Tada)
+                                    .duration(900)
+                                    .repeat(0)
+                                    .playOn(findViewById(R.id.txtImptDataNasc));
+                            return;
+
+                        } else if ((arrayDataDigitadaConvertida[1] <= 0 || arrayDataDigitadaConvertida[1] > 12)) {
+                            dataNasc.setFocusable(true);
+                            dataNasc.setError("MÊS Invalido");
+                            animacaoRequired = YoYo.with(Techniques.Tada)
+                                    .duration(900)
+                                    .repeat(0)
+                                    .playOn(findViewById(R.id.txtImptDataNasc));
+                            return;
+
+                        } else if ((arrayDataDigitadaConvertida[2] <= 1920) || (arrayDataDigitadaConvertida[2] > arrayDataSistemaConvertida[2])) {
+
+                            dataNasc.setFocusable(true);
+                            dataNasc.setError("ANO Invalido");
+                            animacaoRequired = YoYo.with(Techniques.Tada)
+                                    .duration(900)
+                                    .repeat(0)
+                                    .playOn(findViewById(R.id.txtImptDataNasc));
+                            return;
+                        } else if (arrayDataDigitadaConvertida[2] == arrayDataSistemaConvertida[2]) {
+                            if ((arrayDataDigitadaConvertida[1] > arrayDataSistemaConvertida[1])) {
+                                dataNasc.setFocusable(true);
+                                dataNasc.setError("MÊS Invalido");
+                                animacaoRequired = YoYo.with(Techniques.Tada)
+                                        .duration(900)
+                                        .repeat(0)
+                                        .playOn(findViewById(R.id.txtImptDataNasc));
+                                return;
+                            }
+
+                        }
+
+                    }
+                } else {
+                    //nada
+                }
 
                 if (usuarioAtual == null) {//****SALVAR*****//
                     try {
@@ -384,7 +401,7 @@ public class Cadastro_Activity extends AppCompatActivity {
             }
         });
         //FAB deletar
-  deletar.setOnClickListener(new View.OnClickListener() {
+        deletar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -442,7 +459,7 @@ public class Cadastro_Activity extends AppCompatActivity {
         final Button vCancelar = dialogText_ExcluirUserview.findViewById(R.id.btnCancelar_UsuarioCancelar);
 
 
-        //preenche os campos com os dados        
+        //preenche os campos com os dados
         vDeletarUsuario.setText(usuarioAtual.getNomeUsuario());
         vDeletarDataNasc.setText(usuarioAtual.getNomeUsuario());
         vDeletarGrauTEA.setText(usuarioAtual.getGrauTEA());
