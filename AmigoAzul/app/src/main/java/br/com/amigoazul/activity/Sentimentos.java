@@ -71,6 +71,9 @@ public class Sentimentos extends AppCompatActivity {
     private final int ALTERA_GALERIA = 4;
 
 
+    String[] palavroes = {"porra", "caralho", "buceta", "merda", "cu", "puta", "fuder", "cacete", "foder", "xereca",
+            "cu", "cú", "cuzinho", "bosta", "boquete", "cu?", "boquete?"};
+
     //tremer a tela
     YoYo.YoYoString animacaoRequired;
 
@@ -215,6 +218,49 @@ public class Sentimentos extends AppCompatActivity {
                         salvar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                //VALIDAÇÂO DE PALAVROES DIGITADOS
+                                if (textoFalar.getText().length() >= 3) {
+                                    String[] arrayTextoFalar = textoFalar.getText().toString().split(" ");//separa a frase em palavras e guarda em array
+
+                                    for (int x = 0; x < arrayTextoFalar.length; x++) {
+                                        arrayTextoFalar[x] = arrayTextoFalar[x].trim();//percorre o array e tira os espaços em branco
+                                    }
+
+                                    for (int i = 0; i < palavroes.length; i++) {
+                                        for (int x = 0; x < arrayTextoFalar.length; x++) {
+                                            if (arrayTextoFalar[x].equals(palavroes[i])) {
+                                                Toast.makeText(getApplicationContext(), "Palavra Inapropriada encontrada..Mude a" +
+                                                        " palavra/frase por favor", Toast.LENGTH_LONG).show();
+                                                textoFalar.setFocusable(true);
+                                                textoFalar.setError("palavra inapropriada");
+
+                                                animacaoRequired = YoYo.with(Techniques.Tada)
+                                                        .duration(900)
+                                                        .repeat(0)
+                                                        .playOn(textoFalar);
+                                                return;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                       /* if (textoFalar.getText().toString().contains(palavroes[i])) {
+                                            Toast.makeText(getApplicationContext(), "Palavra Inapropriada encontrada..Mude a" +
+                                                    " palavra/frase por favor", Toast.LENGTH_LONG).show();
+                                            textoFalar.setFocusable(true);
+                                            textoFalar.setError("palavra inapropriada");
+
+                                            animacaoRequired = YoYo.with(Techniques.Tada)
+                                                    .duration(900)
+                                                    .repeat(0)
+                                                    .playOn(textoFalar);
+                                            return;
+                                        }
+
+                                    }
+                                } else {
+                                    Log.e("DICIONARIO DE PALAVRAO", "nada de palavrao encontrado");
+                                }*/
                                 if (textoFalar.getText().length() <= 3) {
                                     textoFalar.setError("Informe o Texto por favor com no minimo 3 letras");
                                     textoFalar.setFocusable(true);
@@ -265,7 +311,7 @@ public class Sentimentos extends AppCompatActivity {
 
                         final ListaComunicacao listaComunicacaoRCRVW = finalList.get(position);// pega a posição do item clicado
 
-                        //alertDialog para EXCLUIR
+                        //alertDialog para EXCLUIR O SENTIMENTO
                         builder = new AlertDialog.Builder(Sentimentos.this);
                         LayoutInflater inflater = getLayoutInflater();
                         View dialogText_Fotoview = inflater.inflate(R.layout.foto_excluir, null);
@@ -344,7 +390,7 @@ public class Sentimentos extends AppCompatActivity {
 
 
     public void TIRAR_FOTO_ou_GALERIA(final Boolean alteracao) {
-        //alertDialog
+        //alertDialog para escoher daonde é a foto
         AlertDialog.Builder builder = new AlertDialog.Builder(Sentimentos.this);
         LayoutInflater inflater = getLayoutInflater();
         View dialogCameraGaleriaview = inflater.inflate(R.layout.dialog_camera_galeria, null);
@@ -395,7 +441,7 @@ public class Sentimentos extends AppCompatActivity {
             Bundle extra = data.getExtras();
             final Bitmap imagem = (Bitmap) extra.get("data");
 
-            //alertDialog
+            //alertDialog para salvar a foto da CAMERA
             builder = new AlertDialog.Builder(this);
             LayoutInflater inflater = getLayoutInflater();
             View dialogText_Fotoview = inflater.inflate(R.layout.texto_foto, null);
@@ -412,6 +458,35 @@ public class Sentimentos extends AppCompatActivity {
             salvar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //VALIDAÇÂO DE PALAVROES DIGITADOS
+                    if (textoFalar.getText().length() >= 3) {
+                        String[] arrayTextoFalar = textoFalar.getText().toString().split(" ");//separa a frase em palavras e guarda em array
+
+                        for (int x = 0; x < arrayTextoFalar.length; x++) {
+                            arrayTextoFalar[x] = arrayTextoFalar[x].trim();//percorre o array e tira os espaços em branco
+                        }
+
+                        for (int i = 0; i < palavroes.length; i++) {
+                            for (int x = 0; x < arrayTextoFalar.length; x++) {
+                                if (arrayTextoFalar[x].equals(palavroes[i])) {
+                                    Toast.makeText(getApplicationContext(), "Palavra Inapropriada encontrada..Mude a" +
+                                            " palavra/frase por favor", Toast.LENGTH_LONG).show();
+                                    textoFalar.setFocusable(true);
+                                    textoFalar.setError("palavra inapropriada");
+
+                                    animacaoRequired = YoYo.with(Techniques.Tada)
+                                            .duration(900)
+                                            .repeat(0)
+                                            .playOn(textoFalar);
+                                    return;
+                                }
+                            }
+                        }
+                    } else {
+                        Log.e("DICIONARIO DE PALAVRAO", "nada de palavrao encontrado");
+                    }
+
+
                     if (textoFalar.getText().length() <= 2) {
                         textoFalar.setError("minimo 3 letras");
                         textoFalar.setFocusable(true);
@@ -419,26 +494,6 @@ public class Sentimentos extends AppCompatActivity {
                                 .duration(900)
                                 .repeat(0)
                                 .playOn(textoFalar);
-
-                    }
-                    //VALIDAÇÂO DE PALAVROES DIGITADOS
-                    else if (textoFalar.getText().length() >= 3) {
-                        String[] palavroes = {"porra", "caralho", "filha da puta", "buceta", "merda","vai toma no cu","puta que pariu" +
-                                "fuder", "cacete", "vai se foder", "xereca", "vai a merda"};
-                        for (int i = 0; i < palavroes.length; i++) {
-                            if (textoFalar.getText().toString().equals(palavroes[i])){
-                                Toast.makeText(getApplicationContext(),"Palavra Inapropriada encontrada..Mude a" +
-                                        " palavra/frase por favor",Toast.LENGTH_LONG).show();
-                                textoFalar.setFocusable(true);
-                                textoFalar.setError("palavra inapropriada");
-
-                                animacaoRequired = YoYo.with(Techniques.Tada)
-                                        .duration(900)
-                                        .repeat(0)
-                                        .playOn(textoFalar);
-                                i++;
-                            }
-                        }
 
                     } else {
 
@@ -501,7 +556,7 @@ public class Sentimentos extends AppCompatActivity {
             // Criamos um file, com o DIRETORIO, com o mesmo nome novo
             final File novaImagem = new File(rootPath, "AZ-" + dataFormatada + ".JPG");
 
-            //alertDialog
+            //alertDialog para salvar foto que foi pego da GALERIA
             builder = new AlertDialog.Builder(this);
             LayoutInflater inflater = getLayoutInflater();
             View dialogText_Fotoview = inflater.inflate(R.layout.texto_foto, null);
@@ -517,6 +572,33 @@ public class Sentimentos extends AppCompatActivity {
             salvar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //VALIDAÇÂO DE PALAVROES DIGITADOS
+                    if (textoFalar.getText().length() >= 3) {
+                        String[] arrayTextoFalar = textoFalar.getText().toString().split(" ");//separa a frase em palavras e guarda em array
+
+                        for (int x = 0; x < arrayTextoFalar.length; x++) {
+                            arrayTextoFalar[x] = arrayTextoFalar[x].trim();//percorre o array e tira os espaços em branco
+                        }
+
+                        for (int i = 0; i < palavroes.length; i++) {
+                            for (int x = 0; x < arrayTextoFalar.length; x++) {
+                                if (arrayTextoFalar[x].equals(palavroes[i])) {
+                                    Toast.makeText(getApplicationContext(), "Palavra Inapropriada encontrada..Mude a" +
+                                            " palavra/frase por favor", Toast.LENGTH_LONG).show();
+                                    textoFalar.setFocusable(true);
+                                    textoFalar.setError("palavra inapropriada");
+
+                                    animacaoRequired = YoYo.with(Techniques.Tada)
+                                            .duration(900)
+                                            .repeat(0)
+                                            .playOn(textoFalar);
+                                    return;
+                                }
+                            }
+                        }
+                    } else {
+                        Log.e("DICIONARIO DE PALAVRAO", "nada de palavrao encontrado");
+                    }
 
                     if (textoFalar.getText().length() < 2) {
                         textoFalar.setError("Informe o Texto por favor com no minimo 3 letras");
@@ -559,177 +641,6 @@ public class Sentimentos extends AppCompatActivity {
         }
 
 
-//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-        if (requestCode == ALTERA_CAMERA && resultCode == RESULT_OK) {//tirar foto(ALTERAR)
-            Toast.makeText(getApplicationContext(), "ALTERACAO CAMERA FEITA COM SUCESSO", Toast.LENGTH_LONG).show();
-            Bundle extra = data.getExtras();
-            final Bitmap imagem = (Bitmap) extra.get("data");
-
-            //alertDialog para ALTERAR
-            builder = new AlertDialog.Builder(Sentimentos.this);
-            LayoutInflater inflater = getLayoutInflater();
-            View dialogText_Fotoview = inflater.inflate(R.layout.texto_foto, null);
-            builder.setView(dialogText_Fotoview);
-            builder.setCancelable(false);
-
-            final ImageView imagemTirada = dialogText_Fotoview.findViewById(R.id.imgvw_fotoTirada);
-            final TextInputEditText textoFalar = dialogText_Fotoview.findViewById(R.id.edttxt_textoFalar);
-            final TextView textInformativo = dialogText_Fotoview.findViewById(R.id.txtvw_informAlterarFoto);
-            final Button salvar = dialogText_Fotoview.findViewById(R.id.btnSalvar_TextoFalar);
-            Button cancelar = dialogText_Fotoview.findViewById(R.id.btnCancelar_TextoFalar);
-
-            final ListaComunicacao liberadoParaAlterar = (ListaComunicacao) getIntent().getSerializableExtra("libera_alteracao");
-
-
-            //seta o texto informativo para alterar a foto e deixa ele VISIVEL
-            textInformativo.setVisibility(View.VISIBLE);
-            //preenche os campos com os dados
-            textoFalar.setText(liberadoParaAlterar.getTextoFalar());
-            //converte o caminho da imagem em um BITMAP
-            imagemTirada.setImageBitmap(imagem);
-
-            salvar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (textoFalar.getText().length() < 2) {
-                        textoFalar.setError("Informe o Texto por favor com no minimo 3 letras");
-                        textoFalar.setFocusable(true);
-
-                    } else {
-
-                        //atualiza dados da imagem no BD
-                        if (imagem != null) {
-                            listaComunicacaoSentimentos = new ListaComunicacao();
-                            listaComunicacaoSentimentos.setId(liberadoParaAlterar.getId());
-                            listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
-                            listaComunicacaoSentimentos.setExcluido("n");
-                            listaComunicacaoSentimentos.setTipoComunic(liberadoParaAlterar.getTipoComunic());
-                            listaComunicacaoSentimentos.setTextoFalar(textoFalar.getText().toString());
-                            listaComunicacaoSentimentos.setCaminhoFirebase(liberadoParaAlterar.getCaminhoFirebase());
-
-
-                            String s = liberadoParaAlterar.getCaminhoFirebase();
-                            String result = s.substring(s.lastIndexOf(System.getProperty("file.separator")) + 1, s.length());
-                            System.out.println(result);
-                            Log.e("TESTESSSS", result);
-
-
-                            comunicacaoDAO.atualizar(listaComunicacaoSentimentos);
-                            alerta.cancel();
-                            Intent intent = new Intent(Sentimentos.this, Sentimentos.class);
-                            startActivity(intent);
-                            Toast.makeText(getApplicationContext(), "ALTERADO COM SUCESSO", Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-
-                }
-            });
-            cancelar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    alerta.cancel();
-                }
-            });
-            alerta = builder.create();
-            alerta.show();
-            //***fim do ALERTDIALOG ALTERAR
-
-
-        }
-//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-        //foto da galeria (ALTERAR)
-        if (resultCode == RESULT_OK && requestCode == ALTERA_GALERIA) {
-
-            final ListaComunicacao libera_alteracao = (ListaComunicacao) getIntent().getSerializableExtra("libera_alteracao");
-
-            //Pegamos a URI da imagem...
-            Uri uriSelecionada = data.getData();
-
-            //pegar a imagem e converte  para um path compativel para inserir no ImageView
-            String[] colunas = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getContentResolver().query(uriSelecionada, colunas, null, null, null);
-            cursor.moveToFirst();
-            int indexColuna = cursor.getColumnIndex(colunas[0]);
-            String pathImg = cursor.getString(indexColuna);
-            cursor.close();
-
-            final Bitmap imagem = BitmapFactory.decodeFile(pathImg);
-            // criamos um File com o diretório selecionado!
-            final File selecionada = new File(salvar_foto.getRealPathFromURI(uriSelecionada, getApplicationContext()));
-            // Caso não exista o doretório, vamos criar!
-            final File rootPath = new File(splash_activity.meuDirSentimentos.getAbsolutePath());
-            if (!rootPath.exists()) {
-                rootPath.mkdirs();
-            }
-
-
-            //pegar apenas o nome do arquivo sem o nome do diretorio
-            String s = libera_alteracao.getCaminhoFirebase();
-            String result = s.substring(s.lastIndexOf(System.getProperty("file.separator")) + 1, s.length());
-            System.out.println(result);
-            Log.e("TESTESSSS", result);
-
-
-            // Criamos um file, com o DIRETORIO, com o mesmo nome novo
-            final File novaImagem = new File(rootPath, result);
-
-            //alertDialog
-            builder = new AlertDialog.Builder(this);
-            LayoutInflater inflater = getLayoutInflater();
-            View dialogText_Fotoview = inflater.inflate(R.layout.texto_foto, null);
-            builder.setView(dialogText_Fotoview);
-            builder.setCancelable(false);
-
-            final ImageView imagemTirada = dialogText_Fotoview.findViewById(R.id.imgvw_fotoTirada);
-            imagemTirada.setImageBitmap(imagem);
-            final Button salvar = dialogText_Fotoview.findViewById(R.id.btnSalvar_TextoFalar);
-            final EditText textoFalar = dialogText_Fotoview.findViewById(R.id.edttxt_textoFalar);
-            Button cancelar = dialogText_Fotoview.findViewById(R.id.btnCancelar_TextoFalar);
-
-            salvar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    if (textoFalar.getText().length() <= 3) {
-                        textoFalar.setError("Informe o Texto por favor");
-                        textoFalar.setFocusable(true);
-
-                    } else {
-                        //Savar dados da imagem no BD
-                        if (imagem != null) {
-                            String nomeDoArquivo = "AZ-" + dataFormatada + ".JPG";
-                            listaComunicacaoSentimentos.setTextoFalar(textoFalar.getText().toString());
-                            listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
-                            listaComunicacaoSentimentos.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
-                            listaComunicacaoSentimentos.setTipoComunic("sentimentos");
-                            listaComunicacaoSentimentos.setExcluido("n");
-
-                            comunicacaoDAO.salvar(listaComunicacaoSentimentos);
-
-                            try {//Movemos o arquivo!
-                                salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
-                                Toast.makeText(Sentimentos.this, "Imagem Salva com sucesso!", Toast.LENGTH_SHORT).show();
-                                alerta.cancel();
-                                CARREGAR_FOTOS_SENTIMENTOS();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                }
-            });
-            cancelar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    alerta.cancel();
-
-                }
-            });
-            alerta = builder.create();
-            alerta.show();
-        }
     }
 
 

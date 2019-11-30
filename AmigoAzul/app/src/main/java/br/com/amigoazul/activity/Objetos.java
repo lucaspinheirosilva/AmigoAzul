@@ -25,6 +25,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -56,6 +58,9 @@ public class Objetos extends AppCompatActivity {
     //Texto em fala
     TextToSpeech textToSpeech;
 
+    //tremer a tela
+    YoYo.YoYoString animacaoRequired;
+
     ListaComunicacao listaComunicacaoObjetos = new ListaComunicacao();//instaciar objeto Lista de comunicação para obter os GETTER e SETTER
 
     //instanciar outras classes
@@ -69,6 +74,9 @@ public class Objetos extends AppCompatActivity {
     //AlertDialog
     AlertDialog alerta;
     AlertDialog.Builder builder;
+
+    String[] palavroes = {"porra", "caralho", "buceta", "merda", "cu", "puta", "fuder", "cacete", "foder", "xereca",
+            "cu", "cú", "cuzinho", "bosta", "boquete", "cu?", "boquete?"};
 
     //Constantes
     private final int CAMERA = 1;
@@ -180,7 +188,7 @@ public class Objetos extends AppCompatActivity {
                     } else {//se for identificado que foi clicado no botao EXCLUIR ele ira apresente um
 
                         // DIALOG com as informações da imagem para fazer a alteração
-                        //alertDialog para ALTERAR
+                        //alertDialog para ALTERAR os dados do OBJETOS
                         builder = new AlertDialog.Builder(Objetos.this);
                         LayoutInflater inflater = getLayoutInflater();
                         View dialogText_Fotoview = inflater.inflate(R.layout.texto_foto, null);
@@ -211,6 +219,33 @@ public class Objetos extends AppCompatActivity {
                         salvar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+
+                                //VALIDAÇÂO DE PALAVROES DIGITADOS
+                                if (textoFalar.getText().length() >= 3) {
+                                    String[] arrayTextoFalar = textoFalar.getText().toString().split(" ");//separa a frase em palavras e guarda em array
+
+                                    for (int x = 0; x < arrayTextoFalar.length; x++) {
+                                        arrayTextoFalar[x] = arrayTextoFalar[x].trim();//percorre o array e tira os espaços em branco
+                                    }
+
+                                    for (int i = 0; i < palavroes.length; i++) {
+                                        for (int x = 0; x < arrayTextoFalar.length; x++) {
+                                            if (arrayTextoFalar[x].equals(palavroes[i])) {
+                                                Toast.makeText(getApplicationContext(), "Palavra Inapropriada encontrada..Mude a" +
+                                                        " palavra/frase por favor", Toast.LENGTH_LONG).show();
+                                                textoFalar.setFocusable(true);
+                                                textoFalar.setError("palavra inapropriada");
+
+                                                animacaoRequired = YoYo.with(Techniques.Tada)
+                                                        .duration(900)
+                                                        .repeat(0)
+                                                        .playOn(textoFalar);
+                                                return;
+                                            }
+                                        }
+                                    }
+                                }
+
                                 if (textoFalar.getText().length() <= 3) {
                                     textoFalar.setError("Informe o Texto por favor com no minimo 3 letras");
                                     textoFalar.setFocusable(true);
@@ -263,7 +298,7 @@ public class Objetos extends AppCompatActivity {
 
                         final ListaComunicacao listaComunicacaoRCRVW = finalList.get(position);// pega a posição do item clicado
 
-                        //alertDialog para EXCLUIR
+                        //alertDialog para EXCLUIR OBJETOS
                         builder = new AlertDialog.Builder(Objetos.this);
                         LayoutInflater inflater = getLayoutInflater();
                         View dialogText_Fotoview = inflater.inflate(R.layout.foto_excluir, null);
@@ -396,6 +431,32 @@ public class Objetos extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
+                    //VALIDAÇÂO DE PALAVROES DIGITADOS
+                    if (textoFalar.getText().length() >= 3) {
+                        String[] arrayTextoFalar = textoFalar.getText().toString().split(" ");//separa a frase em palavras e guarda em array
+
+                        for (int x = 0; x < arrayTextoFalar.length; x++) {
+                            arrayTextoFalar[x] = arrayTextoFalar[x].trim();//percorre o array e tira os espaços em branco
+                        }
+
+                        for (int i = 0; i < palavroes.length; i++) {
+                            for (int x = 0; x < arrayTextoFalar.length; x++) {
+                                if (arrayTextoFalar[x].equals(palavroes[i])) {
+                                    Toast.makeText(getApplicationContext(), "Palavra Inapropriada encontrada..Mude a" +
+                                            " palavra/frase por favor", Toast.LENGTH_LONG).show();
+                                    textoFalar.setFocusable(true);
+                                    textoFalar.setError("palavra inapropriada");
+
+                                    animacaoRequired = YoYo.with(Techniques.Tada)
+                                            .duration(900)
+                                            .repeat(0)
+                                            .playOn(textoFalar);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+
                     if (textoFalar.getText().length() <= 3) {
                         textoFalar.setError("Informe o Texto com no minimo 3 letras");
                         textoFalar.setFocusable(true);
@@ -476,8 +537,34 @@ public class Objetos extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
+                    //VALIDAÇÂO DE PALAVROES DIGITADOS
+                    if (textoFalar.getText().length() >= 3) {
+                        String[] arrayTextoFalar = textoFalar.getText().toString().split(" ");//separa a frase em palavras e guarda em array
+
+                        for (int x = 0; x < arrayTextoFalar.length; x++) {
+                            arrayTextoFalar[x] = arrayTextoFalar[x].trim();//percorre o array e tira os espaços em branco
+                        }
+
+                        for (int i = 0; i < palavroes.length; i++) {
+                            for (int x = 0; x < arrayTextoFalar.length; x++) {
+                                if (arrayTextoFalar[x].equals(palavroes[i])) {
+                                    Toast.makeText(getApplicationContext(), "Palavra Inapropriada encontrada..Mude a" +
+                                            " palavra/frase por favor", Toast.LENGTH_LONG).show();
+                                    textoFalar.setFocusable(true);
+                                    textoFalar.setError("palavra inapropriada");
+
+                                    animacaoRequired = YoYo.with(Techniques.Tada)
+                                            .duration(900)
+                                            .repeat(0)
+                                            .playOn(textoFalar);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+
                     if (textoFalar.getText().length() <= 3) {
-                        textoFalar.setError("Informe o Texto por favor");
+                        textoFalar.setError("Informe o Texto por favor com no minimo 3 letras");
                         textoFalar.setFocusable(true);
 
                     } else {
