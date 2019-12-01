@@ -73,7 +73,7 @@ public class Sentimentos extends AppCompatActivity {
 
 
     String[] palavroes = {"porra", "caralho", "buceta", "merda", "cu", "puta", "fuder", "cacete", "foder", "xereca",
-            "cu", "cú", "cuzinho", "bosta", "boquete", "cu?", "boquete?","foda","fudido"};
+            "cu", "cú", "cuzinho", "bosta", "boquete", "cu?", "boquete?", "foda", "fudido"};
 
     //tremer a tela
     YoYo.YoYoString animacaoRequired;
@@ -105,11 +105,10 @@ public class Sentimentos extends AppCompatActivity {
 
         //pega a "mensagem mandada pelo botao EXCLUIR" liberando ou nao a exclusao
         //muda o titulo da tela
-        if (sentimentosAtual!=null){
+        if (sentimentosAtual != null) {
             tituloSentimentos.setText("Alterar / Excluir Sentimentos");
             tituloSentimentos.setTextColor(Color.parseColor("#F80909"));
-        }
-        else{
+        } else {
             tituloSentimentos.setText("Sentimentos");
             tituloSentimentos.setTextColor(Color.parseColor("#052C88"));
         }
@@ -514,7 +513,9 @@ public class Sentimentos extends AppCompatActivity {
 
                             salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, nomeDoArquivo, splash_activity.meuDirSentimentos.getAbsolutePath());
                             alerta.cancel();
-                            CARREGAR_FOTOS_SENTIMENTOS();
+                            Intent intent = new Intent(Sentimentos.this, Sentimentos.class);
+                            startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(Sentimentos.this, "Erro ao salvar imagem, refaça a operação por favor!", Toast.LENGTH_SHORT).show();
                             alerta.cancel();
@@ -620,11 +621,15 @@ public class Sentimentos extends AppCompatActivity {
 
                             comunicacaoDAO.salvar(listaComunicacaoSentimentos);
 
+                            Intent intent = new Intent(Sentimentos.this, Sentimentos.class);
+                            startActivity(intent);
+                            finish();
+
                             try {//Movemos o arquivo!
                                 salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
                                 Toast.makeText(Sentimentos.this, "Imagem Salva com sucesso!", Toast.LENGTH_SHORT).show();
                                 alerta.cancel();
-                                CARREGAR_FOTOS_SENTIMENTOS();
+
                             } catch (IOException e) {
                                 e.printStackTrace();
                                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -646,7 +651,8 @@ public class Sentimentos extends AppCompatActivity {
 
 
     }
-    public void onRestart(){
+
+    public void onRestart() {
         super.onRestart();
         tituloSentimentos.setText("Sentimentos");
         tituloSentimentos.setTextColor(Color.parseColor("#052C88"));
