@@ -36,8 +36,8 @@ public class MainMenu extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(MainMenu.this, MenuComunicacao.class);
-
                 startActivity(intent);
+
             }
         });
 
@@ -46,9 +46,9 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(MainMenu.this,MenuAtividades.class);
-
+                Intent intent = new Intent(MainMenu.this, MenuAtividades.class);
                 startActivity(intent);
+
 
             }
         });
@@ -57,8 +57,7 @@ public class MainMenu extends AppCompatActivity {
         FAB_alterarUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainMenu.this,ListarUsuario.class);
-
+                Intent intent = new Intent(MainMenu.this, ListarUsuario.class);
                 startActivity(intent);
             }
         });

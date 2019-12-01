@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -61,6 +62,8 @@ public class Objetos extends AppCompatActivity {
     //tremer a tela
     YoYo.YoYoString animacaoRequired;
 
+    TextView tituloObjetos;
+
     ListaComunicacao listaComunicacaoObjetos = new ListaComunicacao();//instaciar objeto Lista de comunicação para obter os GETTER e SETTER
 
     //instanciar outras classes
@@ -89,8 +92,48 @@ public class Objetos extends AppCompatActivity {
         getSupportActionBar().hide();//esconder a actionBar
         setContentView(R.layout.objetos);
 
+
+        //configuração do idioma e gramatica da fala do dispositivo
+        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+
+                    int ttsLang = textToSpeech.setLanguage(new Locale("pt", "BR"));
+
+                    if (ttsLang == TextToSpeech.LANG_MISSING_DATA
+                            || ttsLang == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "a Linguagem nao é suportada!");
+                    } else {
+                        Log.i("TTS", "Lingua suportada.");
+                    }
+                    Log.i("TTS", "Inicializado com Sucesso.");
+                } else {
+                    Toast.makeText(getApplicationContext(), "TTS Falha de Inicialização!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
+
+        tituloObjetos = findViewById(R.id.txtvw_LabelObjetos);
+
         FabSpeedDial FAB_camera_Objetos = (FabSpeedDial) findViewById(R.id.fab_speed_dial_objetos);
+
         CARREGAR_FOTOS_OBJETOS();
+
+
+        //pega a "mensagem mandada pelo botao EXCLUIR" liberando ou nao a exclusao
+        final String objetocAtual = (String) getIntent().getSerializableExtra("LIBERA_EXCLUSAO");
+
+        //muda o titulo da tela
+        if (objetocAtual!=null){
+            tituloObjetos.setText("Alterar / Excluir Objetos");
+            tituloObjetos.setTextColor(Color.parseColor("#F80909"));
+        }
+        else{
+            tituloObjetos.setText("Objetos");
+            tituloObjetos.setTextColor(Color.parseColor("#052C88"));
+        }
 
         //configuração do idioma e gramatica da fala do dispositivo
         textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -605,6 +648,11 @@ public class Objetos extends AppCompatActivity {
 
         }
 
+    }
+    public  void onRestart(){
+        super.onRestart();
+        tituloObjetos.setText("Objetos");
+        tituloObjetos.setTextColor(Color.parseColor("#052C88"));
     }
 
 

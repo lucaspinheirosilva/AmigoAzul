@@ -30,6 +30,7 @@ public class MenuComunicacao extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MenuComunicacao.this,Sentimentos.class);
                 startActivity(intent);
+                finish();
             }
         });
         objetos.setOnClickListener(new View.OnClickListener() {
@@ -37,6 +38,7 @@ public class MenuComunicacao extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MenuComunicacao.this,Objetos.class);
                 startActivity(intent);
+                finish();
             }
         });
         montarFrase.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +46,7 @@ public class MenuComunicacao extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MenuComunicacao.this,MontarFrase.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

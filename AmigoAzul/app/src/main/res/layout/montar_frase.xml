@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/consLayoutMontarFrase"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#D8D6D6"
@@ -81,5 +82,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:miniFabBackgroundTint="@android:color/white" />
+
+    <TextView
+        android:id="@+id/txtvw_LabelMontarFrase"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/annie_use_your_telescope"
+        android:gravity="center"
+        android:text="Alterar / Excluir Montar Frase"
+        android:textColor="#F80909"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

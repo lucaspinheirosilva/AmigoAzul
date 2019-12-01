@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,12 +23,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.collection.LLRBNode;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,6 +56,8 @@ public class MontarFrase extends AppCompatActivity {
     ImageButton stopAudio;
     ImageButton limparAudio;
     String juntarPalavras = "";
+    ConstraintLayout layout;
+    TextView tituloMontarFrase;
 
     //instanciar outras classes
     Splash_Activity splash_activity = new Splash_Activity();
@@ -90,14 +95,35 @@ public class MontarFrase extends AppCompatActivity {
         getSupportActionBar().hide();//esconder a actionBar
         setContentView(R.layout.montar_frase);
 
+        //pega a "mensagem mandada pelo botao EXCLUIR" liberando ou nao a exclusao
+        final String MontarFraseAtual = (String) getIntent().getSerializableExtra("LIBERA_EXCLUSAO");
+
         //setar variaveis com IDs
         FabSpeedDial FAB_camera_Montar_Frase = findViewById(R.id.fab_speed_dial_MontarFrase);
         fraseMontada = findViewById(R.id.edttxt_MF_fraseMontada);
         playAudio = findViewById(R.id.imgbtn_MF_playAudio);
         stopAudio = findViewById(R.id.imgbtn_MF_StopAudio);
         limparAudio = findViewById(R.id.imgbtn_MF_LimparAudio);
+        layout = findViewById(R.id.consLayoutMontarFrase);
+        tituloMontarFrase = findViewById(R.id.txtvw_LabelMontarFrase);
+
+        //muda o titulo da tela
+        if (MontarFraseAtual!=null){
+            tituloMontarFrase.setVisibility(View.VISIBLE);
+            layout.setBackgroundColor(Color.parseColor("#B5E4FA"));
+            fraseMontada.setVisibility(View.INVISIBLE);
+            playAudio.setVisibility(View.INVISIBLE);
+            stopAudio.setVisibility(View.INVISIBLE);
+            limparAudio.setVisibility(View.INVISIBLE);
+        }
+        else{
+            tituloMontarFrase.setVisibility(View.INVISIBLE);
+
+        }
 
         CARREGAR_FOTOS_SENTIMENTOS();
+
+
 
         //configuração do idioma e gramatica da fala do dispositivo
         textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -648,6 +674,15 @@ public class MontarFrase extends AppCompatActivity {
                 textToSpeech.stop();
             }
         }
+    }
+    public  void onRestart(){
+        super.onRestart();
+        tituloMontarFrase.setVisibility(View.INVISIBLE);
+        layout.setBackgroundColor(Color.parseColor("#D8D6D6"));
+        fraseMontada.setVisibility(View.VISIBLE);
+        playAudio.setVisibility(View.VISIBLE);
+        stopAudio.setVisibility(View.VISIBLE);
+        limparAudio.setVisibility(View.VISIBLE);
     }
 
 

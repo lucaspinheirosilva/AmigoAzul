@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -72,7 +73,7 @@ public class Sentimentos extends AppCompatActivity {
 
 
     String[] palavroes = {"porra", "caralho", "buceta", "merda", "cu", "puta", "fuder", "cacete", "foder", "xereca",
-            "cu", "cú", "cuzinho", "bosta", "boquete", "cu?", "boquete?"};
+            "cu", "cú", "cuzinho", "bosta", "boquete", "cu?", "boquete?","foda","fudido"};
 
     //tremer a tela
     YoYo.YoYoString animacaoRequired;
@@ -83,18 +84,35 @@ public class Sentimentos extends AppCompatActivity {
     Date diaData = new Date();
     String dataFormatada = formataData.format(diaData);
 
+    TextView tituloSentimentos;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();//esconder a actionBar
         setContentView(R.layout.sentimentos);
 
+        final String sentimentosAtual = (String) getIntent().getSerializableExtra("LIBERA_EXCLUSAO");
 
         //setar variaveis com IDs
         FabSpeedDial FAB_camera_Sentimentos = findViewById(R.id.fab_speed_dial_sentimentos);
+        tituloSentimentos = findViewById(R.id.txtvw_LabelSentimentos);
 
 
         CARREGAR_FOTOS_SENTIMENTOS();
+
+
+        //pega a "mensagem mandada pelo botao EXCLUIR" liberando ou nao a exclusao
+        //muda o titulo da tela
+        if (sentimentosAtual!=null){
+            tituloSentimentos.setText("Alterar / Excluir Sentimentos");
+            tituloSentimentos.setTextColor(Color.parseColor("#F80909"));
+        }
+        else{
+            tituloSentimentos.setText("Sentimentos");
+            tituloSentimentos.setTextColor(Color.parseColor("#052C88"));
+        }
 
         //configuração do idioma e gramatica da fala do dispositivo
         textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -128,6 +146,7 @@ public class Sentimentos extends AppCompatActivity {
                         TIRAR_FOTO_ou_GALERIA(false);
                         break;
                     case R.id.FAB_acao_excluirImagem:
+                        tituloSentimentos.setText("Alterar / Excluir");
                         Intent intent = new Intent(Sentimentos.this, Sentimentos.class);
                         String blockSentimentos = "LiberadoParaExclusao";
                         intent.putExtra("LIBERA_EXCLUSAO", blockSentimentos);
@@ -186,6 +205,7 @@ public class Sentimentos extends AppCompatActivity {
                     } else {//se for identificado que foi clicado no botao ALTERAR ele ira apresente um
                         // DIALOG com as informações da imagem para fazer a alteração
 
+
                         //alertDialog para ALTERAR
                         builder = new AlertDialog.Builder(Sentimentos.this);
                         LayoutInflater inflater = getLayoutInflater();
@@ -200,21 +220,21 @@ public class Sentimentos extends AppCompatActivity {
                         Button cancelar = dialogText_Fotoview.findViewById(R.id.btnCancelar_TextoFalar);
 
                         //seta o texto informativo para alterar a foto e deixa ele VISIVEL
-                        textInformativo.setVisibility(View.VISIBLE);
+                        textInformativo.setVisibility(View.INVISIBLE);
                         //preenche os campos com os dados
                         textoFalar.setText(listaComunicacaoSentimentoRCRVW.getTextoFalar());
                         //converte o caminho da imagem em um BITMAP
                         final Bitmap bitmap = BitmapFactory.decodeFile(listaComunicacaoSentimentoRCRVW.getCaminhoFirebase());
                         imagemTirada.setImageBitmap(bitmap);
 
-                        imagemTirada.setOnClickListener(new View.OnClickListener() {
+                        /*imagemTirada.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Toast.makeText(getApplicationContext(), "Rotina ainda não implementada, aguarde as proximas versões...", Toast.LENGTH_LONG).show();
 
                             }
 
-                        });
+                        });*/
                         salvar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -244,23 +264,7 @@ public class Sentimentos extends AppCompatActivity {
                                     }
                                 }
 
-                                       /* if (textoFalar.getText().toString().contains(palavroes[i])) {
-                                            Toast.makeText(getApplicationContext(), "Palavra Inapropriada encontrada..Mude a" +
-                                                    " palavra/frase por favor", Toast.LENGTH_LONG).show();
-                                            textoFalar.setFocusable(true);
-                                            textoFalar.setError("palavra inapropriada");
 
-                                            animacaoRequired = YoYo.with(Techniques.Tada)
-                                                    .duration(900)
-                                                    .repeat(0)
-                                                    .playOn(textoFalar);
-                                            return;
-                                        }
-
-                                    }
-                                } else {
-                                    Log.e("DICIONARIO DE PALAVRAO", "nada de palavrao encontrado");
-                                }*/
                                 if (textoFalar.getText().length() <= 3) {
                                     textoFalar.setError("Informe o Texto por favor com no minimo 3 letras");
                                     textoFalar.setFocusable(true);
@@ -640,6 +644,12 @@ public class Sentimentos extends AppCompatActivity {
             alerta.show();
         }
 
+
+    }
+    public void onRestart(){
+        super.onRestart();
+        tituloSentimentos.setText("Sentimentos");
+        tituloSentimentos.setTextColor(Color.parseColor("#052C88"));
 
     }
 

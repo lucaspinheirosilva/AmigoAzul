@@ -159,6 +159,7 @@ public class Cadastro_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 if (dataNasc.getText().length() == 10) {
 
+                    //pega a data do sistema
                     long date = System.currentTimeMillis();
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     String dateString = sdf.format(date);
@@ -166,17 +167,19 @@ public class Cadastro_Activity extends AppCompatActivity {
 
                     String[] arrayDataSistema = dateString.split("/");//separa a frase em palavras e guarda em array
                     String[] arrayDataInformada = dataNasc.getText().toString().split("/");//separa a frase em palavras e guarda em array
-                    int[] arrayDataDigitadaConvertida = new int[3];
-                    int[] arrayDataSistemaConvertida = new int[3];
+                    int[] arrayDataDigitadaConvertida = new int[3];//cria um array de inteiro de 3 posiçoes vazio
+                    int[] arrayDataSistemaConvertida = new int[3];//cria um array de inteiro de 3 posiçoes vazio
+
                     for (int i = 0; i < arrayDataInformada.length; i++) {
                         arrayDataInformada[i] = arrayDataInformada[i].trim();//percorre o array e tira os espaços em branco
-                        arrayDataSistema[i]= arrayDataSistema[i].trim();
+                        arrayDataSistema[i] = arrayDataSistema[i].trim();//percorre o array e tira os espaços em branco
                         arrayDataDigitadaConvertida[i] = Integer.parseInt(arrayDataInformada[i]);//pega os dados do array de String e passa para o array de inteiro
-                        arrayDataSistemaConvertida[i]= Integer.parseInt(arrayDataSistema[i]);
+                        arrayDataSistemaConvertida[i] = Integer.parseInt(arrayDataSistema[i]);//pega os dados do array de String e passa para o array de inteiro
 
                     }
-                    for (int i = 0; i < arrayDataInformada.length; i++) {
-                        if ((arrayDataDigitadaConvertida[0] <= 0 || arrayDataDigitadaConvertida[0] > 31)) {
+
+                    for (int i = 0; i < arrayDataInformada.length; i++) { //percorre todos os campos do array
+                        if ((arrayDataDigitadaConvertida[0] <= 0 || arrayDataDigitadaConvertida[0] > 31)) {//DIA
                             dataNasc.setFocusable(true);
                             dataNasc.setError("DIA Invalido");
                             animacaoRequired = YoYo.with(Techniques.Tada)
@@ -185,7 +188,7 @@ public class Cadastro_Activity extends AppCompatActivity {
                                     .playOn(findViewById(R.id.txtImptDataNasc));
                             return;
 
-                        } else if ((arrayDataDigitadaConvertida[1] <= 0 || arrayDataDigitadaConvertida[1] > 12)) {
+                        } else if ((arrayDataDigitadaConvertida[1] <= 0 || arrayDataDigitadaConvertida[1] > 12)) {//MES
                             dataNasc.setFocusable(true);
                             dataNasc.setError("MÊS Invalido");
                             animacaoRequired = YoYo.with(Techniques.Tada)
@@ -194,17 +197,18 @@ public class Cadastro_Activity extends AppCompatActivity {
                                     .playOn(findViewById(R.id.txtImptDataNasc));
                             return;
 
-                        } else if ((arrayDataDigitadaConvertida[2] <= 1920) || (arrayDataDigitadaConvertida[2] > arrayDataSistemaConvertida[2])) {
+                        } else if ((arrayDataDigitadaConvertida[2] <= 1920) ||
+                                (arrayDataDigitadaConvertida[2] > arrayDataSistemaConvertida[2])) {//ANO
 
                             dataNasc.setFocusable(true);
-                            dataNasc.setError("ANO Invalido");
+                            dataNasc.setError("ANO Invalido(1920)");
                             animacaoRequired = YoYo.with(Techniques.Tada)
                                     .duration(900)
                                     .repeat(0)
                                     .playOn(findViewById(R.id.txtImptDataNasc));
                             return;
-                        } else if (arrayDataDigitadaConvertida[2] == arrayDataSistemaConvertida[2]) {
-                            if ((arrayDataDigitadaConvertida[1] > arrayDataSistemaConvertida[1])) {
+                        } else if (arrayDataDigitadaConvertida[2] == arrayDataSistemaConvertida[2]) {//se o ANO digitado for igual ao ANO do sistema
+                            if ((arrayDataDigitadaConvertida[1] > arrayDataSistemaConvertida[1])) {//se o MES digitado foi maior que o mes do sistema
                                 dataNasc.setFocusable(true);
                                 dataNasc.setError("MÊS Invalido");
                                 animacaoRequired = YoYo.with(Techniques.Tada)
@@ -212,6 +216,18 @@ public class Cadastro_Activity extends AppCompatActivity {
                                         .repeat(0)
                                         .playOn(findViewById(R.id.txtImptDataNasc));
                                 return;
+                            }
+                            else if(arrayDataDigitadaConvertida[1]==arrayDataSistemaConvertida[1]){
+                                if (arrayDataDigitadaConvertida[0]>arrayDataSistemaConvertida[0]){
+                                    dataNasc.setFocusable(true);
+                                    dataNasc.setError("DIA Invalido");
+                                    animacaoRequired = YoYo.with(Techniques.Tada)
+                                            .duration(900)
+                                            .repeat(0)
+                                            .playOn(findViewById(R.id.txtImptDataNasc));
+                                    return;
+                                }
+
                             }
 
                         }
