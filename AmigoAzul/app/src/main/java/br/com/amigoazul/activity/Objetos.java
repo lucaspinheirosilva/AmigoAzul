@@ -79,7 +79,8 @@ public class Objetos extends AppCompatActivity {
     AlertDialog.Builder builder;
 
     String[] palavroes = {"porra", "caralho", "buceta", "merda", "cu", "puta", "fuder", "cacete", "foder", "xereca",
-            "cu", "cú", "cuzinho", "bosta", "boquete", "cu?", "boquete?"};
+            "cu", "cú", "cuzinho", "bosta", "boquete", "cu?", "boquete?", "foda", "fudido","idiota"};
+
 
     //Constantes
     private final int CAMERA = 1;
@@ -126,11 +127,10 @@ public class Objetos extends AppCompatActivity {
         final String objetocAtual = (String) getIntent().getSerializableExtra("LIBERA_EXCLUSAO");
 
         //muda o titulo da tela
-        if (objetocAtual!=null){
+        if (objetocAtual != null) {
             tituloObjetos.setText("Alterar / Excluir Objetos");
             tituloObjetos.setTextColor(Color.parseColor("#F80909"));
-        }
-        else{
+        } else {
             tituloObjetos.setText("Objetos");
             tituloObjetos.setTextColor(Color.parseColor("#052C88"));
         }
@@ -170,6 +170,7 @@ public class Objetos extends AppCompatActivity {
                         String blockSentimentos = "LiberadoParaExclusao";
                         intent.putExtra("LIBERA_EXCLUSAO", blockSentimentos);
                         startActivity(intent);
+                        finish();
                         break;
                 }
                 return false;
@@ -255,7 +256,7 @@ public class Objetos extends AppCompatActivity {
                         imagemTirada.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Toast.makeText(getApplicationContext(),"Rotina ainda não implementada, aguarde as proximas versões...",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Rotina ainda não implementada, aguarde as proximas versões...", Toast.LENGTH_LONG).show();
                             }
 
                         });
@@ -309,6 +310,7 @@ public class Objetos extends AppCompatActivity {
                                         alerta.cancel();
                                         Intent intent = new Intent(Objetos.this, Objetos.class);
                                         startActivity(intent);
+                                        finish();
                                         Toast.makeText(getApplicationContext(), "SALVO COM SUCESSO", Toast.LENGTH_LONG).show();
                                     }
                                 }
@@ -386,8 +388,9 @@ public class Objetos extends AppCompatActivity {
 
                                 comunicacaoDAO.atualizar(listaComunicacaoObjetos);
                                 alerta.cancel();
-                                Intent intent = new Intent(Objetos.this,Objetos.class);
+                                Intent intent = new Intent(Objetos.this, Objetos.class);
                                 startActivity(intent);
+                                finish();
                                 Toast.makeText(getApplicationContext(), "EXCLUIDO COM SUCESSO", Toast.LENGTH_LONG).show();
 
                             }
@@ -405,13 +408,11 @@ public class Objetos extends AppCompatActivity {
 
                 }
             }));
-        }
-        else {
+        } else {
             splash_activity.meuDirObjetos.mkdirs();
             CARREGAR_FOTOS_OBJETOS();//recursividade
         }
     }
-
 
 
     public void TIRAR_FOTO_ou_GALERIA() {
@@ -519,7 +520,9 @@ public class Objetos extends AppCompatActivity {
 
                             salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, nomeDoArquivo, splash_activity.meuDirObjetos.getAbsolutePath());
                             alerta.cancel();
-                            CARREGAR_FOTOS_OBJETOS();
+                            Intent intent = new Intent(Objetos.this, Objetos.class);
+                            startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(Objetos.this, "Erro ao salvar imagem, refaça a operação por favor!", Toast.LENGTH_SHORT).show();
                             alerta.cancel();
@@ -621,12 +624,14 @@ public class Objetos extends AppCompatActivity {
                             listaComunicacaoObjetos.setExcluido("n");
 
                             comunicacaoDAO.salvar(listaComunicacaoObjetos);
+                            Intent intent = new Intent(Objetos.this, Objetos.class);
+                            startActivity(intent);
+                            finish();
 
                             try {//Movemos o arquivo!
                                 salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
                                 Toast.makeText(Objetos.this, "Imagem movida com sucesso!", Toast.LENGTH_SHORT).show();
                                 alerta.cancel();
-                                CARREGAR_FOTOS_OBJETOS();
                             } catch (IOException e) {
                                 e.printStackTrace();
                                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -647,9 +652,9 @@ public class Objetos extends AppCompatActivity {
 
 
         }
-
     }
-    public  void onRestart(){
+
+    public void onRestart() {
         super.onRestart();
         tituloObjetos.setText("Objetos");
         tituloObjetos.setTextColor(Color.parseColor("#052C88"));

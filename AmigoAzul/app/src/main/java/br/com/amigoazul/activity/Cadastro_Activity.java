@@ -84,7 +84,7 @@ public class Cadastro_Activity extends AppCompatActivity {
         gravar = findViewById(R.id.imgbtn_SalvarCadastro);
         deletar = findViewById(R.id.imgbtn_deletarCadastro);
 
-        //marcara da data de aniversario
+        //mascara da data de aniversario
         dataNasc.addTextChangedListener(new MaskedWatcher(formatadorNascimento, dataNasc));
 
         //deixar botao DELETAR invisivel ou visivel

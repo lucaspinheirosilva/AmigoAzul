@@ -65,7 +65,8 @@ public class MontarFrase extends AppCompatActivity {
     ComunicacaoDAO comunicacaoDAO;
 
     String[] palavroes = {"porra", "caralho", "buceta", "merda", "cu", "puta", "fuder", "cacete", "foder", "xereca",
-            "cu", "cú", "cuzinho", "bosta", "boquete", "cu?", "boquete?"};
+            "cu", "cú", "cuzinho", "bosta", "boquete", "cu?", "boquete?", "foda", "fudido","idiota"};
+
 
     //AlertDialog
     AlertDialog alerta;
@@ -186,6 +187,7 @@ public class MontarFrase extends AppCompatActivity {
                         String blockSentimentos = "LiberadoParaExclusao";
                         intent.putExtra("LIBERA_EXCLUSAO", blockSentimentos);
                         startActivity(intent);
+                        finish();
                         break;
                 }
                 return false;
@@ -316,6 +318,7 @@ public class MontarFrase extends AppCompatActivity {
                                         alerta.cancel();
                                         Intent intent = new Intent(MontarFrase.this, MontarFrase.class);
                                         startActivity(intent);
+                                        finish();
                                         Toast.makeText(getApplicationContext(), "SALVO COM SUCESSO", Toast.LENGTH_LONG).show();
                                     }
                                 }
@@ -393,6 +396,7 @@ public class MontarFrase extends AppCompatActivity {
                                 alerta.cancel();
                                 Intent intent = new Intent(MontarFrase.this, MontarFrase.class);
                                 startActivity(intent);
+                                finish();
                                 Toast.makeText(getApplicationContext(), "REGISTRO EXCLUIDO COM SUCESSO", Toast.LENGTH_LONG).show();
 
                             }
@@ -527,7 +531,9 @@ public class MontarFrase extends AppCompatActivity {
 
                             salvar_foto.SALVAR_IMAGEM_DIRECTORIO(imagem, nomeDoArquivo, splash_activity.meuDirMontarFreses.getAbsolutePath());
                             alerta.cancel();
-                            CARREGAR_FOTOS_SENTIMENTOS();
+                            Intent intent = new Intent(MontarFrase.this, MontarFrase.class);
+                            startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(MontarFrase.this, "Erro ao salvar imagem, refaça a operação por favor!", Toast.LENGTH_SHORT).show();
                             alerta.cancel();
@@ -634,7 +640,9 @@ public class MontarFrase extends AppCompatActivity {
                                 salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
                                 Toast.makeText(MontarFrase.this, "Imagem movida com sucesso!", Toast.LENGTH_SHORT).show();
                                 alerta.cancel();
-                                CARREGAR_FOTOS_SENTIMENTOS();
+                                Intent intent = new Intent(MontarFrase.this, MontarFrase.class);
+                                startActivity(intent);
+                                finish();
                             } catch (IOException e) {
                                 e.printStackTrace();
                                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();

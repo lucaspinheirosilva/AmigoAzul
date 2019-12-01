@@ -73,7 +73,7 @@ public class Sentimentos extends AppCompatActivity {
 
 
     String[] palavroes = {"porra", "caralho", "buceta", "merda", "cu", "puta", "fuder", "cacete", "foder", "xereca",
-            "cu", "cú", "cuzinho", "bosta", "boquete", "cu?", "boquete?", "foda", "fudido"};
+            "cu", "cú", "cuzinho", "bosta", "boquete", "cu?", "boquete?", "foda", "fudido","idiota"};
 
     //tremer a tela
     YoYo.YoYoString animacaoRequired;
@@ -150,6 +150,7 @@ public class Sentimentos extends AppCompatActivity {
                         String blockSentimentos = "LiberadoParaExclusao";
                         intent.putExtra("LIBERA_EXCLUSAO", blockSentimentos);
                         startActivity(intent);
+                        finish();
                         break;
                 }
                 return false;
@@ -226,14 +227,6 @@ public class Sentimentos extends AppCompatActivity {
                         final Bitmap bitmap = BitmapFactory.decodeFile(listaComunicacaoSentimentoRCRVW.getCaminhoFirebase());
                         imagemTirada.setImageBitmap(bitmap);
 
-                        /*imagemTirada.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(getApplicationContext(), "Rotina ainda não implementada, aguarde as proximas versões...", Toast.LENGTH_LONG).show();
-
-                            }
-
-                        });*/
                         salvar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -284,6 +277,7 @@ public class Sentimentos extends AppCompatActivity {
                                         alerta.cancel();
                                         Intent intent = new Intent(Sentimentos.this, Sentimentos.class);
                                         startActivity(intent);
+                                        finish();
                                         Toast.makeText(getApplicationContext(), "SALVO COM SUCESSO", Toast.LENGTH_LONG).show();
                                     }
                                 }
@@ -361,6 +355,7 @@ public class Sentimentos extends AppCompatActivity {
                                 alerta.cancel();
                                 Intent intent = new Intent(Sentimentos.this, Sentimentos.class);
                                 startActivity(intent);
+                                finish();
                                 Toast.makeText(getApplicationContext(), "EXCLUIDO COM SUCESSO", Toast.LENGTH_LONG).show();
 
                             }
@@ -648,8 +643,6 @@ public class Sentimentos extends AppCompatActivity {
             alerta = builder.create();
             alerta.show();
         }
-
-
     }
 
     public void onRestart() {
@@ -658,6 +651,5 @@ public class Sentimentos extends AppCompatActivity {
         tituloSentimentos.setTextColor(Color.parseColor("#052C88"));
 
     }
-
 
 }
