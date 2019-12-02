@@ -72,8 +72,8 @@ public class Sentimentos extends AppCompatActivity {
     private final int ALTERA_GALERIA = 4;
 
 
-    String[] palavroes = {"porra", "caralho", "buceta", "merda", "cu", "puta", "fuder", "cacete", "foder", "xereca",
-            "cu", "cú", "cuzinho", "bosta", "boquete", "cu?", "boquete?", "foda", "fudido","idiota"};
+    String[] palavroes = {"PORRA", "CARALHO", "BUCETA", "MERDA", "CU","CÚ", "PUTA","PUTAS", "FUDER", "CACETE", "FODER", "XERECA",
+            "CUZINHO", "BOSTA", "BOQUETE", "CU?", "BOQUETE?", "FODA", "FUDIDO","IDIOTA"};
 
     //tremer a tela
     YoYo.YoYoString animacaoRequired;
@@ -106,10 +106,10 @@ public class Sentimentos extends AppCompatActivity {
         //pega a "mensagem mandada pelo botao EXCLUIR" liberando ou nao a exclusao
         //muda o titulo da tela
         if (sentimentosAtual != null) {
-            tituloSentimentos.setText("Alterar / Excluir Sentimentos");
+            tituloSentimentos.setText("ALTERAR / EXCLUIR SENTIMENTOS");
             tituloSentimentos.setTextColor(Color.parseColor("#F80909"));
         } else {
-            tituloSentimentos.setText("Sentimentos");
+            tituloSentimentos.setText("SENTIMENTOS");
             tituloSentimentos.setTextColor(Color.parseColor("#052C88"));
         }
 
@@ -220,7 +220,8 @@ public class Sentimentos extends AppCompatActivity {
                         Button cancelar = dialogText_Fotoview.findViewById(R.id.btnCancelar_TextoFalar);
 
                         //seta o texto informativo para alterar a foto e deixa ele VISIVEL
-                        textInformativo.setVisibility(View.INVISIBLE);
+                        textInformativo.setVisibility(View.VISIBLE);
+                        textInformativo.setText("ALTERARAÇÃO");
                         //preenche os campos com os dados
                         textoFalar.setText(listaComunicacaoSentimentoRCRVW.getTextoFalar());
                         //converte o caminho da imagem em um BITMAP
@@ -241,10 +242,10 @@ public class Sentimentos extends AppCompatActivity {
                                     for (int i = 0; i < palavroes.length; i++) {
                                         for (int x = 0; x < arrayTextoFalar.length; x++) {
                                             if (arrayTextoFalar[x].equals(palavroes[i])) {
-                                                Toast.makeText(getApplicationContext(), "Palavra Inapropriada encontrada..Mude a" +
-                                                        " palavra/frase por favor", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getApplicationContext(), "PALAVRA INAPROPRIADA ENCONTRADA..MUDE A" +
+                                                        " PALAVRA / FRASE POR FAVOR", Toast.LENGTH_LONG).show();
                                                 textoFalar.setFocusable(true);
-                                                textoFalar.setError("palavra inapropriada");
+                                                textoFalar.setError("PALAVRA INAPROPRIADA");
 
                                                 animacaoRequired = YoYo.with(Techniques.Tada)
                                                         .duration(900)
@@ -257,8 +258,8 @@ public class Sentimentos extends AppCompatActivity {
                                 }
 
 
-                                if (textoFalar.getText().length() <= 3) {
-                                    textoFalar.setError("Informe o Texto por favor com no minimo 3 letras");
+                                if (textoFalar.getText().length() < 3) {
+                                    textoFalar.setError("INFORME O TEXTO COM NO MÍNIMO 3 CARACTERES");
                                     textoFalar.setFocusable(true);
 
                                 } else {
@@ -268,9 +269,9 @@ public class Sentimentos extends AppCompatActivity {
                                         listaComunicacaoSentimentos = new ListaComunicacao();
                                         listaComunicacaoSentimentos.setId(listaComunicacaoSentimentoRCRVW.getId());
                                         listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
-                                        listaComunicacaoSentimentos.setExcluido("n");
+                                        listaComunicacaoSentimentos.setExcluido("N");
                                         listaComunicacaoSentimentos.setTipoComunic(listaComunicacaoSentimentoRCRVW.getTipoComunic());
-                                        listaComunicacaoSentimentos.setTextoFalar(textoFalar.getText().toString());
+                                        listaComunicacaoSentimentos.setTextoFalar(textoFalar.getText().toString().toUpperCase());
                                         listaComunicacaoSentimentos.setCaminhoFirebase(listaComunicacaoSentimentoRCRVW.getCaminhoFirebase());
 
                                         comunicacaoDAO.atualizar(listaComunicacaoSentimentos);
@@ -316,7 +317,6 @@ public class Sentimentos extends AppCompatActivity {
                         builder.setCancelable(false);
 
                         final ImageView imagemTirada_excluir = dialogText_Fotoview.findViewById(R.id.imgvw_DELETAR_fotoTirada);
-                        final EditText id = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_ID);
                         final EditText tipoComunicacao = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_TipoComunic);
                         final EditText textoFalar_excluir = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_textReproduzir);
 
@@ -325,7 +325,6 @@ public class Sentimentos extends AppCompatActivity {
                         Button cancelar_excluir = dialogText_Fotoview.findViewById(R.id.btnCancelar_FotoDeletar);
 
                         //preenche os campos com os dados
-                        id.setText(listaComunicacaoRCRVW.getId().toString());
                         tipoComunicacao.setText(listaComunicacaoRCRVW.getTipoComunic());
                         textoFalar_excluir.setText(listaComunicacaoRCRVW.getTextoFalar());
 
@@ -334,7 +333,6 @@ public class Sentimentos extends AppCompatActivity {
                         imagemTirada_excluir.setImageBitmap(bitmap);
 
                         //deixa os campos inativos para a alteração dos textos
-                        id.setEnabled(false);
                         tipoComunicacao.setEnabled(false);
                         textoFalar_excluir.setEnabled(false);
 
@@ -346,7 +344,7 @@ public class Sentimentos extends AppCompatActivity {
                                 listaComunicacaoSentimentos = new ListaComunicacao();
                                 listaComunicacaoSentimentos.setId(listaComunicacaoRCRVW.getId());
                                 listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
-                                listaComunicacaoSentimentos.setExcluido("s");
+                                listaComunicacaoSentimentos.setExcluido("S");
                                 listaComunicacaoSentimentos.setTipoComunic(listaComunicacaoRCRVW.getTipoComunic());
                                 listaComunicacaoSentimentos.setTextoFalar(listaComunicacaoRCRVW.getTextoFalar());
                                 listaComunicacaoSentimentos.setCaminhoFirebase(listaComunicacaoRCRVW.getCaminhoFirebase());
@@ -467,10 +465,10 @@ public class Sentimentos extends AppCompatActivity {
                         for (int i = 0; i < palavroes.length; i++) {
                             for (int x = 0; x < arrayTextoFalar.length; x++) {
                                 if (arrayTextoFalar[x].equals(palavroes[i])) {
-                                    Toast.makeText(getApplicationContext(), "Palavra Inapropriada encontrada..Mude a" +
-                                            " palavra/frase por favor", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "PALAVRA INAPROPRIADA ENCONTRADA..MUDE A" +
+                                            " PALAVRA / FRASE POR FAVOR", Toast.LENGTH_LONG).show();
                                     textoFalar.setFocusable(true);
-                                    textoFalar.setError("palavra inapropriada");
+                                    textoFalar.setError("PALAVRA INAPROPRIADA");
 
                                     animacaoRequired = YoYo.with(Techniques.Tada)
                                             .duration(900)
@@ -485,8 +483,8 @@ public class Sentimentos extends AppCompatActivity {
                     }
 
 
-                    if (textoFalar.getText().length() <= 2) {
-                        textoFalar.setError("minimo 3 letras");
+                    if (textoFalar.getText().length() < 3) {
+                        textoFalar.setError("INFORME O TEXTO COM NO MÍNIMO 3 CARACTERES");
                         textoFalar.setFocusable(true);
                         animacaoRequired = YoYo.with(Techniques.Tada)
                                 .duration(900)
@@ -501,8 +499,8 @@ public class Sentimentos extends AppCompatActivity {
                             listaComunicacaoSentimentos.setTextoFalar(textoFalar.getText().toString());
                             listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
                             listaComunicacaoSentimentos.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
-                            listaComunicacaoSentimentos.setTipoComunic("sentimentos");
-                            listaComunicacaoSentimentos.setExcluido("n");
+                            listaComunicacaoSentimentos.setTipoComunic("SENTIMENTOS");
+                            listaComunicacaoSentimentos.setExcluido("N");
 
                             comunicacaoDAO.salvar(listaComunicacaoSentimentos);
 
@@ -512,7 +510,7 @@ public class Sentimentos extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         } else {
-                            Toast.makeText(Sentimentos.this, "Erro ao salvar imagem, refaça a operação por favor!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Sentimentos.this, "ERRO AO SALVAR IMAGEM, REFAÇA A OPERAÇÃO POR FAVOR!", Toast.LENGTH_SHORT).show();
                             alerta.cancel();
                         }
                     }
@@ -583,10 +581,10 @@ public class Sentimentos extends AppCompatActivity {
                         for (int i = 0; i < palavroes.length; i++) {
                             for (int x = 0; x < arrayTextoFalar.length; x++) {
                                 if (arrayTextoFalar[x].equals(palavroes[i])) {
-                                    Toast.makeText(getApplicationContext(), "Palavra Inapropriada encontrada..Mude a" +
-                                            " palavra/frase por favor", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "PALAVRA INAPROPRIADA ENCONTRADA..MUDE A\"" +
+                                            " PALAVRA / FRASE POR FAVOR", Toast.LENGTH_LONG).show();
                                     textoFalar.setFocusable(true);
-                                    textoFalar.setError("palavra inapropriada");
+                                    textoFalar.setError("PALAVRA INAPROPRIADA");
 
                                     animacaoRequired = YoYo.with(Techniques.Tada)
                                             .duration(900)
@@ -600,18 +598,18 @@ public class Sentimentos extends AppCompatActivity {
                         Log.e("DICIONARIO DE PALAVRAO", "nada de palavrao encontrado");
                     }
 
-                    if (textoFalar.getText().length() < 2) {
-                        textoFalar.setError("Informe o Texto por favor com no minimo 3 letras");
+                    if (textoFalar.getText().length() < 3) {
+                        textoFalar.setError("INFORME O TEXTO COM NO MÍNIMO 3 CARACTERES");
                         textoFalar.setFocusable(true);
 
                     } else {
                         //Savar dados da imagem no BD
                         if (imagem != null) {
                             String nomeDoArquivo = "AZ-" + dataFormatada + ".JPG";
-                            listaComunicacaoSentimentos.setTextoFalar(textoFalar.getText().toString());
+                            listaComunicacaoSentimentos.setTextoFalar(textoFalar.getText().toString().toUpperCase());
                             listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
                             listaComunicacaoSentimentos.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
-                            listaComunicacaoSentimentos.setTipoComunic("sentimentos");
+                            listaComunicacaoSentimentos.setTipoComunic("SENTIMENTOS");
                             listaComunicacaoSentimentos.setExcluido("n");
 
                             comunicacaoDAO.salvar(listaComunicacaoSentimentos);
@@ -622,7 +620,7 @@ public class Sentimentos extends AppCompatActivity {
 
                             try {//Movemos o arquivo!
                                 salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
-                                Toast.makeText(Sentimentos.this, "Imagem Salva com sucesso!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Sentimentos.this, "IMAGEM SALVA COM SUCESSO!", Toast.LENGTH_SHORT).show();
                                 alerta.cancel();
 
                             } catch (IOException e) {

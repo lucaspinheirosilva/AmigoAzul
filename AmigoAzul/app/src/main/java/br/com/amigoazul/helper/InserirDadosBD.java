@@ -33,30 +33,30 @@ public class InserirDadosBD {
 
         if (SPLASH_listarUsuario.size() == 0) {
             //INSERE UM USUARIO POR DEFAULT PARA TESTE
-            listaUsuario.setNomeUsuario("Lucas");
+            listaUsuario.setNomeUsuario("LUCAS");
             listaUsuario.setDataNasc("24/03/1993");
-            listaUsuario.setGrauTEA("nivel 2");
+            listaUsuario.setGrauTEA("NIVEL 2");
             listaUsuario.setEmail(null);
             listaUsuario.setSenha(null);
-            listaUsuario.setExcluido("n");
+            listaUsuario.setExcluido("N");
 
             usuarioDAO.salvar(listaUsuario);
         }
         if (SPLASH_listComunicSentimentos.size() == 0) {
             //INSERE SENTIMENTOS
             listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Sentimentos/AZ-22-10-2019-19:55:00.JPG");
-            listaComunicacao.setTextoFalar("estou com dor");
+            listaComunicacao.setTextoFalar("ESTOU COM DOR");
             listaComunicacao.setTextoFalar_MontarFrase(null);
-            listaComunicacao.setTipoComunic("sentimentos");
-            listaComunicacao.setExcluido("n");
+            listaComunicacao.setTipoComunic("SENTIMENTOS");
+            listaComunicacao.setExcluido("N");
 
             comunicacaoDAO.salvar(listaComunicacao);
 
             listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Sentimentos/AZ-22-10-2019-19:55:42.JPG");
-            listaComunicacao.setTextoFalar("estou com fome");
+            listaComunicacao.setTextoFalar("ESTOU COM FOME");
             listaComunicacao.setTextoFalar_MontarFrase(null);
-            listaComunicacao.setTipoComunic("sentimentos");
-            listaComunicacao.setExcluido("n");
+            listaComunicacao.setTipoComunic("SENTIMENTOS");
+            listaComunicacao.setExcluido("N");
 
             comunicacaoDAO.salvar(listaComunicacao);
         }
@@ -72,10 +72,10 @@ public class InserirDadosBD {
             comunicacaoDAO.salvar(listaComunicacao);
 
             listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Objetos/AZ-22-10-2019-19:56:42.JPG");
-            listaComunicacao.setTextoFalar("quero ver televisão");
+            listaComunicacao.setTextoFalar("QUERO VER TELEFISÃO");
             listaComunicacao.setTextoFalar_MontarFrase(null);
-            listaComunicacao.setTipoComunic("objetos");
-            listaComunicacao.setExcluido("n");
+            listaComunicacao.setTipoComunic("OBJETOS");
+            listaComunicacao.setExcluido("N");
 
             comunicacaoDAO.salvar(listaComunicacao);
         }
@@ -83,41 +83,41 @@ public class InserirDadosBD {
             //INSERE MONTAR FRASE
             listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Montar_Frase/AZ-27-10-2019-10:07:24.JPG");
             listaComunicacao.setTextoFalar(null);
-            listaComunicacao.setTextoFalar_MontarFrase("eu");
-            listaComunicacao.setTipoComunic("montar frase");
-            listaComunicacao.setExcluido("n");
+            listaComunicacao.setTextoFalar_MontarFrase("EU");
+            listaComunicacao.setTipoComunic("MONTAR FRASE");
+            listaComunicacao.setExcluido("N");
 
             comunicacaoDAO.salvar(listaComunicacao);
 
             listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Montar_Frase/AZ-29-10-2019-14:14:15.JPG");
             listaComunicacao.setTextoFalar(null);
-            listaComunicacao.setTextoFalar_MontarFrase("não");
-            listaComunicacao.setTipoComunic("montar frase");
-            listaComunicacao.setExcluido("n");
+            listaComunicacao.setTextoFalar_MontarFrase("NÃO");
+            listaComunicacao.setTipoComunic("MONTAR FRASE");
+            listaComunicacao.setExcluido("N");
 
             comunicacaoDAO.salvar(listaComunicacao);
 
             listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Montar_Frase/AZ-27-10-2019-10:09:28.JPG");
             listaComunicacao.setTextoFalar(null);
-            listaComunicacao.setTextoFalar_MontarFrase("estou");
-            listaComunicacao.setTipoComunic("montar frase");
-            listaComunicacao.setExcluido("n");
+            listaComunicacao.setTextoFalar_MontarFrase("ESTOU");
+            listaComunicacao.setTipoComunic("MONTAR FRASE");
+            listaComunicacao.setExcluido("N");
 
             comunicacaoDAO.salvar(listaComunicacao);
 
             listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Montar_Frase/AZ-27-10-2019-10:10:27.JPG");
             listaComunicacao.setTextoFalar(null);
-            listaComunicacao.setTextoFalar_MontarFrase("comida");
-            listaComunicacao.setTipoComunic("montar frase");
-            listaComunicacao.setExcluido("n");
+            listaComunicacao.setTextoFalar_MontarFrase("COMIDA");
+            listaComunicacao.setTipoComunic("MONTAR FRASE");
+            listaComunicacao.setExcluido("N");
 
             comunicacaoDAO.salvar(listaComunicacao);
 
             listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Montar_Frase/AZ-27-10-2019-11:26:12.JPG");
             listaComunicacao.setTextoFalar(null);
-            listaComunicacao.setTextoFalar_MontarFrase("fome");
-            listaComunicacao.setTipoComunic("montar frase");
-            listaComunicacao.setExcluido("n");
+            listaComunicacao.setTextoFalar_MontarFrase("FOME");
+            listaComunicacao.setTipoComunic("MONTAR FRASE");
+            listaComunicacao.setExcluido("N");
 
             comunicacaoDAO.salvar(listaComunicacao);
         }

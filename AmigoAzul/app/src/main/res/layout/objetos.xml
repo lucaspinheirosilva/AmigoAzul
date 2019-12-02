@@ -38,7 +38,7 @@
         android:layout_height="25dp"
         android:fontFamily="@font/annie_use_your_telescope"
         android:gravity="center"
-        android:text="Objetos"
+        android:text="OBJETOS"
         android:textColor="#052C88"
         android:textSize="18sp"
         android:textStyle="bold"

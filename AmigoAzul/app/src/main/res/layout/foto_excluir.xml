@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="EXCLUIR"
+        android:textColor="#EE0303"
+        android:textSize="18sp" />
+
     <ImageView
         android:id="@+id/imgvw_DELETAR_fotoTirada"
         android:layout_width="190dp"
@@ -22,37 +31,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="5dp"
-        android:text="Tem certeza que deseja EXCLUIR os dados abaixo?"
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
+        android:text="TEM CERTEZA QUE DESEJA EXCLUIR OS DADOS ABAIXO?"
         android:textColor="#FF0303" />
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="38dp"
-            android:paddingLeft="10dp"
-            android:text="ID:"
-            android:textColor="#000000"
-            android:textSize="17sp" />
-
-        <EditText
-            android:id="@+id/edttxt_Deletar_ID"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:ems="10"
-            android:hint="ID"
-            android:inputType="textPersonName"
-            android:maxLines="1" />
-    </LinearLayout>
 
 
     <LinearLayout
@@ -78,7 +60,7 @@
             android:layout_gravity="center_horizontal"
             android:ems="10"
             android:hint="Texto a Reproduzir"
-            android:inputType="textPersonName"
+            android:inputType="textCapCharacters"
             android:maxLines="1" />
     </LinearLayout>
 
@@ -105,7 +87,7 @@
             android:layout_gravity="center_horizontal"
             android:ems="10"
             android:hint="tipo de comunicacao"
-            android:inputType="textPersonName"
+            android:inputType="textCapCharacters"
             android:maxLines="1" />
     </LinearLayout>
 

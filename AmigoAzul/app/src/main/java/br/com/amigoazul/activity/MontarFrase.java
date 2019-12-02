@@ -64,8 +64,8 @@ public class MontarFrase extends AppCompatActivity {
     SALVAR_FOTO salvar_foto = new SALVAR_FOTO();
     ComunicacaoDAO comunicacaoDAO;
 
-    String[] palavroes = {"porra", "caralho", "buceta", "merda", "cu", "puta", "fuder", "cacete", "foder", "xereca",
-            "cu", "cú", "cuzinho", "bosta", "boquete", "cu?", "boquete?", "foda", "fudido","idiota"};
+    String[] palavroes = {"PORRA", "CARALHO", "BUCETA", "MERDA", "CU","CÚ", "PUTA","PUTAS", "FUDER", "CACETE", "FODER", "XERECA",
+            "CUZINHO", "BOSTA", "BOQUETE", "CU?", "BOQUETE?", "FODA", "FUDIDO","IDIOTA"};
 
 
     //AlertDialog
@@ -255,19 +255,13 @@ public class MontarFrase extends AppCompatActivity {
 
                         //seta o texto informativo para alterar a foto e deixa ele VISIVEL
                         textInformativo.setVisibility(View.VISIBLE);
+                        textInformativo.setText("ALTERAR");
                         //preenche os campos com os dados
                         textoFalar.setText(listaComunicacaoMontarFraseRCRVW.getTextoFalar());
                         //converte o caminho da imagem em um BITMAP
                         final Bitmap bitmap = BitmapFactory.decodeFile(listaComunicacaoMontarFraseRCRVW.getCaminhoFirebase());
                         imagemTirada.setImageBitmap(bitmap);
 
-                        imagemTirada.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(getApplicationContext(),"Rotina ainda não implementada, aguarde as proximas versões...",Toast.LENGTH_LONG).show();
-                            }
-
-                        });
                         salvar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -283,10 +277,10 @@ public class MontarFrase extends AppCompatActivity {
                                     for (int i = 0; i < palavroes.length; i++) {
                                         for (int x = 0; x < arrayTextoFalar.length; x++) {
                                             if (arrayTextoFalar[x].equals(palavroes[i])) {
-                                                Toast.makeText(getApplicationContext(), "Palavra Inapropriada encontrada..Mude a" +
-                                                        " palavra/frase por favor", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getApplicationContext(), "PALAVRA INAPROPRIADA ENCONTRADA..MUDE A" +
+                                                        " PALAVRA / FRASE POR FAVOR", Toast.LENGTH_LONG).show();
                                                 textoFalar.setFocusable(true);
-                                                textoFalar.setError("palavra inapropriada");
+                                                textoFalar.setError("PALAVRA INAPROPRIADA");
 
                                                 animacaoRequired = YoYo.with(Techniques.Tada)
                                                         .duration(900)
@@ -299,7 +293,7 @@ public class MontarFrase extends AppCompatActivity {
                                 }
 
                                 if (textoFalar.getText().length() < 2) {
-                                    textoFalar.setError("Informe o Texto por favor com no minimo 2 letras");
+                                    textoFalar.setError("INFORME O TEXTO COM NO MÍNIMO 2 CARACTERES");
                                     textoFalar.setFocusable(true);
 
                                 } else {
@@ -308,8 +302,8 @@ public class MontarFrase extends AppCompatActivity {
                                     if (bitmap != null) {
                                         listaComunicacaoMontarFrase = new ListaComunicacao();
                                         listaComunicacaoMontarFrase.setId(listaComunicacaoMontarFraseRCRVW.getId());
-                                        listaComunicacaoMontarFrase.setTextoFalar_MontarFrase(textoFalar.getText().toString());
-                                        listaComunicacaoMontarFrase.setExcluido("n");
+                                        listaComunicacaoMontarFrase.setTextoFalar_MontarFrase(textoFalar.getText().toString().toUpperCase());
+                                        listaComunicacaoMontarFrase.setExcluido("N");
                                         listaComunicacaoMontarFrase.setTipoComunic(listaComunicacaoMontarFraseRCRVW.getTipoComunic());
                                         listaComunicacaoMontarFrase.setTextoFalar(null);
                                         listaComunicacaoMontarFrase.setCaminhoFirebase(listaComunicacaoMontarFraseRCRVW.getCaminhoFirebase());
@@ -357,7 +351,6 @@ public class MontarFrase extends AppCompatActivity {
                         builder.setCancelable(false);
 
                         final ImageView imagemTirada_excluir = dialogText_Fotoview.findViewById(R.id.imgvw_DELETAR_fotoTirada);
-                        final EditText id = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_ID);
                         final EditText tipoComunicacao = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_TipoComunic);
                         final EditText textoFalar_excluir = dialogText_Fotoview.findViewById(R.id.edttxt_Deletar_textReproduzir);
 
@@ -366,7 +359,6 @@ public class MontarFrase extends AppCompatActivity {
                         Button cancelar_excluir = dialogText_Fotoview.findViewById(R.id.btnCancelar_FotoDeletar);
 
                         //preenche os campos com os dados
-                        id.setText(listaComunicacaoRCRVW.getId().toString());
                         tipoComunicacao.setText(listaComunicacaoRCRVW.getTipoComunic());
                         textoFalar_excluir.setText(listaComunicacaoRCRVW.getTextoFalar_MontarFrase());
 
@@ -375,7 +367,6 @@ public class MontarFrase extends AppCompatActivity {
                         imagemTirada_excluir.setImageBitmap(bitmap);
 
                         //deixa os campos inativos para a alteração dos textos
-                        id.setEnabled(false);
                         tipoComunicacao.setEnabled(false);
                         textoFalar_excluir.setEnabled(false);
 
@@ -386,8 +377,8 @@ public class MontarFrase extends AppCompatActivity {
                                 //DELETAR dados da imagem no BD
                                 listaComunicacaoMontarFrase = new ListaComunicacao();
                                 listaComunicacaoMontarFrase.setId(listaComunicacaoRCRVW.getId());
-                                listaComunicacaoMontarFrase.setTextoFalar_MontarFrase(listaComunicacaoRCRVW.getTextoFalar_MontarFrase());
-                                listaComunicacaoMontarFrase.setExcluido("s");
+                                listaComunicacaoMontarFrase.setTextoFalar_MontarFrase(listaComunicacaoRCRVW.getTextoFalar_MontarFrase().toUpperCase());
+                                listaComunicacaoMontarFrase.setExcluido("S");
                                 listaComunicacaoMontarFrase.setTipoComunic(listaComunicacaoRCRVW.getTipoComunic());
                                 listaComunicacaoMontarFrase.setTextoFalar(null);
                                 listaComunicacaoMontarFrase.setCaminhoFirebase(listaComunicacaoRCRVW.getCaminhoFirebase());
@@ -497,10 +488,10 @@ public class MontarFrase extends AppCompatActivity {
                         for (int i = 0; i < palavroes.length; i++) {
                             for (int x = 0; x < arrayTextoFalar.length; x++) {
                                 if (arrayTextoFalar[x].equals(palavroes[i])) {
-                                    Toast.makeText(getApplicationContext(), "Palavra Inapropriada encontrada..Mude a" +
-                                            " palavra/frase por favor", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "PALAVRA INAPROPRIADA ENCONTRADA..MUDE A" +
+                                            " PALAVRA / FRASE POR FAVOR", Toast.LENGTH_LONG).show();
                                     textoFalar.setFocusable(true);
-                                    textoFalar.setError("palavra inapropriada");
+                                    textoFalar.setError("PALAVRA INAPROPRIADA");
 
                                     animacaoRequired = YoYo.with(Techniques.Tada)
                                             .duration(900)
@@ -513,7 +504,7 @@ public class MontarFrase extends AppCompatActivity {
                     }
 
                     if (textoFalar.getText().length() < 2) {
-                        textoFalar.setError("Informe o Texto por favor com no minimo 2 letras");
+                        textoFalar.setError("INFORME O TEXTO COM NO MÍNIMO 2 CARACTERES");
                         textoFalar.setFocusable(true);
 
                     } else {
@@ -521,11 +512,11 @@ public class MontarFrase extends AppCompatActivity {
                         //Savar dados da imagem no BD
                         if (imagem != null) {
                             String nomeDoArquivo = "AZ-" + dataFormatada + ".JPG";
-                            listaComunicacaoMontarFrase.setTextoFalar_MontarFrase(textoFalar.getText().toString());
+                            listaComunicacaoMontarFrase.setTextoFalar_MontarFrase(textoFalar.getText().toString().toUpperCase());
                             listaComunicacaoMontarFrase.setTextoFalar(null);
                             listaComunicacaoMontarFrase.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
-                            listaComunicacaoMontarFrase.setTipoComunic("montar frase");
-                            listaComunicacaoMontarFrase.setExcluido("n");
+                            listaComunicacaoMontarFrase.setTipoComunic("MONTAR FRASE");
+                            listaComunicacaoMontarFrase.setExcluido("N");
 
                             comunicacaoDAO.salvar(listaComunicacaoMontarFrase);
 
@@ -535,7 +526,7 @@ public class MontarFrase extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         } else {
-                            Toast.makeText(MontarFrase.this, "Erro ao salvar imagem, refaça a operação por favor!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MontarFrase.this, "ERRO AO SALVAR IMAGEM..REFAÇA A OPERAÇÃO POR FAVOR!", Toast.LENGTH_SHORT).show();
                             alerta.cancel();
                         }
                     }
@@ -605,10 +596,10 @@ public class MontarFrase extends AppCompatActivity {
                         for (int i = 0; i < palavroes.length; i++) {
                             for (int x = 0; x < arrayTextoFalar.length; x++) {
                                 if (arrayTextoFalar[x].equals(palavroes[i])) {
-                                    Toast.makeText(getApplicationContext(), "Palavra Inapropriada encontrada..Mude a" +
-                                            " palavra/frase por favor", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "PALAVRA INAPROPRIADA ENCONTRADA..MUDE A " +
+                                            " PALAVRA / FRASE POR FAVOR", Toast.LENGTH_LONG).show();
                                     textoFalar.setFocusable(true);
-                                    textoFalar.setError("palavra inapropriada");
+                                    textoFalar.setError("PALAVRA INAPROPRIADA");
 
                                     animacaoRequired = YoYo.with(Techniques.Tada)
                                             .duration(900)
@@ -621,24 +612,24 @@ public class MontarFrase extends AppCompatActivity {
                     }
 
                     if (textoFalar.getText().length() < 2) {
-                        textoFalar.setError("Informe o Texto por favor com no minimo 2 letras");
+                        textoFalar.setError("INFORME O TEXTO COM NO MÍNIMO 2 CARACTERES");
                         textoFalar.setFocusable(true);
 
                     } else {
                         //Savar dados da imagem no BD
                         if (imagem != null) {
                             String nomeDoArquivo = "AZ-" + dataFormatada + ".JPG";
-                            listaComunicacaoMontarFrase.setTextoFalar_MontarFrase(textoFalar.getText().toString());
+                            listaComunicacaoMontarFrase.setTextoFalar_MontarFrase(textoFalar.getText().toString().toUpperCase());
                             listaComunicacaoMontarFrase.setTextoFalar(null);
                             listaComunicacaoMontarFrase.setCaminhoFirebase(splash_activity.meuDirMontarFreses + "/" + nomeDoArquivo);
-                            listaComunicacaoMontarFrase.setTipoComunic("montar frase");
-                            listaComunicacaoMontarFrase.setExcluido("n");
+                            listaComunicacaoMontarFrase.setTipoComunic("MONTAR FRASE");
+                            listaComunicacaoMontarFrase.setExcluido("N");
 
                             comunicacaoDAO.salvar(listaComunicacaoMontarFrase);
 
                             try {//Movemos o arquivo!
                                 salvar_foto.COPIAR_ARQUIVO(selecionada, novaImagem, getApplicationContext());
-                                Toast.makeText(MontarFrase.this, "Imagem movida com sucesso!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MontarFrase.this, "IMAGEM SALVA COM SUCESSO!", Toast.LENGTH_SHORT).show();
                                 alerta.cancel();
                                 Intent intent = new Intent(MontarFrase.this, MontarFrase.class);
                                 startActivity(intent);

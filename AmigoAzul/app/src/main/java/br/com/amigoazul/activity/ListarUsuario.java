@@ -79,7 +79,7 @@ public class ListarUsuario extends AppCompatActivity {
                             intent.putExtra("usuarioSelecionado", usuarioselecionado);
                             startActivity(intent);
                         } else {//senão ele seleciona usuario e vai para tela de menu principal
-                             Toast.makeText(getApplicationContext(), "usuario SELECIONADO", Toast.LENGTH_SHORT).show();
+                             Toast.makeText(getApplicationContext(), "USUÁRIO SELECIONADO", Toast.LENGTH_SHORT).show();
 
                             Intent intent = new Intent(ListarUsuario.this,MainMenu.class);
                             startActivity(intent);

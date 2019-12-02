@@ -90,7 +90,7 @@
         android:layout_marginTop="5dp"
         android:fontFamily="@font/annie_use_your_telescope"
         android:gravity="center"
-        android:text="Alterar / Excluir Montar Frase"
+        android:text="ALTERAR / EXCLUIR MONTAR FRASE"
         android:textColor="#F80909"
         android:textSize="18sp"
         android:textStyle="bold"

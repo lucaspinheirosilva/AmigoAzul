@@ -106,7 +106,7 @@ public class Cadastro_Activity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                 if (nome.getText().length() > 49) {
-                    nome.setError("Limite de caracteres Atingido");
+                    nome.setError("LIMITE DE CARACTERES ATINGIDO");
                 }
             }
 
@@ -124,7 +124,7 @@ public class Cadastro_Activity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (senha.getText().length() > 14) {
-                    senha.setError("Limite de caracteres Atingido");
+                    senha.setError("LIMITE DE CARACTERES ATINGIDO");
                 }
 
             }
@@ -141,13 +141,13 @@ public class Cadastro_Activity extends AppCompatActivity {
             nome.setText(usuarioAtual.getNomeUsuario());
             dataNasc.setText(usuarioAtual.getDataNasc());
 
-            if (usuarioAtual.getGrauTEA().equals("nivel 1")) {
+            if (usuarioAtual.getGrauTEA().equals("NIVEL 1")) {
                 Nivel1.setChecked(true);
             }
-            if (usuarioAtual.getGrauTEA().equals("nivel 2")) {
+            if (usuarioAtual.getGrauTEA().equals("NIVEL 2")) {
                 Nivel2.setChecked(true);
             }
-            if (usuarioAtual.getGrauTEA().equals("nivel 3")) {
+            if (usuarioAtual.getGrauTEA().equals("NIVEL 3")) {
                 Nivel3.setChecked(true);
             }
             email.setText(usuarioAtual.getEmail());
@@ -181,7 +181,7 @@ public class Cadastro_Activity extends AppCompatActivity {
                     for (int i = 0; i < arrayDataInformada.length; i++) { //percorre todos os campos do array
                         if ((arrayDataDigitadaConvertida[0] <= 0 || arrayDataDigitadaConvertida[0] > 31)) {//DIA
                             dataNasc.setFocusable(true);
-                            dataNasc.setError("DIA Invalido");
+                            dataNasc.setError("DIA INVÁLIDO");
                             animacaoRequired = YoYo.with(Techniques.Tada)
                                     .duration(900)
                                     .repeat(0)
@@ -190,18 +190,18 @@ public class Cadastro_Activity extends AppCompatActivity {
 
                         } else if ((arrayDataDigitadaConvertida[1] <= 0 || arrayDataDigitadaConvertida[1] > 12)) {//MES
                             dataNasc.setFocusable(true);
-                            dataNasc.setError("MÊS Invalido");
+                            dataNasc.setError("MÊS INVÁLIDO");
                             animacaoRequired = YoYo.with(Techniques.Tada)
                                     .duration(900)
                                     .repeat(0)
                                     .playOn(findViewById(R.id.txtImptDataNasc));
                             return;
 
-                        } else if ((arrayDataDigitadaConvertida[2] <= 1920) ||
+                        } else if ((arrayDataDigitadaConvertida[2] < 1920) ||
                                 (arrayDataDigitadaConvertida[2] > arrayDataSistemaConvertida[2])) {//ANO
 
                             dataNasc.setFocusable(true);
-                            dataNasc.setError("ANO Invalido(1920)");
+                            dataNasc.setError("ANO INVÁLIDO(MIN 1920 MAX ANO ATUAL)");
                             animacaoRequired = YoYo.with(Techniques.Tada)
                                     .duration(900)
                                     .repeat(0)
@@ -210,7 +210,7 @@ public class Cadastro_Activity extends AppCompatActivity {
                         } else if (arrayDataDigitadaConvertida[2] == arrayDataSistemaConvertida[2]) {//se o ANO digitado for igual ao ANO do sistema
                             if ((arrayDataDigitadaConvertida[1] > arrayDataSistemaConvertida[1])) {//se o MES digitado foi maior que o mes do sistema
                                 dataNasc.setFocusable(true);
-                                dataNasc.setError("MÊS Invalido");
+                                dataNasc.setError("MÊS INVÁLIDO");
                                 animacaoRequired = YoYo.with(Techniques.Tada)
                                         .duration(900)
                                         .repeat(0)
@@ -220,7 +220,7 @@ public class Cadastro_Activity extends AppCompatActivity {
                             else if(arrayDataDigitadaConvertida[1]==arrayDataSistemaConvertida[1]){
                                 if (arrayDataDigitadaConvertida[0]>arrayDataSistemaConvertida[0]){
                                     dataNasc.setFocusable(true);
-                                    dataNasc.setError("DIA Invalido");
+                                    dataNasc.setError("DIA INVÁLIDO");
                                     animacaoRequired = YoYo.with(Techniques.Tada)
                                             .duration(900)
                                             .repeat(0)
@@ -241,20 +241,20 @@ public class Cadastro_Activity extends AppCompatActivity {
                     try {
                         if (nome.getText().length() < 3) {
                             nome.setFocusable(true);
-                            nome.setError("Minimo 3 letras");
+                            nome.setError("MINÍMO 3 LETRAS");
                             animacaoRequired = YoYo.with(Techniques.Tada)
                                     .duration(900)
                                     .repeat(0)
                                     .playOn(findViewById(R.id.txtImptNome));
                         } else if (dataNasc.getText().length() < 10) {
                             dataNasc.setFocusable(true);
-                            dataNasc.setError("data Invalida");
+                            dataNasc.setError("DATA INVÁLIDA");
                             animacaoRequired = YoYo.with(Techniques.Tada)
                                     .duration(900)
                                     .repeat(0)
                                     .playOn(findViewById(R.id.txtImptDataNasc));
                         } else if ((Nivel1.isChecked() == false) && (Nivel2.isChecked() == false) && (Nivel3.isChecked() == false)) {
-                            Toast.makeText(getApplicationContext(), "Selecione o NÍVEL do TEA", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "SELECIONE O NÍVEL DO TEA", Toast.LENGTH_SHORT).show();
                             Nivel1.setTextColor(Color.RED);
                             Nivel2.setTextColor(Color.RED);
                             Nivel3.setTextColor(Color.RED);
@@ -277,22 +277,22 @@ public class Cadastro_Activity extends AppCompatActivity {
                         else if ((email.getText().length() != 0) &&
                                 (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches())) {
 
-                            email.setError("Email Invalido");
+                            email.setError("E-MAIL INVÁLIDO");
                             animacaoRequired = YoYo.with(Techniques.Tada)
                                     .duration(900)
                                     .repeat(0)
                                     .playOn(findViewById(R.id.txtImptEmail));
 
                         } else if ((email.getText().length() != 0) && (senha.getText().length() == 0)) {
-                            senha.setError("Senha requerida");
-                            Toast.makeText(getApplicationContext(), "Voce informou um E-mail, é OBRIGATÓRIO você " +
-                                    "informar a senha para a segurança dos dados", Toast.LENGTH_LONG).show();
+                            senha.setError("SENHA REQUERIDA");
+                            Toast.makeText(getApplicationContext(), "VOCE INFORMOU UM EMAIL, É OBRIGATÓRIO " +
+                                    "INFORMAR A SENHA PARA SEGURANÇA DOS DADOS", Toast.LENGTH_LONG).show();
                             animacaoRequired = YoYo.with(Techniques.Tada)
                                     .duration(900)
                                     .repeat(0)
                                     .playOn(findViewById(R.id.txtImptSenha));
                         } else if ((email.getText().length() != 0) && (senha.getText().length() > 1) && (senha.getText().length() <= 5)) {
-                            senha.setError("Minimo 6 Caracteres");
+                            senha.setError("MINÍMO 6 CARACTERES");
                             animacaoRequired = YoYo.with(Techniques.Tada)
                                     .duration(900)
                                     .repeat(0)
@@ -301,57 +301,57 @@ public class Cadastro_Activity extends AppCompatActivity {
                         } else {
                             //salva as informaçoes digitadas nos GETTERS AND SETTERS
 
-                            listaUsuario.setNomeUsuario(nome.getText().toString());
-                            listaUsuario.setDataNasc(dataNasc.getText().toString());
+                            listaUsuario.setNomeUsuario(nome.getText().toString().toUpperCase());
+                            listaUsuario.setDataNasc(dataNasc.getText().toString().toUpperCase());
 
                             if (Nivel1.isChecked()) {
-                                NIVELTEA = "nivel 1";
+                                NIVELTEA = "NIVEL 1";
                                 listaUsuario.setGrauTEA(NIVELTEA);
                             }
                             if (Nivel2.isChecked()) {
-                                NIVELTEA = "nivel 2";
+                                NIVELTEA = "NIVEL 2";
                                 listaUsuario.setGrauTEA(NIVELTEA);
                             }
                             if (Nivel3.isChecked()) {
-                                NIVELTEA = "nivel 3";
+                                NIVELTEA = "NIVEL 3";
                                 listaUsuario.setGrauTEA(NIVELTEA);
 
                             }
 
-                            listaUsuario.setEmail(email.getText().toString());
-                            listaUsuario.setSenha(senha.getText().toString());
-                            listaUsuario.setExcluido("n");
+                            listaUsuario.setEmail(email.getText().toString().toUpperCase());
+                            listaUsuario.setSenha(senha.getText().toString().toUpperCase());
+                            listaUsuario.setExcluido("N");
 
                             usuarioDAO.salvar(listaUsuario);
 
-                            Toast.makeText(getApplicationContext(), "cadastro de usuário salvo com sucesso", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "CADASTROS DE USUÁRIO SALVO COM SUCESSO", Toast.LENGTH_SHORT).show();
 
                             Intent intent = new Intent(Cadastro_Activity.this, MainMenu.class);
                             startActivity(intent);
                             finish();
                         }
                     } catch (Exception erro) {
-                        Toast.makeText(getApplicationContext(), "erro ao salvar cadastro de usuário " + erro.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "ERRO AO SALVAR CADASTRO DE USUÁRIO " + erro.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 } else {//****ALTERAR****//
 
                     try {
                         if (nome.getText().length() < 3) {
                             nome.setFocusable(true);
-                            nome.setError("Minimo 3 letras");
+                            nome.setError("MINÍMO 3 LETRAS");
                             animacaoRequired = YoYo.with(Techniques.Tada)
                                     .duration(900)
                                     .repeat(0)
                                     .playOn(findViewById(R.id.txtImptNome));
                         } else if (dataNasc.getText().length() < 10) {
                             dataNasc.setFocusable(true);
-                            dataNasc.setError("data Invalida");
+                            dataNasc.setError("DATA INVÁLIDA");
                             animacaoRequired = YoYo.with(Techniques.Tada)
                                     .duration(900)
                                     .repeat(0)
                                     .playOn(findViewById(R.id.txtImptDataNasc));
                         } else if ((Nivel1.isChecked() == false) && (Nivel2.isChecked() == false) && (Nivel3.isChecked() == false)) {
-                            Toast.makeText(getApplicationContext(), "Selecione o NIVEL do TEA", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "SELECIONE O NÍVEL DO TEA", Toast.LENGTH_SHORT).show();
                             Nivel1.setTextColor(Color.RED);
                             Nivel2.setTextColor(Color.RED);
                             Nivel3.setTextColor(Color.RED);
@@ -361,22 +361,22 @@ public class Cadastro_Activity extends AppCompatActivity {
                         else if ((email.getText().length() != 0) &&
                                 (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches())) {
 
-                            email.setError("Email Invalido");
+                            email.setError("E-MAIL INVÁLIDO");
                             animacaoRequired = YoYo.with(Techniques.Tada)
                                     .duration(900)
                                     .repeat(0)
                                     .playOn(findViewById(R.id.txtImptEmail));
 
                         } else if ((email.getText().length() != 0) && (senha.getText().length() == 0)) {
-                            senha.setError("Senha requerida");
-                            Toast.makeText(getApplicationContext(), "Voce informou um E-mail, é OBRIGATÓRIO você " +
-                                    "informar a senha para a segurança dos dados", Toast.LENGTH_LONG).show();
+                            senha.setError("SENHA REQUERIDA");
+                            Toast.makeText(getApplicationContext(), "VOCE INFORMOU UM EMAIL, É OBRIGATÓRIO " +
+                                    "INFORMAR A SENHA PARA SEGURANÇA DOS DADOS", Toast.LENGTH_LONG).show();
                             animacaoRequired = YoYo.with(Techniques.Tada)
                                     .duration(900)
                                     .repeat(0)
                                     .playOn(findViewById(R.id.txtImptSenha));
                         } else if ((email.getText().length() != 0) && (senha.getText().length() > 1) && (senha.getText().length() <= 5)) {
-                            senha.setError("Minimo 6 Caracteres");
+                            senha.setError("MÍNIMO 6 CARACTERES");
                             animacaoRequired = YoYo.with(Techniques.Tada)
                                     .duration(900)
                                     .repeat(0)
@@ -385,33 +385,33 @@ public class Cadastro_Activity extends AppCompatActivity {
                         } else {
 
                             listaUsuario.setId(usuarioAtual.getId());
-                            listaUsuario.setNomeUsuario(nome.getText().toString());
-                            listaUsuario.setDataNasc(dataNasc.getText().toString());
+                            listaUsuario.setNomeUsuario(nome.getText().toString().toUpperCase());
+                            listaUsuario.setDataNasc(dataNasc.getText().toString().toUpperCase());
 
                             if (Nivel1.isChecked()) {
-                                NIVELTEA = "nivel 1";
+                                NIVELTEA = "NIVEL 1";
                                 listaUsuario.setGrauTEA(NIVELTEA);
                             }
                             if (Nivel2.isChecked()) {
-                                NIVELTEA = "nivel 2";
+                                NIVELTEA = "NIVEL 2";
                                 listaUsuario.setGrauTEA(NIVELTEA);
                             }
                             if (Nivel3.isChecked()) {
-                                NIVELTEA = "nivel 3";
+                                NIVELTEA = "NIVEL 3";
                                 listaUsuario.setGrauTEA(NIVELTEA);
                             }
 
-                            listaUsuario.setEmail(email.getText().toString());
-                            listaUsuario.setSenha(senha.getText().toString());
+                            listaUsuario.setEmail(email.getText().toString().toUpperCase());
+                            listaUsuario.setSenha(senha.getText().toString().toUpperCase());
                             listaUsuario.setExcluido(usuarioAtual.getExcluido());
 
                             usuarioDAO.atualizar(listaUsuario);
 
-                            Toast.makeText(getApplicationContext(), " cadastro de usuario atualizado com sucesso", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), " CADASTRO DE USUÁRIO ATUALIZADO COM SUCESSO", Toast.LENGTH_LONG).show();
                             finish();
                         }
                     } catch (Exception erro) {
-                        Toast.makeText(getApplicationContext(), "erro ao atualizar cadastro de usuario " + erro.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "ERRO AO ATUALIZAR CADASTRO DE USUÁRIO " + erro.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -422,9 +422,9 @@ public class Cadastro_Activity extends AppCompatActivity {
             public void onClick(View v) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(Cadastro_Activity.this);
-                builder.setTitle("Confirmar Exclusão");
-                builder.setMessage("Deseja Excluir o usuario " + usuarioAtual.getNomeUsuario() +
-                        " Nascido em " + usuarioAtual.getDataNasc() + " ?");
+                builder.setTitle("CONFIRMA EXCLUSÃO");
+                builder.setMessage("DESEJA EXCLUIR O USUÁRIO " + usuarioAtual.getNomeUsuario().toUpperCase() +
+                        " NASCIDO EM " + usuarioAtual.getDataNasc() + " ?");
                 builder.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -439,7 +439,7 @@ public class Cadastro_Activity extends AppCompatActivity {
                             listaUsuario.setExcluido("S");
 
                             usuarioDAO.atualizar(listaUsuario);
-                            Toast.makeText(getApplicationContext(), "Excluido com Sucesso!!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "EXCLUIDO COM SUCESSO!!", Toast.LENGTH_LONG).show();
                             finish();
                         } else {
                             Toast.makeText(getApplicationContext(), "ERRO AO EXCLUIR!!", Toast.LENGTH_LONG).show();
@@ -459,63 +459,6 @@ public class Cadastro_Activity extends AppCompatActivity {
 
             }
         });
-
-        /*// DIALOG com as informações da imagem para fazer a alteração
-        //alertDialog para ALTERAR
-        builder = new AlertDialog.Builder(Cadastro_Activity.this);
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogText_ExcluirUserview = inflater.inflate(R.layout.usuario_excluir, null);
-        builder.setView(dialogText_ExcluirUserview);
-        builder.setCancelable(false);
-
-        final EditText vDeletarUsuario = dialogText_ExcluirUserview.findViewById(R.id.edttxt_Deletar_NomeUsuario);
-        final EditText vDeletarDataNasc = dialogText_ExcluirUserview.findViewById(R.id.edttxt_Deletar_DataNasc);
-        final EditText vDeletarGrauTEA = dialogText_ExcluirUserview.findViewById(R.id.edttxt_Deletar_GrauTEA);
-        final Button vDeletar = dialogText_ExcluirUserview.findViewById(R.id.btnDeletar_UsuarioDeletar);
-        final Button vCancelar = dialogText_ExcluirUserview.findViewById(R.id.btnCancelar_UsuarioCancelar);
-
-
-        //preenche os campos com os dados
-        vDeletarUsuario.setText(usuarioAtual.getNomeUsuario());
-        vDeletarDataNasc.setText(usuarioAtual.getNomeUsuario());
-        vDeletarGrauTEA.setText(usuarioAtual.getGrauTEA());
-
-        vDeletar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (usuarioAtual != null) {
-                    listaUsuario.setId(usuarioAtual.getId());
-                    listaUsuario.setNomeUsuario(usuarioAtual.getNomeUsuario());
-                    listaUsuario.setDataNasc(usuarioAtual.getDataNasc());
-                    listaUsuario.setEmail(usuarioAtual.getEmail());
-                    listaUsuario.setSenha(usuarioAtual.getSenha());
-                    listaUsuario.setGrauTEA(usuarioAtual.getGrauTEA());
-                    listaUsuario.setExcluido("S");
-
-                    usuarioDAO.atualizar(listaUsuario);
-                    Toast.makeText(getApplicationContext(), "Excluido com Sucesso!!", Toast.LENGTH_LONG).show();
-                    finish();
-                } else {
-                    Toast.makeText(getApplicationContext(), "ERRO AO EXCLUIR!!", Toast.LENGTH_LONG).show();
-                    Log.i("ERRO", "ERRO AO EXCLUIR USUARIO DO CADASTRO!!");
-
-                }
-
-            }
-        });
-        final AlertDialog finalAlerta = alerta;
-        vCancelar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finalAlerta.dismiss();
-            }
-        });
-        alerta = builder.create();
-        alerta.show();
-        //***fim do ALERTDIALOG ALTERAR
-*/
-
-
     }
 
 }
