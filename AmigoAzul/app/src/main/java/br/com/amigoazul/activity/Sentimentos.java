@@ -610,7 +610,7 @@ public class Sentimentos extends AppCompatActivity {
                             listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
                             listaComunicacaoSentimentos.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
                             listaComunicacaoSentimentos.setTipoComunic("SENTIMENTOS");
-                            listaComunicacaoSentimentos.setExcluido("n");
+                            listaComunicacaoSentimentos.setExcluido("N");
 
                             comunicacaoDAO.salvar(listaComunicacaoSentimentos);
 

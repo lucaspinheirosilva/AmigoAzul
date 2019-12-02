@@ -45,7 +45,7 @@ public class InserirDadosBD {
         if (SPLASH_listComunicSentimentos.size() == 0) {
             //INSERE SENTIMENTOS
             listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Sentimentos/AZ-02-12-2019-09:50:10.JPG");
-            listaComunicacao.setTextoFalar("ESTE SOM ME ENCOMODA");
+            listaComunicacao.setTextoFalar("ESTE SOM ME INCOMODA");
             listaComunicacao.setTextoFalar_MontarFrase(null);
             listaComunicacao.setTipoComunic("SENTIMENTOS");
             listaComunicacao.setExcluido("N");

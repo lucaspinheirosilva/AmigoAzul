@@ -1,5 +1,5 @@
 ﻿{
-	"version": 1574121108,
+	"version": 1575302164,
 	"fileList": [
 		"data.js",
 		"c2runtime.js",
@@ -24,6 +24,9 @@
 		"images/tiledbackground.png",
 		"images/barracarregando.png",
 		"images/sprite4-sheet0.png",
+		"images/btnproximo-sheet0.png",
+		"images/volumemais-sheet0.png",
+		"images/volumemenos-sheet0.png",
 		"media/error.m4a",
 		"media/error.ogg",
 		"media/plim.m4a",
