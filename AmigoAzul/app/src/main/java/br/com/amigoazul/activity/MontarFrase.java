@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Locale;
 
 import br.com.amigoazul.R;
+import br.com.amigoazul.adapter.ListarMontarFreseAdapter;
 import br.com.amigoazul.adapter.ListarSentimentosAdapter;
 import br.com.amigoazul.helper.ComunicacaoDAO;
 import br.com.amigoazul.helper.RecyclerItemClickListiner;
@@ -216,8 +217,8 @@ public class MontarFrase extends AppCompatActivity {
             //"ADAPTER" que monta as imagens no RecyclerView com 3 colunas
             StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
             RCRVW_listarMontarFrase.setLayoutManager(sglm);
-            ListarSentimentosAdapter listarSentimentosAdapter = new ListarSentimentosAdapter(MontarFrase.this, list);
-            RCRVW_listarMontarFrase.setAdapter(listarSentimentosAdapter);
+            ListarMontarFreseAdapter listarMontarFraseAdapter = new ListarMontarFreseAdapter(MontarFrase.this, list);
+            RCRVW_listarMontarFrase.setAdapter(listarMontarFraseAdapter);
 
 
             final List <ListaComunicacao> finalList = list;//Array de lista de sentimentos que recebe o metodo LISTAR do banco
@@ -514,7 +515,7 @@ public class MontarFrase extends AppCompatActivity {
                             String nomeDoArquivo = "AZ-" + dataFormatada + ".JPG";
                             listaComunicacaoMontarFrase.setTextoFalar_MontarFrase(textoFalar.getText().toString().toUpperCase());
                             listaComunicacaoMontarFrase.setTextoFalar(null);
-                            listaComunicacaoMontarFrase.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
+                            listaComunicacaoMontarFrase.setCaminhoFirebase(splash_activity.meuDirMontarFreses + "/" + nomeDoArquivo);
                             listaComunicacaoMontarFrase.setTipoComunic("MONTAR FRASE");
                             listaComunicacaoMontarFrase.setExcluido("N");
 

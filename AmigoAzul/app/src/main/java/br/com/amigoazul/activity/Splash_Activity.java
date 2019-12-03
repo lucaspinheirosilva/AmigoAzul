@@ -35,17 +35,6 @@ public class Splash_Activity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 1000;
     final static int Const_WRITE_EXTERNAL_STORAGE = 001;
 
-
-    /***VARIAVEIS FIREBASE*/
-    FirebaseStorage firebaseStorage;
-    StorageReference storageReference;
-
-    /**
-     * VARIAVEL PROGRESSBAR
-     */
-    ProgressDialog progressDialog;
-
-
     /**
      * CRIAR DIRETORIO NO CELULAR DO USUARIO
      */
@@ -60,7 +49,6 @@ public class Splash_Activity extends AppCompatActivity {
     /**
      * ESTANCIAR OUTRAS CLASSES
      */
-    ListaComunicacao listaComunicacao = new ListaComunicacao();
     InserirDadosBD inserirDadosAutomaticos = new InserirDadosBD();
 
 
@@ -78,22 +66,22 @@ public class Splash_Activity extends AppCompatActivity {
                 if (!meuDiretorio.exists()) {
                     meuDiretorio.mkdirs();
 
-                    Toast.makeText(getApplicationContext(), "DIRETORIO CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "DIRETORIO CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
 
                     if (!meuDirSentimentos.exists()) {
                         meuDirSentimentos.mkdirs();
-                        Toast.makeText(getApplicationContext(), "DIRETORIO SENTIMENTOS CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "DIRETORIO SENTIMENTOS CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
                     }
                     if (!meuDirObjetos.exists()) {
                         meuDirObjetos.mkdirs();
-                        Toast.makeText(getApplicationContext(), "DIRETORIO OBJETOS CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getApplicationContext(), "DIRETORIO OBJETOS CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
                     }
                     if (!meuDirMontarFreses.exists()) {
                         meuDirMontarFreses.mkdirs();
-                        Toast.makeText(getApplicationContext(), "DIRETORIO MONTAR FRASES CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "DIRETORIO MONTAR FRASES CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "DIRETORIO JA EXISTE", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "DIRETORIO JA EXISTE", Toast.LENGTH_SHORT).show();
                     meuDiretorio.getAbsolutePath().toString();
                 }
 
@@ -110,15 +98,21 @@ public class Splash_Activity extends AppCompatActivity {
 
                         SPLASH_listusers = usuarioDAO.listar();
                         if (SPLASH_listusers.size() > 0) {
-                            Toast.makeText(getApplicationContext(), "USUARIO ENCONTRADO", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "USUARIO ENCONTRADO", Toast.LENGTH_SHORT).show();
 
-                            Intent i = new Intent(Splash_Activity.this, ListarUsuario.class);
+                            /*Intent i = new Intent(Splash_Activity.this, ListarUsuario.class);
+                            String blockSplash = "bloqueadoSplash";
+                            i.putExtra("BLOQUEIO_SPLASH", blockSplash);
+                            startActivity(i);
+                            finish();*/
+                            Intent i = new Intent(Splash_Activity.this, MainMenu.class);
                             String blockSplash = "bloqueadoSplash";
                             i.putExtra("BLOQUEIO_SPLASH", blockSplash);
                             startActivity(i);
                             finish();
+
                         } else {
-                            Toast.makeText(getApplicationContext(), "NENHUM USUARIO ENCONTRADO", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "NENHUM USUARIO ENCONTRADO", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(Splash_Activity.this, Introducao_Activity.class);
                             startActivity(i);
 
@@ -128,91 +122,13 @@ public class Splash_Activity extends AppCompatActivity {
                     }
                 }, SPLASH_TIME_OUT);
 
-                /**chama o metodo para download*/
-                //DOWNLOAD();
-
             } else {
                 requestPermission();
             }
         }
     }
 
-    /**
-     * METODO TESTE PARA BAIXAR IMAGENS FIREBASE
-     */
-    /*public void DOWNLOAD() {
-        storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference fileRef;
-        StorageReference imageReference;
-        imageReference = FirebaseStorage.getInstance().getReference().child("Sentimentos");
-
-
-        //todo:continuar apartir daqui
-        ComunicacaoDAO comunicacaoDAO = new ComunicacaoDAO(getApplicationContext());
-        List <ListaComunicacao> listaComunicacaos = new ArrayList <>();
-        listaComunicacaos = comunicacaoDAO.listar();
-
-
-        //Percorre o Vetor e pega o nome do campo "CAMINHO FIRABASE" e unificar com o URL de download
-        //que vem do FIREBASE, e baixar as imagen no laço FOR
-        int i;
-        for (i = 0; i < listaComunicacaos.size(); i++) {
-            Log.e("FIREBASE", "Nome da Imagem no Banco de dados do Dispositivo " + listaComunicacaos.get(i).getCaminhoFirebase());
-            fileRef = imageReference.child(listaComunicacaos.get(i).getCaminhoFirebase());
-            Log.e("FIREBASE", "Caminho da Imagem no Firebase " + fileRef.toString());
-            if (fileRef != null) {
-                progressDialog = new ProgressDialog(this);
-                progressDialog.setTitle("Baixando Imagens.");
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                progressDialog.setMessage("Baixando " + (i = i + 1) + " de " + listaComunicacaos.size());
-                progressDialog.show();
-                try {
-                    final File file = new File(meuDirSentimentos,listaComunicacaos.get(i).getCaminhoFirebase());
-                    final StorageReference finalFileRef = fileRef;
-                    fileRef.getFile(file).addOnSuccessListener(new OnSuccessListener <FileDownloadTask.TaskSnapshot>() {
-                       @Override
-                       public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-
-                           //TODO: ANALIZAR ESSE TRECHO E IMPLEMENTAR NO DOWNLOAD DAS IMAGENS
-                           DownloadManager downloadmanager =(DownloadManager) getApplication().getSystemService(Context.DOWNLOAD_SERVICE);
-                           Uri uri = Uri.parse(finalFileRef.toString());
-                           DownloadManager.Request request = new DownloadManager.Request(uri);
-
-                           request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                           request.setDestinationInExternalFilesDir(getApplicationContext(),meuDirObjetos.getAbsolutePath(),null);
-                           downloadmanager.enqueue(request);
-                           //https://www.youtube.com/watch?v=SmXGlv7QEO0
-                         /* public void downloadFile(Context context,String arquivoNome,String extensaoArquivo,String diretorio,String url){
-                               DownloadManager downloadmanager =(DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-                               Uri uri = Uri.parse(url);
-                               DownloadManager.Request request = new DownloadManager.Request(uri);
-
-                               request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                               request.setDestinationInExternalFilesDir(context,diretorio,null);
-                               downloadmanager.enqueue(request);
-
-                           }
-
-                       }
-                   }).addOnFailureListener(new OnFailureListener() {
-                       @Override
-                       public void onFailure(@NonNull Exception e) {
-                           Toast.makeText(getApplicationContext(),"EERRRROO",Toast.LENGTH_LONG).show();
-
-                       }
-                   });
-
-                }catch (Exception erro){
-
-                }
-
-
-            }
-
-        }
-
-    }*///metodo DOWNLOAD testar futuramente
+    //metodo DOWNLOAD testar futuramente
     private boolean checkPermission() {
 
         int result_write = ContextCompat.checkSelfPermission(Splash_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -241,19 +157,19 @@ public class Splash_Activity extends AppCompatActivity {
 
                         if (!meuDirSentimentos.exists()) {
                             meuDirSentimentos.mkdirs();
-                            Toast.makeText(getApplicationContext(), "DIRETORIO SENTIMENTOS CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(getApplicationContext(), "DIRETORIO SENTIMENTOS CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
                         }
                         if (!meuDirObjetos.exists()) {
                             meuDirObjetos.mkdirs();
-                            Toast.makeText(getApplicationContext(), "DIRETORIO OBJETOS CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(getApplicationContext(), "DIRETORIO OBJETOS CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
                         }
                         if (!meuDirMontarFreses.exists()) {
                             meuDirMontarFreses.mkdirs();
-                            Toast.makeText(getApplicationContext(), "DIRETORIO MONTAR FRASES CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(getApplicationContext(), "DIRETORIO MONTAR FRASES CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
                         }
-                        Toast.makeText(getApplicationContext(), "DIRETORIO CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "DIRETORIO CRIADO COM SUCESSO", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "DIRETORIO JA EXISTE", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "DIRETORIO JA EXISTE", Toast.LENGTH_SHORT).show();
                         meuDiretorio.getAbsolutePath().toString();
                     }
 
@@ -266,17 +182,22 @@ public class Splash_Activity extends AppCompatActivity {
                             /**verifica se existe usuario cadastrado no BD**/
                             SPLASH_listusers = usuarioDAO.listar();
                             if (SPLASH_listusers.size() > 0) {
-                                Toast.makeText(getApplicationContext(), "USUARIO ENCONTRADO", Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(getApplicationContext(), "USUARIO ENCONTRADO", Toast.LENGTH_SHORT).show();
 
                                 //enviar uma String com uma mensagem para outra tela informando que esta bloqueado a
                                 //edição ou exclusao
-                                Intent i = new Intent(Splash_Activity.this, ListarUsuario.class);
+                                /*Intent i = new Intent(Splash_Activity.this, ListarUsuario.class);
+                                String blockSplash = "bloqueadoSplash";
+                                i.putExtra("BLOQUEIO_SPLASH", blockSplash);
+                                startActivity(i);
+                                finish();*/
+                                Intent i = new Intent(Splash_Activity.this, MainMenu.class);
                                 String blockSplash = "bloqueadoSplash";
                                 i.putExtra("BLOQUEIO_SPLASH", blockSplash);
                                 startActivity(i);
                                 finish();
                             } else {
-                                Toast.makeText(getApplicationContext(), "NENHUM USUARIO ENCONTRADO", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(), "NENHUM USUARIO ENCONTRADO", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(Splash_Activity.this, Introducao_Activity.class);
                                 startActivity(i);
                                 // Fecha esta activity
@@ -285,8 +206,6 @@ public class Splash_Activity extends AppCompatActivity {
                         }
                     }, SPLASH_TIME_OUT);
 
-                    /**chama o metodo para download*/
-                    //  DOWNLOAD();
                 } else {
                     /**Cria o gerador do AlertDialog*/
                     AlertDialog.Builder builder = new AlertDialog.Builder(Splash_Activity.this);

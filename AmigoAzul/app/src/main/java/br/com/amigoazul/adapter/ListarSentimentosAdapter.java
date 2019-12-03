@@ -71,23 +71,7 @@ public class ListarSentimentosAdapter extends RecyclerView.Adapter<ListarSentime
                 //.placeholder(R.drawable.loading_spinner)
                 .into(holder.imageViewSentimentos);
 
-        /*Picasso.get()
-                .load(pathFile)
-                //.resize(100,100)
-                //  .centerCrop()
-                .into(holder.imageViewSentimentos);*/
 
-
-
-       /* holder.imageViewSentimentos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context,listaComunicacao.getTextoFalar(),Toast.LENGTH_LONG).show();
-
-
-
-            }
-        });*/
     }
 
     @Override

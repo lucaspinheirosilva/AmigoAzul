@@ -31,7 +31,7 @@ public class InserirDadosBD {
         SPLASH_listComunicMontarFrase = comunicacaoDAO.listar_montarFrases();
         SPLASH_listarUsuario = usuarioDAO.listar();
 
-        if (SPLASH_listarUsuario.size() == 0) {
+       /* if (SPLASH_listarUsuario.size() == 0) {
             //INSERE UM USUARIO POR DEFAULT PARA TESTE
             listaUsuario.setNomeUsuario("LUCAS");
             listaUsuario.setDataNasc("24/03/1993");
@@ -41,7 +41,7 @@ public class InserirDadosBD {
             listaUsuario.setExcluido("N");
 
             usuarioDAO.salvar(listaUsuario);
-        }
+        }*/
         if (SPLASH_listComunicSentimentos.size() == 0) {
             //INSERE SENTIMENTOS
             listaComunicacao.setCaminhoFirebase("/storage/emulated/0/AmigoAzul_Fotos/Sentimentos/AZ-02-12-2019-09:50:10.JPG");
@@ -218,7 +218,7 @@ public class InserirDadosBD {
 
             comunicacaoDAO.salvar(listaComunicacao);
         }
-        Toast.makeText(contexto, "DADOS PARA TESTES INSERIDOS COM SUCESSO", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(contexto, "DADOS PARA TESTES INSERIDOS COM SUCESSO", Toast.LENGTH_SHORT).show();
     }
 }
 

@@ -496,7 +496,7 @@ public class Sentimentos extends AppCompatActivity {
                         //Savar dados da imagem no BD
                         if (imagem != null) {
                             String nomeDoArquivo = "AZ-" + dataFormatada + ".JPG";
-                            listaComunicacaoSentimentos.setTextoFalar(textoFalar.getText().toString());
+                            listaComunicacaoSentimentos.setTextoFalar(textoFalar.getText().toString().toUpperCase());
                             listaComunicacaoSentimentos.setTextoFalar_MontarFrase(null);
                             listaComunicacaoSentimentos.setCaminhoFirebase(splash_activity.meuDirSentimentos + "/" + nomeDoArquivo);
                             listaComunicacaoSentimentos.setTipoComunic("SENTIMENTOS");
